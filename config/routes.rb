@@ -4,6 +4,10 @@ Rails.application.routes.draw do
 
   get '/goodbye', to: 'landing#goodbye'
 
+  resources :categories, only: [:index, :show] do
+    resources :posts, only: [:new, :create, :show]
+  end
+
   get 'admin', to: 'admin#index'
 
   namespace :admin do
