@@ -50,3 +50,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # HAML for templating
 gem 'haml-rails', '~> 0.9.0'
+
+# Authentication
+gem 'devise'
+gem 'bcrypt', platforms: :ruby
