@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
+  root 'landing#index'
+
+  get '/goodbye', to: 'landing#goodbye'
+
   get 'admin', to: 'admin#index'
 
   namespace :admin do
