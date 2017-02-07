@@ -11,7 +11,14 @@ default: &default
 
 development:
   <<: *default
-  database: db/development.sqlite3
+  # database: db/development.sqlite3
+  adapter: mysql2
+  encoding: utf8mb4
+  database: dh_datahjelpen_org
+  username: dh_datahjelpen_org
+  password: T4jWcZfcWTff6NYm
+  host: 127.0.1.1
+  port: 3306
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

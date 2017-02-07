@@ -54,3 +54,6 @@ gem 'haml-rails', '~> 0.9.0'
 # Authentication
 gem 'devise'
 gem 'bcrypt', platforms: :ruby
+
+# MySQL DB
+gem 'mysql2'
