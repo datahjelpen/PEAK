@@ -53,6 +53,5 @@ Rails.application.configure do
   # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-  I18n.locale = :no_nb
-  config.i18n.default_locale = :no_nb
+  config.i18n.default_locale = :no
 end

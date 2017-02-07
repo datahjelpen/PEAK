@@ -1,6 +1,6 @@
 # Additional translations at https://github.com/plataformatec/devise/wiki/I18n
 
-no_nb:
+"no": # Must be in qoutes because YAML thought it would be a good idèa to use yes and no for true and false.
   devise:
     confirmations:
       confirmed: "Din konto er aktivert og du er nå innlogget."
