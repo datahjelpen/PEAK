@@ -54,6 +54,7 @@ gem 'haml-rails', '~> 0.9.0'
 # Authentication
 gem 'devise'
 gem 'bcrypt', platforms: :ruby
+gem 'omniauth-facebook'
 
 # MySQL DB
 gem 'mysql2'
