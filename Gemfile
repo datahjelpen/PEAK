@@ -44,6 +44,7 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'html2haml'
+  gem 'certified'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -54,8 +55,12 @@ gem 'haml-rails', '~> 0.9.0'
 
 # Authentication
 gem 'devise'
+# gem 'bcrypt', '3.1.5', platforms: :ruby, :require => 'bcrypt'
 gem 'bcrypt', platforms: :ruby
 gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'omniauth-google-oauth2'
 
 # MySQL DB
 gem 'mysql2'
+# bundle config build.mysql2 --with-mysql-dir="c:\xampp\mysql\bin"

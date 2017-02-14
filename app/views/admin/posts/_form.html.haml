@@ -1,0 +1,62 @@
+= form_for :post, url: posts_path do |f|
+  - if @post.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@post.errors.count, 'error')
+        prohibited
+        this post from being saved:
+      %ul
+        - @post.errors.full_messages.each do |msg|
+          %li= msg
+  %p
+    = f.label :title
+    = f.text_field :title
+  %p
+    = f.label :text
+    = f.text_area :text
+  %p
+    = f.label :excrept
+    = f.text_area :excrept
+  %p
+    = f.label :extra_css
+    = f.text_area :extra_css
+  %p
+    = f.label :extra_js
+    = f.text_area :extra_js
+  %p
+    = f.label :type
+    %select
+      %option{value: "a", selected: params[:type] == "a"}= "a"
+      %option{value: "b", selected: params[:type] == "b"}= "b"
+  %p
+    = f.label :author
+    %f.select
+      %f.option{value: "a", selected: params[:author] == "a"}= "a"
+      %f.option{value: "b", selected: params[:author] == "b"}= "b"
+  %p
+    = f.label :template
+    = f.text_field :template
+  %p
+    = f.label :microdata
+    = f.text_field :microdata
+  %p
+    = f.label :custom_meta
+    = f.text_field :custom_meta
+  %p
+    = f.label :rights
+    = f.text_field :rights
+  %p
+    = f.label :comments
+    = f.check_box :comments
+    / = check_box "comments[#{comments}]",  1, !!(false)
+  %p
+    = f.label :status
+    %select
+      %option{value: "draft", selected: params[:status] == "draft"}= "draft"
+      %option{value: "published", selected: params[:status] == "published"}= "published"
+      %option{value: "private", selected: params[:status] == "private"}= "private"
+  %p
+    = f.label :locale
+    %select
+      %option{value: "no", selected: params[:locale] == "no"}= "no"
+      %option{value: "en", selected: params[:locale] == "en"}= "en"

@@ -275,4 +275,6 @@ Devise.setup do |config|
   config.omniauth :facebook,
                   Rails.application.secrets.facebook_app_id,
                   Rails.application.secrets.facebook_app_secret
+  config.omniauth :google_oauth2, Rails.application.secrets.google_app_id, Rails.application.secrets.google_app_secret
+  config.omniauth :twitter, Rails.application.secrets.twitter_app_id, Rails.application.secrets.twitter_app_secret
 end

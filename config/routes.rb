@@ -1,19 +1,32 @@
 Rails.application.routes.draw do
-  devise_for :users
-  root 'landing#index'
+  devise_for :users, :controllers => {
+    registrations: 'registrations',
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  }
 
-  get '/goodbye', to: 'landing#goodbye'
-
-  resources :categories, only: [:index, :show] do
-    resources :posts, only: [:new, :create, :show]
+  devise_scope :user do
+    get '/users/edit' => 'account'
+    get '/account' => 'devise/registrations#edit'
+    get '/profile' => 'devise/registrations#edit'
+    # get '/profile' => 'registrations#profile_edit'
+    # post '/profile' => 'registrations#profile_update'
   end
 
-  get 'admin', to: 'admin#index'
 
+  root 'landing#index'
+  get '/welcome', to: 'landing#welcome'
+  get '/goodbye', to: 'landing#goodbye'
+  # get '/profile', to: 'registrations#edit'
+
+  resources :posts, only: [:index, :show]
+  #   resources :posts, only: [:show]
+  # end
+
+  get '/admin', to: 'admin#index'
   namespace :admin do
     resources :posts
-    resources :post_categories
-    resources :post_types
-    resources :post_tags
+    # resources :post_categories
+    # resources :post_types
+    # resources :post_tags
   end
 end

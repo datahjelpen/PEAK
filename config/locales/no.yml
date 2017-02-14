@@ -233,8 +233,6 @@
       long: "%A, %e. %B %Y, %H:%M"
       short: "%e. %B, %H:%M"
     pm: ''
-  hello: "Hei verden"
-  goodbye: "Ses igjen snart!"
   account:
     account: "Konto"
     login: "Logg inn"
@@ -243,3 +241,7 @@
   landing:
     index:
       heading: "Landing#index"
+    welcome:
+      heading: "Velkommen"
+    goodbye:
+      heading: "Ses igjen snart!"

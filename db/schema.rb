@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20170208130956) do
     t.string   "provider"
     t.string   "uid"
     t.string   "name_display"
+    t.string   "image"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
