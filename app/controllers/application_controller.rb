@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  after_filter :store_action
+  after_action :store_action
 
   # Store the action
   def store_action
