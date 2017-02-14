@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
   # Store the action
   def store_action
     return unless request.get?
-    if (request.path != "/users/sign_in" &&
+    if (request.path != "/goodbye" &&
+        request.path != "/users/sign_in" &&
         request.path != "/users/sign_up" &&
         request.path != "/users/password/new" &&
         request.path != "/users/password/edit" &&
