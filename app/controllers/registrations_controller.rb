@@ -1,10 +1,10 @@
 class RegistrationsController < Devise::RegistrationsController
   def sign_up_params
-    params.require(:user).permit(:name_display, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name_display, :email, :password, :password_confirmation, :avatar, :avatar_cache)
   end
 
   def account_update_params
-    params.require(:user).permit(:name_display, :email, :password, :password_confirmation, :current_password)
+    params.require(:user).permit(:name_display, :email, :password, :password_confirmation, :current_password, :avatar, :avatar_cache)
   end
 
   protected
@@ -21,8 +21,7 @@ class RegistrationsController < Devise::RegistrationsController
       end
     end
 
-  private
-    def profile_params
-      params.require(:user).permit(:name_display)
+    def after_update_path_for(resource)
+      '/account'
     end
 end

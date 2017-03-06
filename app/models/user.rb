@@ -22,4 +22,16 @@ class User < ApplicationRecord
       end
     end
   end
+
+  mount_uploader :avatar, AvatarUploader
+  # User Avatar Validation
+  def avatar_size_validation
+    validates_integrity_of  :avatar
+    validates_processing_of :avatar
+  end
+
+  private
+    def avatar_size_validation
+      errors[:avatar] << "should be less than 3MB" if avatar.size > 3.megabytes
+    end
 end
