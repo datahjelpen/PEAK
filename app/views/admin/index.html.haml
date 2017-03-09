@@ -1,4 +1,15 @@
 %h1 Admin page
 
-= link_to 'All posts', admin_posts_path
-= link_to 'New post', new_admin_post_path
+%table
+  %thead
+    %tr
+      %th
+        %h2 Posts
+  %tbody
+    %tr
+      %td
+        = link_to 'All posts', admin_posts_path
+        = link_to 'New post', new_admin_post_path
+    %tr
+      %td
+        = render 'admin/posts/posts'
