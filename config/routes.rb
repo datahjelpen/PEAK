@@ -8,21 +8,17 @@ Rails.application.routes.draw do
     get '/users/edit' => 'account'
     get '/account' => 'devise/registrations#edit'
     get '/profile' => 'devise/registrations#edit'
-    # get '/profile' => 'registrations#profile_edit'
-    # post '/profile' => 'registrations#profile_update'
   end
 
 
   root 'landing#index'
   get '/welcome', to: 'landing#welcome'
   get '/goodbye', to: 'landing#goodbye'
-  # get '/profile', to: 'registrations#edit'
 
   resources :posts, only: [:index, :show]
-  #   resources :posts, only: [:show]
-  # end
+  resources :posts, except: [:index, :show], :controller => "admin/posts"
 
-  get '/admin', to: 'admin#index'
+  get '/admin', to: 'admin/#index'
   namespace :admin do
     resources :posts
     # resources :post_categories
