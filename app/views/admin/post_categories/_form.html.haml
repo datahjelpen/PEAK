@@ -1,0 +1,34 @@
+= form_for @post_category do |f|
+  - if @post_category.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@post_category.errors.count, 'error')
+        prohibited
+        this post_category from being saved:
+      %ul
+        - @post_category.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :slug
+    = f.text_field :slug
+  .field
+    = f.label :image
+    = f.text_field :image
+  .field
+    = f.label :parent
+    = f.text_field :parent
+  .field
+    = f.label :template
+    = f.text_field :template
+  .field
+    = f.label :locale
+    = f.text_field :locale
+  .field
+    = f.label :rights
+    = f.text_field :rights
+  .actions
+    = f.submit 'Save'

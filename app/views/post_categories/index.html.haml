@@ -1,0 +1,11 @@
+%h1 Listing posts
+
+%table
+  %tr
+    %th Id
+    %th Name
+  - @post_categories.each do |post_category|
+    %tr
+      %td= post_category.id
+      %td= post_category.name
+      %td= link_to 'Show', post_category_path(post_category)

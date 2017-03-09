@@ -17,11 +17,13 @@ Rails.application.routes.draw do
 
   resources :posts, only: [:index, :show]
   resources :posts, except: [:index, :show], :controller => "admin/posts"
+  resources :post_categories, only: [:index, :show]
+  resources :post_categories, except: [:index, :show], :controller => "admin/categories"
 
   get '/admin', to: 'admin/#index'
   namespace :admin do
     resources :posts
-    # resources :post_categories
+    resources :post_categories
     # resources :post_types
     # resources :post_tags
   end

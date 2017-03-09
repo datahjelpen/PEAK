@@ -5,11 +5,18 @@
     %tr
       %th
         %h2 Posts
+      %th
+        %h2 Post categories
   %tbody
     %tr
+      %td
+        = link_to 'All post categories', admin_post_categories_path
+        = link_to 'New post category', new_admin_post_category_path
       %td
         = link_to 'All posts', admin_posts_path
         = link_to 'New post', new_admin_post_path
     %tr
       %td
         = render 'admin/posts/posts'
+      %td
+        = render 'admin/post_categories/post_categories'
