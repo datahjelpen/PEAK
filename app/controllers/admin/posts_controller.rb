@@ -19,7 +19,7 @@ class Admin::PostsController < Admin::ApplicationController
     @post = Post.new(post_params)
 
     if @post.save
-      redirect_to admin_post_path(@post)
+      redirect_to edit_admin_post_path(@post)
     else
       render 'new'
     end
@@ -29,7 +29,7 @@ class Admin::PostsController < Admin::ApplicationController
     @post = Post.find(params[:id])
 
     if @post.update(post_params)
-      redirect_to admin_posts_path
+      redirect_to edit_admin_post_path(@post)
     else
       render 'edit'
     end
@@ -39,7 +39,7 @@ class Admin::PostsController < Admin::ApplicationController
     @post = Post.find(params[:id])
     @post.destroy
 
-    redirect_to admin_posts_path
+    redirect_to :back
   end
 
   private

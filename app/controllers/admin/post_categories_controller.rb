@@ -19,7 +19,7 @@ class Admin::PostCategoriesController < Admin::ApplicationController
     @post_category = PostCategory.new(post_category_params)
 
     if @post_category.save
-      redirect_to admin_post_category_path(@post_category)
+      redirect_to edit_admin_post_category_path(@post_category)
     else
       render 'new'
     end
@@ -29,7 +29,7 @@ class Admin::PostCategoriesController < Admin::ApplicationController
     @post_category = PostCategory.find(params[:id])
 
     if @post_category.update(post_category_params)
-      redirect_to admin_post_categories_path
+      redirect_to edit_admin_post_category_path(@post_category)
     else
       render 'edit'
     end
@@ -39,7 +39,7 @@ class Admin::PostCategoriesController < Admin::ApplicationController
     @post_category = PostCategory.find(params[:id])
     @post_category.destroy
 
-    redirect_to admin_post_categories_path
+    redirect_to :back
   end
 
   private
