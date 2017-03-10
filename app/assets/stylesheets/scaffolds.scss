@@ -1,17 +1,37 @@
+* {
+  &,
+  &:before,
+  &:after {
+    -moz-box-sizing: border-box;
+    box-sizing: inherit;
+  }
+}
+
+html,
 body {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  padding: 1em;
   background-color: #fff;
+}
+
+body {
   color: #333;
+  background-color: #eee;
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
-  margin: 33px;
+  padding: 2em;
 }
 
 p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
-  margin: 33px;
+  padding: 1em;
 }
 
 pre {
@@ -23,13 +43,9 @@ pre {
 a {
   color: #000;
 
-  &:visited {
-    color: #666;
-  }
-
+  &:focus,
   &:hover {
-    color: #fff;
-    background-color: #000;
+    color: #ff0000;
   }
 }
 
@@ -86,4 +102,14 @@ div {
 
 label {
   display: block;
+}
+
+table {
+  width: 100%;
+
+  tr {
+    td {
+      vertical-align: top;
+    }
+  }
 }
