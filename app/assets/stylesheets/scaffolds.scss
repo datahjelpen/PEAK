@@ -1,37 +1,17 @@
-* {
-  &,
-  &:before,
-  &:after {
-    -moz-box-sizing: border-box;
-    box-sizing: inherit;
-  }
-}
-
-html,
 body {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-html {
-  padding: 1em;
   background-color: #fff;
-}
-
-body {
   color: #333;
-  background-color: #eee;
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
-  padding: 2em;
+  margin: 33px;
 }
 
 p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
-  padding: 1em;
+  margin: 33px;
 }
 
 pre {
@@ -43,9 +23,13 @@ pre {
 a {
   color: #000;
 
-  &:focus,
+  &:visited {
+    color: #666;
+  }
+
   &:hover {
-    color: #ff0000;
+    color: #fff;
+    background-color: #000;
   }
 }
 
@@ -102,12 +86,4 @@ div {
 
 label {
   display: block;
-}
-
-table {
-  tr {
-    td {
-      vertical-align: top;
-    }
-  }
 }
