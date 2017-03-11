@@ -51,7 +51,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # HAML for templating
-gem 'haml-rails', '~> 0.9.0'
+gem 'haml-rails'
 
 # Authentication
 gem 'devise'
@@ -61,6 +61,14 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'omniauth-google-oauth2'
 
+# Storage
+gem 'fog'
+
 # MySQL DB
 gem 'mysql2'
 # bundle config build.mysql2 --with-mysql-dir="c:\xampp\mysql\bin"
+
+# Images
+gem 'carrierwave'
+gem 'mini_magick'
+# gem 'rmagick'
