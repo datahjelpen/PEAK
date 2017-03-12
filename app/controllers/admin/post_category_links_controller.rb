@@ -15,6 +15,16 @@ class Admin::PostCategoryLinksController < Admin::ApplicationController
     @post_category_link = PostCategoryLink.find(params[:id])
   end
 
+  def self.new(post_id, categories)
+    categories.each do |category|
+      @post_category_link = PostCategoryLink.new(post: post_id, category: category.to_i)
+
+      if !@post_category_link.save
+        abort("Could not save the post category link")
+      end
+    end
+  end
+
   def create
     @post_category_link = PostCategoryLink.new(post_category_link_params)
 

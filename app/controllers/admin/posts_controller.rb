@@ -9,16 +9,20 @@ class Admin::PostsController < Admin::ApplicationController
 
   def new
     @post = Post.new
+    @post_category = PostCategory.all
   end
 
   def edit
     @post = Post.find(params[:id])
+    @post_category = PostCategory.all
   end
 
   def create
     @post = Post.new(post_params)
 
     if @post.save
+      @post_category_link = Admin::PostCategoryLinksController.new(@post.id, params[:post_categories])
+
       redirect_to edit_admin_post_path(@post)
     else
       render 'new'
@@ -46,6 +50,8 @@ class Admin::PostsController < Admin::ApplicationController
   def post_params
     params.require(:post).permit(
       :title,
+      :slug,
+      :post_categories,
       :text,
       :excrept,
       :extra_css,

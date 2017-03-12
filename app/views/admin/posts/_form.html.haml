@@ -47,9 +47,14 @@
     = f.label :rights
     = f.text_field :rights
   .field
+    %pre
+      - @post_category.each do |category|
+        = f.label category.name
+        %input{:name => "post_categories[]", :type => "checkbox", :value => category.id}
+
+  .field
     = f.label :comments
     = f.check_box :comments
-    / = check_box "comments[#{comments}]",  1, !!(false)
   .field
     = f.label :status
     %select
@@ -58,8 +63,8 @@
       %option{value: "private", selected: params[:status] == "private"}= "private"
   .field
     = f.label :locale
-    %select
-      %option{value: "no", selected: params[:locale] == "no"}= "no"
-      %option{value: "en", selected: params[:locale] == "en"}= "en"
+    = f.select(:locale) do
+      - [['no', 1], ['en', 2]].each do |c|
+        = content_tag(:option, c.first, value: c.last)
   .actions
     = f.submit 'Save'

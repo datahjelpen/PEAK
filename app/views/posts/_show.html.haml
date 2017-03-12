@@ -1,7 +1,25 @@
 %h1
   = @post.title
+
 %p
   %strong Text:
   = @post.text
 
+%p 
+  %strong Categories:
+%ul
+  - @post_category.each do |category|
+    %li
+      = category.name
+
+%hr
+
+%p
+  %strong Post:
+%pre
 = @post.inspect
+
+%p
+  %strong Post category:
+%pre
+= @post_category.inspect
