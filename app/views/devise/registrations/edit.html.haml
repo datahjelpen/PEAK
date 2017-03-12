@@ -11,24 +11,12 @@
   .field
     - if resource.avatar.url.present?
       = image_tag resource.avatar.url, id: 'image_input_preview', class: 'avatar'
-
-      / = f.label :remove_avatar do
-      /   Fjern nåværende avatar
-      /   = f.check_box :remove_avatar
+      
     - else
       = image_tag 'avatar.png', id: 'image_input_preview', class: 'avatar'
     %br
     = f.file_field :avatar, 'id': 'image_input'
     = f.hidden_field :avatar_cache
-
-
-
-  / .field
-  /   %br/
-  /   %br/
-  /   = f.label :image, 'Add a pic?'
-  /   = f.file_field :image, id: 'image_input'
-
 
   - if resource.provider.nil?
     %h2 Account security
