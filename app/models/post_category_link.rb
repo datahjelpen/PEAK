@@ -1,0 +1,2 @@
+class PostCategoryLink < ApplicationRecord
+end

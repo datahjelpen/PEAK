@@ -1,0 +1,2 @@
+module PostCategoryLinksHelper
+end
