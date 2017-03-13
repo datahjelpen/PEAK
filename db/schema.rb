@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 20170312170017) do
 
   create_table "post_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string   "name"
-    t.string   "slug"
+    t.string   "slug",       null: false
     t.string   "image"
     t.integer  "parent"
     t.integer  "template"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20170312170017) do
     t.integer  "rights"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_post_categories_on_slug", unique: true, using: :btree
   end
 
   create_table "post_category_links", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
@@ -33,13 +34,15 @@ ActiveRecord::Schema.define(version: 20170312170017) do
 
   create_table "post_tags", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string   "name"
-    t.string   "slug"
+    t.string   "slug",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_post_tags_on_slug", unique: true, using: :btree
   end
 
   create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string   "title"
+    t.string   "slug",                      null: false
     t.text     "text",        limit: 65535
     t.text     "excrept",     limit: 65535
     t.text     "extra_css",   limit: 65535
@@ -55,6 +58,7 @@ ActiveRecord::Schema.define(version: 20170312170017) do
     t.integer  "locale"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.index ["slug"], name: "index_posts_on_slug", unique: true, using: :btree
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|

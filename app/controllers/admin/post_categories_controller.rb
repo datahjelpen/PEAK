@@ -16,6 +16,7 @@ class Admin::PostCategoriesController < Admin::ApplicationController
   end
 
   def create
+    prepare_params(params)
     @post_category = PostCategory.new(post_category_params)
 
     if @post_category.save
@@ -43,15 +44,24 @@ class Admin::PostCategoriesController < Admin::ApplicationController
   end
 
   private
-    def post_category_params
-      params.require(:post_category).permit(
-        :name,
-        :slug,
-        :image,
-        :parent,
-        :template,
-        :locale,
-        :rights
-      )
+  def post_category_params
+    params.require(:post_category).permit(
+      :name,
+      :slug,
+      :image,
+      :parent,
+      :template,
+      :locale,
+      :rights
+    )
+  end
+
+  def prepare_params(params)
+    # Slug
+    if params[:post_category][:slug].present?
+      params[:post_category][:slug] = params[:post_category][:slug].parameterize
+    else
+      params[:post_category][:slug] = params[:post_category][:name].parameterize
     end
+  end
 end

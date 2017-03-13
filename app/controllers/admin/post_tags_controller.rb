@@ -16,6 +16,7 @@ class Admin::PostTagsController < Admin::ApplicationController
   end
 
   def create
+    prepare_params(params)
     @post_tag = PostTag.new(post_tag_params)
 
     if @post_tag.save
@@ -43,10 +44,19 @@ class Admin::PostTagsController < Admin::ApplicationController
   end
 
   private
-    def post_tag_params
-      params.require(:post_tag).permit(
-        :name,
-        :slug
-      )
+  def post_tag_params
+    params.require(:post_tag).permit(
+      :name,
+      :slug
+    )
+  end
+
+  def prepare_params(params)
+    # Slug
+    if params[:post_tag][:slug].present?
+      params[:post_tag][:slug] = params[:post_tag][:slug].parameterize
+    else
+      params[:post_tag][:slug] = params[:post_tag][:name].parameterize
     end
+  end
 end

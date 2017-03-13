@@ -18,6 +18,8 @@ class Admin::PostsController < Admin::ApplicationController
   end
 
   def create
+    prepare_params(params)
+
     @post = Post.new(post_params)
 
     if @post.save
@@ -66,5 +68,13 @@ class Admin::PostsController < Admin::ApplicationController
       :status,
       :locale
     )
+  end
+  def prepare_params(params)
+    # Slug
+    if params[:post][:slug].present?
+      params[:post][:slug] = params[:post][:slug].parameterize
+    else
+      params[:post][:slug] = params[:post][:title].parameterize
+    end
   end
 end
