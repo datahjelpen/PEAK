@@ -5,9 +5,9 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-    
+
     categories = [];
-    PostCategoryLink.where(post: params[:id]).each do |link|
+    PostCategoryLink.where(post: @post.id).each do |link|
       categories.push(link.category);
     end
 
