@@ -9,7 +9,6 @@
         %h2 Post categories
       %th
         %h2 Post tags
-  %tbody
     %tr
       %td
         = link_to 'All posts', admin_posts_path
@@ -20,6 +19,7 @@
       %td
         = link_to 'All post tags', admin_post_tags_path
         = link_to 'New post tag', new_admin_post_tag_path
+  %tbody
     %tr
       %td
         = render 'admin/posts/posts'
