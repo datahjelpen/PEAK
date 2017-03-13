@@ -4,7 +4,7 @@ class Admin::PostTagsController < Admin::ApplicationController
   end
 
   def show
-    @post_tag = PostTag.find(params[:id])
+    redirect_to post_tag_path(params[:id])
   end
 
   def new

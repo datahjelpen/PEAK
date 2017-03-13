@@ -4,7 +4,7 @@ class Admin::PostsController < Admin::ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
+    redirect_to post_path(params[:id])
   end
 
   def new

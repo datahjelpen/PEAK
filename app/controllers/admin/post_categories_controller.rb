@@ -4,7 +4,7 @@ class Admin::PostCategoriesController < Admin::ApplicationController
   end
 
   def show
-    @post_category = PostCategory.find(params[:id])
+    redirect_to post_category_path(params[:id])
   end
 
   def new
