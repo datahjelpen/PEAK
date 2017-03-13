@@ -19,11 +19,10 @@ class Admin::PostsController < Admin::ApplicationController
 
   def create
     prepare_params(params)
-
     @post = Post.new(post_params)
 
     if @post.save
-      @post_category_link = Admin::PostCategoryLinksController.new(@post.id, params[:post_categories])
+      Admin::PostCategoryLinksController.new(@post.id, params[:post][:post_categories])
 
       redirect_to edit_admin_post_path(@post)
     else
@@ -69,12 +68,18 @@ class Admin::PostsController < Admin::ApplicationController
       :locale
     )
   end
+
   def prepare_params(params)
     # Slug
     if params[:post][:slug].present?
       params[:post][:slug] = params[:post][:slug].parameterize
     else
       params[:post][:slug] = params[:post][:title].parameterize
+    end
+
+    # Categories
+    if !params[:post][:post_categories].present?
+      params[:post][:post_categories] = [1]
     end
   end
 end
