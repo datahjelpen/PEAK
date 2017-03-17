@@ -9,20 +9,30 @@ class Admin::PostsController < Admin::ApplicationController
 
   def new
     @post = Post.new
-    @post_category = PostCategory.all
+    # @post_category = PostCategory.all
+    # @post_type = PostType.all
   end
 
   def edit
     @post = Post.find(params[:id])
-    @post_category = PostCategory.all
+    # @post_category = PostCategory.all
+    # @post_type = PostType.all
   end
 
   def create
     prepare_params(params)
-    @post = Post.new(post_params)
+    # @post = Post.new(post_params.except(:post_category_ids, :post_type))
+    @post = Post.new(post_params.except(:post_type))
 
     if @post.save
-      Admin::PostCategoryLinksController.new(@post.id, params[:post][:post_categories])
+      # Admin::PostCategoryLinksController.new(@post.id, params[:post][:post_category_ids])
+      # @post_type = PostTypeLink.new(post: @post.id, post_type: params[:post][:post_type])
+
+      # if @post_type.save
+      #   redirect_to edit_admin_post_path(@post)
+      # else
+      #   render 'new'
+      # end
 
       redirect_to edit_admin_post_path(@post)
     else
@@ -52,7 +62,6 @@ class Admin::PostsController < Admin::ApplicationController
     params.require(:post).permit(
       :title,
       :slug,
-      :post_categories,
       :text,
       :excrept,
       :extra_css,
@@ -65,7 +74,9 @@ class Admin::PostsController < Admin::ApplicationController
       :rights,
       :comments,
       :status,
-      :locale
+      :locale,
+      :post_type,
+      post_category_ids: []
     )
   end
 
@@ -78,8 +89,8 @@ class Admin::PostsController < Admin::ApplicationController
     end
 
     # Categories
-    if !params[:post][:post_categories].present?
-      params[:post][:post_categories] = [1]
+    if !params[:post][:post_category_ids].present?
+      params[:post][:post_category_ids] = [1]
     end
   end
 end

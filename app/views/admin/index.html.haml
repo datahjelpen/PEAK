@@ -27,3 +27,11 @@
         = render 'admin/post_categories/post_categories'
       %td
         = render 'admin/post_tags/post_tags'
+    %tr
+      %td
+        %h2 Post types
+        = link_to 'All post types', admin_post_types_path
+        = link_to 'New post type', new_admin_post_type_path
+        = render 'admin/post_types/post_types'
+      %td
+      %td

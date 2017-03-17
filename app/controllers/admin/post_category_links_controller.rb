@@ -3,10 +3,6 @@ class Admin::PostCategoryLinksController < Admin::ApplicationController
     @post_category_links = PostCategoryLink.all
   end
 
-  def show
-    @post_category_link = PostCategoryLink.find(params[:id])
-  end
-
   def new
     @post_category_link = PostCategoryLink.new
   end
@@ -18,7 +14,7 @@ class Admin::PostCategoryLinksController < Admin::ApplicationController
   def self.new(post_id, categories)
     if categories.present?
       categories.each do |category|
-        @post_category_link = PostCategoryLink.new(post: post_id, category: category.to_i)
+        @post_category_link = PostCategoryLink.new(post_id: post_id, post_category_id: category.to_i)
 
         if !@post_category_link.save
           abort("Could not save the post category link")
@@ -59,8 +55,8 @@ class Admin::PostCategoryLinksController < Admin::ApplicationController
   private
   def post_category_link_params
     params.require(:post_category_link).permit(
-      :post,
-      :category
+      :post_id,
+      :post_category_id
     )
   end
 end

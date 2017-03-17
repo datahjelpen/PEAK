@@ -28,11 +28,6 @@
     = f.label :extra_js
     = f.text_area :extra_js
   .field
-    = f.label :type
-    %select
-      %option{value: "a", selected: params[:type] == "a"}= "a"
-      %option{value: "b", selected: params[:type] == "b"}= "b"
-  .field
     = f.label :author
     %f.select
       %f.option{value: "a", selected: params[:author] == "a"}= "a"
@@ -50,11 +45,14 @@
     = f.label :rights
     = f.text_field :rights
   .field
-    %pre
-      - @post_category.each do |category|
-        = f.label category.name
-        %input{:name => "post_categories[]", :type => "checkbox", :value => category.id}
-
+    = f.collection_check_boxes :post_category_ids, PostCategory.all.collect, :id, :name do |m|
+      = m.check_box
+      = m.label
+  / .field
+  /   = f.label :post_type
+  /   %select{:name => "post[post_type]"}
+  /     - @post_type.each do |t|
+  /       = content_tag(:option, t.name, value: t.id)
   .field
     = f.label :comments
     = f.check_box :comments
@@ -71,3 +69,5 @@
         = content_tag(:option, c.first, value: c.last)
   .actions
     = f.submit 'Save'
+
+= PostCategory.inspect

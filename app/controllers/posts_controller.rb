@@ -5,12 +5,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-
-    categories = [];
-    PostCategoryLink.where(post: @post.id).each do |link|
-      categories.push(link.category);
-    end
-
-    @post_category = PostCategory.find(categories);
+    @post["post_categories"] = PostCategoriesController.get_post_categories(@post.id)
+    @post["post_type"] = PostTypesController.get_post_type(@post.id)
   end
 end

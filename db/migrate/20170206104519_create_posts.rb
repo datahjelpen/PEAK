@@ -8,7 +8,6 @@ class CreatePosts < ActiveRecord::Migration[5.0]
       t.text :excrept
       t.text :extra_css
       t.text :extra_js
-      t.integer :type
       t.integer :author
       t.integer :template
       t.integer :microdata
@@ -17,6 +16,63 @@ class CreatePosts < ActiveRecord::Migration[5.0]
       t.boolean :comments
       t.integer :status
       t.integer :locale
+
+      t.timestamps
+    end
+
+    create_table :post_categories do |t|
+      t.string :name
+      t.string :slug, :null => false
+      t.index :slug, unique: true
+      t.string :image
+      t.integer :parent
+      t.integer :post_type
+      t.integer :template
+      t.integer :locale
+      t.integer :rights
+
+      t.timestamps
+    end
+    PostCategory.create :name => 'Uncategorized', :slug => 'uncategorized'
+
+    create_table :post_category_links do |t|
+      t.belongs_to :post, index: true
+      t.belongs_to :post_category, index: true
+
+      t.timestamps
+    end
+
+    create_table :post_types do |t|
+      t.string :name
+      t.string :slug, :null => false
+      t.index :slug, unique: true
+      t.integer :template
+      t.integer :rights
+      t.integer :locale
+
+      t.timestamps
+    end
+
+    create_table :post_type_links do |t|
+      t.belongs_to :post, index: true
+      t.belongs_to :post_type, index: true
+
+      t.timestamps
+    end
+
+    create_table :post_tags do |t|
+      t.string :name
+      t.string :slug, :null => false
+      t.index :slug, unique: true
+      t.integer :post_type
+      t.integer :locale
+
+      t.timestamps
+    end
+
+    create_table :post_tag_links do |t|
+      t.belongs_to :post, index: true
+      t.belongs_to :post_tag, index: true
 
       t.timestamps
     end
