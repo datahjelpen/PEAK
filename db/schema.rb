@@ -91,6 +91,8 @@ ActiveRecord::Schema.define(version: 20170208130956) do
     t.integer  "locale"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.integer  "post_type_id"
+    t.index ["post_type_id"], name: "index_posts_on_post_type_id", using: :btree
     t.index ["slug"], name: "index_posts_on_slug", unique: true, using: :btree
   end
 

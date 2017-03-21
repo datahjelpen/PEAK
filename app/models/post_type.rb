@@ -1,6 +1,7 @@
 class PostType < ApplicationRecord
-  has_many :post_type_links, dependent: :destroy
-  has_many :posts, :through => :post_type_links
+  has_many :posts, dependent: :destroy
+  has_many :post_categories, dependent: :destroy
+  has_many :post_tags, dependent: :destroy
 
   # Use slug instead of ID for pretty urls
   validates_uniqueness_of :slug

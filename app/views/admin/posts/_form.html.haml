@@ -1,3 +1,5 @@
+= @post.post_categories.inspect
+
 = form_for @post do |f|
   - if @post.errors.any?
     #error_explanation
@@ -48,11 +50,9 @@
     = f.collection_check_boxes :post_category_ids, PostCategory.all.collect, :id, :name do |m|
       = m.check_box
       = m.label
-  / .field
-  /   = f.label :post_type
-  /   %select{:name => "post[post_type]"}
-  /     - @post_type.each do |t|
-  /       = content_tag(:option, t.name, value: t.id)
+  .field
+    = f.label :post_type_id
+    = f.select(:post_type_id, PostType.all.collect {|t| [ t.name, t.id ] }, { include_blank: true })
   .field
     = f.label :comments
     = f.check_box :comments
@@ -69,5 +69,3 @@
         = content_tag(:option, c.first, value: c.last)
   .actions
     = f.submit 'Save'
-
-= PostCategory.inspect

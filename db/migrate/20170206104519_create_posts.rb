@@ -17,6 +17,8 @@ class CreatePosts < ActiveRecord::Migration[5.0]
       t.integer :status
       t.integer :locale
 
+      t.belongs_to :post_type, index: true
+
       t.timestamps
     end
 

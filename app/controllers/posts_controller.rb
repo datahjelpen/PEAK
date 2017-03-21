@@ -1,11 +1,14 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.all
+
+    if PostType.find(params[:post_type_id])
+      @posts = PostType.find(params[:post_type_id]).posts
+    end
   end
 
   def show
-    @post = Post.find(params[:id])
-    @post["post_categories"] = PostCategoriesController.get_post_categories(@post.id)
-    @post["post_type"] = PostTypesController.get_post_type(@post.id)
+    if PostType.find(params[:post_type_id])
+      @post = Post.find(params[:id])
+    end
   end
 end

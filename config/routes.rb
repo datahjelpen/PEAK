@@ -12,7 +12,6 @@ Rails.application.routes.draw do
   end
 
   ## POSTS ##
-  resources :posts, only: [:index, :show]
   resources :posts, except: [:index, :show], :controller => "admin/posts"
 
   resources :post_categories, only: [:index, :show]
@@ -36,4 +35,7 @@ Rails.application.routes.draw do
   root 'landing#index'
   get '/welcome', to: 'landing#welcome'
   get '/goodbye', to: 'landing#goodbye'
+  resources :post_types, only: [:index, :show], :path => "/" do
+    resources :posts,           only: [:index, :show], :path => "/"
+  end
 end
