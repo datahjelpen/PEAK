@@ -50,6 +50,7 @@ class Admin::PostCategoriesController < Admin::ApplicationController
       :slug,
       :image,
       :parent,
+      :post_type_id,
       :template,
       :locale,
       :rights

@@ -1,6 +1,8 @@
 class PostTag < ApplicationRecord
-  has_many :post_tag_links, dependent: :destroy
   has_many :posts, :through => :post_tag_links
+  has_many :post_tag_links, dependent: :destroy
+
+  belongs_to :post_type
 
   # Use slug instead of ID for pretty urls
   validates_uniqueness_of :slug

@@ -47,7 +47,9 @@ class Admin::PostTagsController < Admin::ApplicationController
   def post_tag_params
     params.require(:post_tag).permit(
       :name,
-      :slug
+      :slug,
+      :post_type_id,
+      :locale
     )
   end
 

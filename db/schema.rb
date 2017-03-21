@@ -14,15 +14,16 @@ ActiveRecord::Schema.define(version: 20170208130956) do
 
   create_table "post_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string   "name"
-    t.string   "slug",       null: false
+    t.string   "slug",         null: false
     t.string   "image"
     t.integer  "parent"
-    t.integer  "post_type"
     t.integer  "template"
     t.integer  "locale"
     t.integer  "rights"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "post_type_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["post_type_id"], name: "index_post_categories_on_post_type_id", using: :btree
     t.index ["slug"], name: "index_post_categories_on_slug", unique: true, using: :btree
   end
 
@@ -46,21 +47,13 @@ ActiveRecord::Schema.define(version: 20170208130956) do
 
   create_table "post_tags", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string   "name"
-    t.string   "slug",       null: false
-    t.integer  "post_type"
+    t.string   "slug",         null: false
     t.integer  "locale"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["slug"], name: "index_post_tags_on_slug", unique: true, using: :btree
-  end
-
-  create_table "post_type_links", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.integer  "post_id"
     t.integer  "post_type_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.index ["post_id"], name: "index_post_type_links_on_post_id", using: :btree
-    t.index ["post_type_id"], name: "index_post_type_links_on_post_type_id", using: :btree
+    t.index ["post_type_id"], name: "index_post_tags_on_post_type_id", using: :btree
+    t.index ["slug"], name: "index_post_tags_on_slug", unique: true, using: :btree
   end
 
   create_table "post_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
@@ -76,11 +69,11 @@ ActiveRecord::Schema.define(version: 20170208130956) do
 
   create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string   "title"
-    t.string   "slug",                      null: false
-    t.text     "text",        limit: 65535
-    t.text     "excrept",     limit: 65535
-    t.text     "extra_css",   limit: 65535
-    t.text     "extra_js",    limit: 65535
+    t.string   "slug",                       null: false
+    t.text     "text",         limit: 65535
+    t.text     "excrept",      limit: 65535
+    t.text     "extra_css",    limit: 65535
+    t.text     "extra_js",     limit: 65535
     t.integer  "author"
     t.integer  "template"
     t.integer  "microdata"
@@ -89,9 +82,9 @@ ActiveRecord::Schema.define(version: 20170208130956) do
     t.boolean  "comments"
     t.integer  "status"
     t.integer  "locale"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
     t.integer  "post_type_id"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["post_type_id"], name: "index_posts_on_post_type_id", using: :btree
     t.index ["slug"], name: "index_posts_on_slug", unique: true, using: :btree
   end

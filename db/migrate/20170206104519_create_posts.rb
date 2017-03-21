@@ -22,16 +22,34 @@ class CreatePosts < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
+    create_table :post_types do |t|
+      t.string :name
+      t.string :slug, :null => false
+      t.index :slug, unique: true
+      t.integer :template
+      t.integer :rights
+      t.integer :locale
+
+      t.timestamps
+    end
+
+    # create_table :post_type_links do |t|
+    #   t.belongs_to :post, index: true
+    #   t.belongs_to :post_type, index: true
+
+    #   t.timestamps
+    # end
+
     create_table :post_categories do |t|
       t.string :name
       t.string :slug, :null => false
       t.index :slug, unique: true
       t.string :image
       t.integer :parent
-      t.integer :post_type
       t.integer :template
       t.integer :locale
       t.integer :rights
+      t.belongs_to :post_type, index: true
 
       t.timestamps
     end
@@ -44,30 +62,12 @@ class CreatePosts < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
-    create_table :post_types do |t|
-      t.string :name
-      t.string :slug, :null => false
-      t.index :slug, unique: true
-      t.integer :template
-      t.integer :rights
-      t.integer :locale
-
-      t.timestamps
-    end
-
-    create_table :post_type_links do |t|
-      t.belongs_to :post, index: true
-      t.belongs_to :post_type, index: true
-
-      t.timestamps
-    end
-
     create_table :post_tags do |t|
       t.string :name
       t.string :slug, :null => false
       t.index :slug, unique: true
-      t.integer :post_type
       t.integer :locale
+      t.belongs_to :post_type, index: true
 
       t.timestamps
     end

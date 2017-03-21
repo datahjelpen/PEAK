@@ -15,5 +15,13 @@
   .field
     = f.label :slug
     = f.text_field :slug
+  .field
+    = f.label :post_type_id
+    = f.select(:post_type_id, PostType.all.collect {|t| [ t.name, t.id ] }, { include_blank: true })
+  .field
+    = f.label :locale
+    = f.select(:locale) do
+      - [['no', 1], ['en', 2]].each do |c|
+        = content_tag(:option, c.first, value: c.last)
   .actions
     = f.submit 'Save'

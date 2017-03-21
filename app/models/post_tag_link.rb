@@ -1,4 +1,4 @@
-class PostTypeLink < ApplicationRecord
+class PostTagLink < ApplicationRecord
   belongs_to :post
   belongs_to :post_tag
 end
