@@ -1,27 +1,20 @@
 class Admin::PostsController < Admin::ApplicationController
   def index
-    @posts = Post.all
+    @post_type = PostType.find(params[:post_type_id])
   end
 
   def show
-    redirect_to post_path(params[:id])
+    redirect_to post_type_post_path(params[:post_type_id], params[:id])
   end
 
   def new
     @post = Post.new
-    @post_category = PostCategory.all
-    @post_type = PostType.all
+    @post.post_type = PostType.find(params[:post_type_id])
   end
 
   def edit
     @post = Post.find(params[:id])
-
-    # p '------'
-    # @post = Post.includes(:post_categories).find(@post.id)
-    # p '------'
-
-    # @post_category = PostCategory.all
-    # @post_type = PostType.all
+    @post_type = PostType.find(params[:post_type_id])
   end
 
   def create
@@ -29,7 +22,7 @@ class Admin::PostsController < Admin::ApplicationController
     @post = Post.new(post_params)
 
     if @post.save
-      redirect_to edit_admin_post_path(@post)
+      redirect_to edit_admin_post_type_post_path(@post.post_type, @post)
     else
       render 'new'
     end

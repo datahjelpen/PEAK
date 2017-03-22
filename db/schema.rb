@@ -86,7 +86,8 @@ ActiveRecord::Schema.define(version: 20170208130956) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.index ["post_type_id"], name: "index_posts_on_post_type_id", using: :btree
-    t.index ["slug"], name: "index_posts_on_slug", unique: true, using: :btree
+    t.index ["slug", "post_type_id"], name: "index_posts_on_slug_and_post_type_id", unique: true, using: :btree
+    t.index ["slug"], name: "index_posts_on_slug", using: :btree
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|

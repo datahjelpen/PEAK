@@ -3,7 +3,7 @@ class CreatePosts < ActiveRecord::Migration[5.0]
     create_table :posts do |t|
       t.string :title
       t.string :slug, :null => false
-      t.index :slug, unique: true
+      t.index :slug
       t.text :text
       t.text :excrept
       t.text :extra_css
@@ -16,11 +16,11 @@ class CreatePosts < ActiveRecord::Migration[5.0]
       t.boolean :comments
       t.integer :status
       t.integer :locale
-
-      t.belongs_to :post_type, index: true
+      t.belongs_to :post_type, index: true, :null => false
 
       t.timestamps
     end
+    add_index :posts, [:slug, :post_type_id], unique: true
 
     create_table :post_types do |t|
       t.string :name
@@ -32,13 +32,6 @@ class CreatePosts < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
-
-    # create_table :post_type_links do |t|
-    #   t.belongs_to :post, index: true
-    #   t.belongs_to :post_type, index: true
-
-    #   t.timestamps
-    # end
 
     create_table :post_categories do |t|
       t.string :name

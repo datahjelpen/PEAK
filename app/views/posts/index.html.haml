@@ -5,7 +5,7 @@
     %th Id
     %th Title
     %th Text
-  - @posts.each do |post|
+  - @post_type.posts.each do |post|
     %tr
       %td= post.id
       %td= post.title

@@ -1,37 +1,49 @@
 %h1 Admin page
 
+/ = link_to 'All posts', admin_post_type_posts_path(post_type)
+/ = link_to 'New post', new_admin_post_type_post_path(post_type)
+/ = render 'admin/posts/posts', post_type: post_type
+
+%h2 Post types
+
 %table
-  %thead
-    %tr
-      %th
-        %h2 Posts
-      %th
-        %h2 Post categories
-      %th
-        %h2 Post tags
-    %tr
-      %td
-        = link_to 'All posts', admin_posts_path
-        = link_to 'New post', new_admin_post_path
-      %td
-        = link_to 'All post categories', admin_post_categories_path
-        = link_to 'New post category', new_admin_post_category_path
-      %td
-        = link_to 'All post tags', admin_post_tags_path
-        = link_to 'New post tag', new_admin_post_tag_path
   %tbody
     %tr
       %td
-        = render 'admin/posts/posts'
-      %td
-        = render 'admin/post_categories/post_categories'
-      %td
-        = render 'admin/post_tags/post_tags'
-    %tr
-      %td
-        %h2 Post types
         = link_to 'All post types', admin_post_types_path
         = link_to 'New post type', new_admin_post_type_path
         = render 'admin/post_types/post_types'
-      %td
-      %td
+
+%h2 Post overview
+
+- @post_types.each do |post_type|
+  %table
+    %thead
+      %tr
+        %th
+          %h2
+            = post_type.name
+        %th
+          %h2
+            = post_type.name + " categories"
+        %th
+          %h2
+            = post_type.name + " tags"
+      %tr
+        %td
+          = link_to 'All posts', admin_post_type_posts_path(post_type)
+          = link_to 'New post', new_admin_post_type_post_path(post_type)
+        %td
+          = link_to 'All post categories', admin_post_categories_path
+          = link_to 'New post category', new_admin_post_category_path
+        %td
+          = link_to 'All post tags', admin_post_tags_path
+          = link_to 'New post tag', new_admin_post_tag_path
+    %tbody
+      %tr
+        %td
+          = render 'admin/posts/posts', post_type: post_type
+        %td
+          = render 'admin/post_categories/post_categories', post_type: post_type
+        %td
+          = render 'admin/post_tags/post_tags', post_type: post_type
