@@ -1,5 +1,5 @@
 %h1 Listing post categories (ADMIN)
 
-= link_to 'New post category', new_admin_post_tag_path
+= link_to 'New post category', new_admin_post_type_post_tag_path
 
-= render 'admin/post_tags/post_tags'
+= render 'admin/post_tags/post_tags', post_type: @post_type

@@ -14,10 +14,9 @@ Rails.application.routes.draw do
   # admin
   get '/admin', to: 'admin/#index'
   namespace :admin do
-    resources :post_tags
-    resources :post_categories
-
     resources :post_types do
+      resources :post_tags
+      resources :post_categories
       resources :posts
     end
   end
@@ -28,14 +27,14 @@ Rails.application.routes.draw do
   get '/goodbye', to: 'landing#goodbye'
 
   ## POSTS ##
-  resources :posts,           except: [:index, :show], :controller => "admin/posts"
-  resources :post_tags,       except: [:index, :show], :controller => "admin/post_tags"
   resources :post_types,      except: [:index, :show], :controller => "admin/post_types"
+  resources :post_tags,       except: [:index, :show], :controller => "admin/post_tags"
   resources :post_categories, except: [:index, :show], :controller => "admin/post_categories"
+  resources :posts,           except: [:index, :show], :controller => "admin/posts"
 
-  resources :post_types, only: [:index, :show] do
-    resources :posts,           only: [:index, :show]
-    resources :post_tags,       only: [:index, :show]
-    resources :post_categories, only: [:index, :show]
+  resources :post_types, only: [:index, :show], path: "/" do
+    resources :post_tags,       only: [:index, :show], path: "tags"
+    resources :post_categories, only: [:index, :show], path: "categories"
+    resources :posts,           only: [:index, :show], path: "/"
   end
 end

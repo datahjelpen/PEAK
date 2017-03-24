@@ -36,21 +36,22 @@ class CreatePosts < ActiveRecord::Migration[5.0]
     create_table :post_categories do |t|
       t.string :name
       t.string :slug, :null => false
-      t.index :slug, unique: true
+      t.index :slug
       t.string :image
       t.integer :parent
       t.integer :template
       t.integer :locale
       t.integer :rights
-      t.belongs_to :post_type, index: true
+      t.belongs_to :post_type, index: true, :null => false
 
       t.timestamps
     end
-    PostCategory.create :name => 'Uncategorized', :slug => 'uncategorized'
+    add_index :post_categories, [:slug, :post_type_id], unique: true
+    PostCategory.create :name => 'Uncategorized', :slug => 'uncategorized', :post_type_id => 1
 
     create_table :post_category_links do |t|
-      t.belongs_to :post, index: true
-      t.belongs_to :post_category, index: true
+      t.belongs_to :post, index: true, :null => false
+      t.belongs_to :post_category, index: true, :null => false
 
       t.timestamps
     end
@@ -58,16 +59,17 @@ class CreatePosts < ActiveRecord::Migration[5.0]
     create_table :post_tags do |t|
       t.string :name
       t.string :slug, :null => false
-      t.index :slug, unique: true
+      t.index :slug
       t.integer :locale
-      t.belongs_to :post_type, index: true
+      t.belongs_to :post_type, index: true, :null => false
 
       t.timestamps
     end
+    add_index :post_tags, [:slug, :post_type_id], unique: true
 
     create_table :post_tag_links do |t|
-      t.belongs_to :post, index: true
-      t.belongs_to :post_tag, index: true
+      t.belongs_to :post, index: true, :null => false
+      t.belongs_to :post_tag, index: true, :null => false
 
       t.timestamps
     end

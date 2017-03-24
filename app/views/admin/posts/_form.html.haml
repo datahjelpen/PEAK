@@ -49,8 +49,6 @@
       = m.check_box
       = m.label
   .field
-    = f.hidden_field :post_type_id, :value => @post.post_type.id
-  .field
     = f.label :comments
     = f.check_box :comments
   .field
@@ -64,5 +62,7 @@
     = f.select(:locale) do
       - [['no', 1], ['en', 2]].each do |c|
         = content_tag(:option, c.first, value: c.last)
+  .field
+    = f.hidden_field :post_type_id, :value => @post.post_type.id
   .actions
     = f.submit 'Save'

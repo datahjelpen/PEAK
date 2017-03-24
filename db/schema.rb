@@ -20,16 +20,17 @@ ActiveRecord::Schema.define(version: 20170208130956) do
     t.integer  "template"
     t.integer  "locale"
     t.integer  "rights"
-    t.integer  "post_type_id"
+    t.integer  "post_type_id", null: false
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["post_type_id"], name: "index_post_categories_on_post_type_id", using: :btree
-    t.index ["slug"], name: "index_post_categories_on_slug", unique: true, using: :btree
+    t.index ["slug", "post_type_id"], name: "index_post_categories_on_slug_and_post_type_id", unique: true, using: :btree
+    t.index ["slug"], name: "index_post_categories_on_slug", using: :btree
   end
 
   create_table "post_category_links", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.integer  "post_id"
-    t.integer  "post_category_id"
+    t.integer  "post_id",          null: false
+    t.integer  "post_category_id", null: false
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.index ["post_category_id"], name: "index_post_category_links_on_post_category_id", using: :btree
@@ -37,8 +38,8 @@ ActiveRecord::Schema.define(version: 20170208130956) do
   end
 
   create_table "post_tag_links", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.integer  "post_id"
-    t.integer  "post_tag_id"
+    t.integer  "post_id",     null: false
+    t.integer  "post_tag_id", null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["post_id"], name: "index_post_tag_links_on_post_id", using: :btree
@@ -49,11 +50,12 @@ ActiveRecord::Schema.define(version: 20170208130956) do
     t.string   "name"
     t.string   "slug",         null: false
     t.integer  "locale"
-    t.integer  "post_type_id"
+    t.integer  "post_type_id", null: false
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["post_type_id"], name: "index_post_tags_on_post_type_id", using: :btree
-    t.index ["slug"], name: "index_post_tags_on_slug", unique: true, using: :btree
+    t.index ["slug", "post_type_id"], name: "index_post_tags_on_slug_and_post_type_id", unique: true, using: :btree
+    t.index ["slug"], name: "index_post_tags_on_slug", using: :btree
   end
 
   create_table "post_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
@@ -82,7 +84,7 @@ ActiveRecord::Schema.define(version: 20170208130956) do
     t.boolean  "comments"
     t.integer  "status"
     t.integer  "locale"
-    t.integer  "post_type_id"
+    t.integer  "post_type_id",               null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.index ["post_type_id"], name: "index_posts_on_post_type_id", using: :btree

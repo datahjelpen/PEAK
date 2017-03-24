@@ -1,14 +1,16 @@
 class PostsController < ApplicationController
   def index
-
-    if PostType.find(params[:post_type_id])
-      @posts = PostType.find(params[:post_type_id]).posts
-    end
+    @post_type = PostType.find(params[:post_type_id])
   end
 
   def show
-    if PostType.find(params[:post_type_id])
-      @post = Post.find(params[:id])
+    if post_type = PostType.find(params[:post_type_id])
+
+      # (params[:id] = ~ /\A\d+\z/ params[:id] : params[:id].to_f)
+
+      @post = Post.where(slug: params[:id], post_type_id: post_type.id)
+    else
+      render 'error/404'
     end
   end
 end

@@ -1,18 +1,20 @@
 class Admin::PostCategoriesController < Admin::ApplicationController
   def index
-    @post_categories = PostCategory.all
+    @post_type = PostType.find(params[:post_type_id])
   end
 
   def show
-    redirect_to post_category_path(params[:id])
+    redirect_to post_type_post_category_path(params[:post_type_id], params[:id])
   end
 
   def new
     @post_category = PostCategory.new
+    @post_category.post_type = PostType.find(params[:post_type_id])
   end
 
   def edit
     @post_category = PostCategory.find(params[:id])
+    @post_type = PostType.find(params[:post_type_id])
   end
 
   def create
@@ -20,7 +22,7 @@ class Admin::PostCategoriesController < Admin::ApplicationController
     @post_category = PostCategory.new(post_category_params)
 
     if @post_category.save
-      redirect_to edit_admin_post_category_path(@post_category)
+      redirect_to edit_admin_post_type_post_category_path(@post_category.post_type, @post_category)
     else
       render 'new'
     end

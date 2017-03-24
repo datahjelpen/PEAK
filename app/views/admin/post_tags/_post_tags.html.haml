@@ -2,12 +2,12 @@
   %tr
     %th Id
     %th Name
-  - @post_tags.each do |post_tag|
+  - post_type.post_tags.each do |post_tag|
     %tr
       %td= post_tag.id
       %td= post_tag.name
-      %td= link_to 'Show', admin_post_tag_path(post_tag)
-      %td= link_to 'Edit', edit_admin_post_tag_path(post_tag)
-      %td= link_to 'Destroy', admin_post_tag_path(post_tag),
+      %td= link_to 'Show', admin_post_type_post_tag_path(post_type, post_tag)
+      %td= link_to 'Edit', edit_admin_post_type_post_tag_path(post_type, post_tag)
+      %td= link_to 'Destroy', admin_post_type_post_tag_path(post_type, post_tag),
             method: :delete,
             data: { confirm: 'Are you sure?' }

@@ -5,7 +5,7 @@ class PostTag < ApplicationRecord
   belongs_to :post_type
 
   # Use slug instead of ID for pretty urls
-  validates_uniqueness_of :slug
+  validates :slug, uniqueness: { scope: :post_type }
   validates_format_of :slug, :without => /\A\d/
 
   def to_param

@@ -34,11 +34,11 @@
           = link_to 'All posts', admin_post_type_posts_path(post_type)
           = link_to 'New post', new_admin_post_type_post_path(post_type)
         %td
-          = link_to 'All post categories', admin_post_categories_path
-          = link_to 'New post category', new_admin_post_category_path
+          = link_to 'All post categories', admin_post_type_post_categories_path(post_type)
+          = link_to 'New post category', new_admin_post_type_post_category_path(post_type)
         %td
-          = link_to 'All post tags', admin_post_tags_path
-          = link_to 'New post tag', new_admin_post_tag_path
+          = link_to 'All post tags', admin_post_type_post_tags_path(post_type)
+          = link_to 'New post tag', new_admin_post_type_post_tag_path(post_type)
     %tbody
       %tr
         %td

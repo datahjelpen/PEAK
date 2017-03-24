@@ -1,18 +1,20 @@
 class Admin::PostTagsController < Admin::ApplicationController
   def index
-    @post_tags = PostTag.all
+    @post_type = PostType.find(params[:post_type_id])
   end
 
   def show
-    redirect_to post_tag_path(params[:id])
+    redirect_to post_type_post_tag_path(params[:post_type_id], params[:id])
   end
 
   def new
     @post_tag = PostTag.new
+    @post_tag.post_type = PostType.find(params[:post_type_id])
   end
 
   def edit
     @post_tag = PostTag.find(params[:id])
+    @post_type = PostType.find(params[:post_type_id])
   end
 
   def create
@@ -20,7 +22,7 @@ class Admin::PostTagsController < Admin::ApplicationController
     @post_tag = PostTag.new(post_tag_params)
 
     if @post_tag.save
-      redirect_to edit_admin_post_tag_path(@post_tag)
+      redirect_to edit_admin_post_type_post_tag_path(@post_tag.post_type, @post_tag)
     else
       render 'new'
     end

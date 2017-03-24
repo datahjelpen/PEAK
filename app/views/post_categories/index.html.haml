@@ -8,4 +8,4 @@
     %tr
       %td= post_category.id
       %td= post_category.name
-      %td= link_to 'Show', post_category_path(post_category)
+      %td= link_to 'Show', post_type_post_category_path(post_category.post_type, post_category)

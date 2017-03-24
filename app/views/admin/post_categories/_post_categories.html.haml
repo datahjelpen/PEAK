@@ -2,12 +2,12 @@
   %tr
     %th Id
     %th Name
-  - @post_categories.each do |post_category|
+  - post_type.post_categories.each do |post_category|
     %tr
       %td= post_category.id
       %td= post_category.name
-      %td= link_to 'Show', admin_post_category_path(post_category)
-      %td= link_to 'Edit', edit_admin_post_category_path(post_category)
-      %td= link_to 'Destroy', admin_post_category_path(post_category),
+      %td= link_to 'Show', admin_post_type_post_category_path(post_type, post_category)
+      %td= link_to 'Edit', edit_admin_post_type_post_category_path(post_type, post_category)
+      %td= link_to 'Destroy', admin_post_type_post_category_path(post_type, post_category),
             method: :delete,
             data: { confirm: 'Are you sure?' }
