@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170208130956) do
+ActiveRecord::Schema.define(version: 20170324232157) do
 
   create_table "post_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string   "name"
@@ -90,6 +90,14 @@ ActiveRecord::Schema.define(version: 20170208130956) do
     t.index ["post_type_id"], name: "index_posts_on_post_type_id", using: :btree
     t.index ["slug", "post_type_id"], name: "index_posts_on_slug_and_post_type_id", unique: true, using: :btree
     t.index ["slug"], name: "index_posts_on_slug", using: :btree
+  end
+
+  create_table "site_settings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.string   "setting_name"
+    t.string   "setting_value"
+    t.string   "setting_group"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
