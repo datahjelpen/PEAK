@@ -47,7 +47,6 @@ class CreatePosts < ActiveRecord::Migration[5.0]
       t.timestamps
     end
     add_index :post_categories, [:slug, :post_type_id], unique: true
-    PostCategory.create :name => 'Uncategorized', :slug => 'uncategorized', :post_type_id => 1
 
     create_table :post_category_links do |t|
       t.belongs_to :post, index: true, :null => false
