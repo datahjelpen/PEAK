@@ -3,6 +3,7 @@ class CreateSiteSettings < ActiveRecord::Migration[5.0]
     create_table :site_settings do |t|
       t.string :setting_name
       t.string :setting_value
+      t.string :setting_type
       t.string :setting_group
 
       t.timestamps

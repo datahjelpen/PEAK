@@ -7,8 +7,19 @@
     = fields_for "site_settings[]", s do |f|
       .field
         = f.label s.setting_name
-        = f.text_field :setting_value
+        = f.text_field :setting_value, :class => s.setting_type
   .actions
     %button{type: "submit"} Save
 
 = @settings.inspect
+
+
+- if @settings_color
+  = stylesheet_link_tag "/assets/jquery-minicolors-2.2.4/jquery.minicolors.css", media: "all", "data-turbolinks-track": "reload"
+  = javascript_include_tag "/assets/jquery-minicolors-2.2.4/jquery.minicolors.min.js", "data-turbolinks-track": "reload"
+
+  %script
+    $("input.color_field").minicolors({
+    swatches: ["#ff0000", "#00ff00", "000000", "0000ff", "ff00ff", "#fff000", "#00ffff"]
+    });
+

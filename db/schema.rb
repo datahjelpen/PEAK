@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 20170324232157) do
   create_table "site_settings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string   "setting_name"
     t.string   "setting_value"
+    t.string   "setting_type"
     t.string   "setting_group"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
