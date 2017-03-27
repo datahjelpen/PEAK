@@ -13,13 +13,7 @@
 
 = @settings.inspect
 
-
-- if @settings_color
-  = stylesheet_link_tag "/assets/jquery-minicolors-2.2.4/jquery.minicolors.css", media: "all", "data-turbolinks-track": "reload"
-  = javascript_include_tag "/assets/jquery-minicolors-2.2.4/jquery.minicolors.min.js", "data-turbolinks-track": "reload"
-
-  %script
-    $("input.color_field").minicolors({
-    swatches: ["#ff0000", "#00ff00", "000000", "0000ff", "ff00ff", "#fff000", "#00ffff"]
-    });
-
+%script
+  $("input.color_field").minicolors({
+  swatches: #{raw(@site_settings[:brand][:colors].values)}
+  });
