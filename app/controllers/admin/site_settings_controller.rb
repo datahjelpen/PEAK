@@ -2,36 +2,24 @@ class Admin::SiteSettingsController < Admin::ApplicationController
   def index
   end
 
-  def general
-    @settings = SiteSettings.where(setting_group: 'general')
+  def show
   end
 
-  def brand
-    @settings = SiteSettings.where(setting_group: 'brand')
-  end
-
-  def appearance
-    @settings = SiteSettings.where(setting_group: 'appearance')
+  def edit
+    @settings_group = params[:setting_group]
+    @settings = SiteSettings.where(setting_group: @settings_group)
   end
 
   def update
-    # @post = Setting.find(params[:id])
+    SiteSettings.update(params[:site_settings].keys, params[:site_settings].values)
 
-    # if @post.update(post_params)
-    #   redirect_to edit_admin_post_path(@post)
-    # else
-    #   render 'edit'
-    # end
+    redirect_back(fallback_location: "/admin/settings/")
   end
 
   private
-  # def post_params
-  #   params.require(:setting).permit(
-  #     :title,
-  #     :slug,
-  #     :text,
-  #     :excrept,
-  #     :extra_css
-  #   )
-  # end
+  def setting_params
+    params.require(:site_settings).permit(
+      :setting_value
+    )
+  end
 end

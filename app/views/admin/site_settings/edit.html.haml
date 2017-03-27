@@ -1,0 +1,14 @@
+%h1
+  = @settings_group
+  settings page
+
+= form_tag admin_site_settings_path, :method => :put do
+  - @settings.each do |s|
+    = fields_for "site_settings[]", s do |f|
+      .field
+        = f.label s.setting_name
+        = f.text_field :setting_value
+  .actions
+    %button{type: "submit"} Save
+
+= @settings.inspect
