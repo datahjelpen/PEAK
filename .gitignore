@@ -44,3 +44,5 @@ bower.json
 public/uploads/
 
 config/database\.yml
+
+lib/assets/theme-config/colors\.scss

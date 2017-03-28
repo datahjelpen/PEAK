@@ -1,4 +1,15 @@
+// Colors file get written by the app,
+// don't edit it, as it will be overwritten
 @import 'theme-config/colors.scss';
+
+// To be on the safe side
+$brand_color_primary: #ffffff !default;
+$brand_color_accent:  #000000 !default;
+$brand_color_1:       #999999 !default;
+$brand_color_2:       #666666 !default;
+$brand_color_3:       #333333 !default;
+$brand_color_dark:    #000000 !default;
+$brand_color_light:   #ffffff !default;
 
 html {
   background-color: $brand_color_dark;
