@@ -3,8 +3,9 @@
   %head
     %title= @site_settings[:general][:site_title]
     = csrf_meta_tags
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track": "reload"
+    = stylesheet_link_tag    @site_settings[:appearance][:peak_theme], media: "all", "data-turbolinks-track": "reload"
+    = javascript_include_tag "application", "data-turbolinks-track": "reload"
 
     %link{:href => "/apple-touch-icon.png", :rel => "apple-touch-icon", :sizes => "180x180"}
     %link{:href => "/favicon-32x32.png", :rel => "icon", :sizes => "32x32", :type => "image/png"}
@@ -20,10 +21,10 @@
   %body
     %nav
       - if user_signed_in?
-        = render 'admin/menu'
+        = render "admin/menu"
       - else
-        = link_to t('account.register'), new_user_registration_path, :class => 'navbar-link'
-        = link_to t('account.login'), new_user_session_path, :class => 'navbar-link'
+        = link_to t("account.register"), new_user_registration_path, :class => "navbar-link"
+        = link_to t("account.login"), new_user_session_path, :class => "navbar-link"
 
       - if notice
         %p.alert.alert-success= notice

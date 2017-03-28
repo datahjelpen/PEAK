@@ -2,9 +2,10 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  
+
   before_action :get_settings
   after_action :store_action
+  after_action :setup_theme
 
   # Store the action
   def store_action
@@ -56,5 +57,42 @@ class ApplicationController < ActionController::Base
       @site_settings[:general] = general
       @site_settings[:brand] = { :info => brand_info, :colors => brand_colors }
       @site_settings[:appearance] = appearance
+
+      return @site_settings
+    end
+
+    def setup_theme()
+      file_theme_colors_path = "#{Rails.root}/lib/assets/theme-config/colors.scss"
+      if File.file?(file_theme_colors_path)
+        content_to_write = ""
+
+        get_settings()[:brand][:colors].each do |color|
+          content_to_write += "$#{color.first}: #{color.last};" + $/
+        end
+
+        # Check if the file content is the same as DB content
+        is_content_same = true
+        File.open(file_theme_colors_path, 'r') {
+          |f|
+          if f.read() == content_to_write
+            is_content_same = false
+          end
+        }
+
+        if is_content_same
+          File.open(file_theme_colors_path, 'w') {
+              |f|
+            begin
+              f.write(content_to_write)
+            rescue IOError => e
+              p '--- ERROR WRITING TO FILE ---'
+              p e
+              p '-----------------------------'
+            ensure
+              f.close unless f.nil?
+            end
+          }
+        end
+      end
     end
 end
