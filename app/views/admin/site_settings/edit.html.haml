@@ -7,7 +7,11 @@
     = fields_for "site_settings[]", s do |f|
       .field
         = f.label s.setting_name
-        = f.text_field :setting_value, :class => s.setting_type
+        - if s.setting_type == "text_field" || s.setting_type == "color_field"
+          = f.text_field :setting_value, :class => s.setting_type
+        - elsif s.setting_type == "file_field"
+          = f.file_field :setting_value, 'class': 'image_upload_input'
+
   .actions
     %button{type: "submit"} Save
 
