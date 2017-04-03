@@ -57,6 +57,7 @@ gem 'haml-rails'
 gem 'devise'
 # gem 'bcrypt', '3.1.5', platforms: :ruby, :require => 'bcrypt'
 gem 'bcrypt', platforms: :ruby
+gem 'cancancan'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'omniauth-google-oauth2'
