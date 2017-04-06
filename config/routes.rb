@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     put   'site_settings',                to: 'site_settings#update'
     patch 'site_settings',                to: 'site_settings#update'
 
+    resources :roles_users
+
     resources :post_types do
       resources :post_tags
       resources :post_categories

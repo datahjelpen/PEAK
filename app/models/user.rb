@@ -12,6 +12,11 @@ class User < ApplicationRecord
     return !!self.roles.find_by_name(role.to_s)
   end
 
+  def ability
+    @ability ||= Ability.new(self)
+  end
+  delegate :can?, :cannot?, :to => :ability
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email

@@ -1,0 +1,33 @@
+= @roles_user.model_name
+
+/ = form_for [:admin, @roles_user] do |f|
+= form_tag admin_roles_user_path, :method => :put do
+  - if @roles_user.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@roles_user.errors.count, "error")
+        prohibited
+        this roles_user from being saved:
+      %ul
+        - @roles_user.errors.full_messages.each do |msg|
+          %li= msg
+  = fields_for "roles_user", @roles_user do |f|
+    .field
+      = f.collection_select :role_id, @roles, :id, :name do |m|
+        = m.check_box
+        = m.label
+    .actions
+      = f.submit "Save"
+
+  / = f.label :role_id
+  / = f.text_field :role_id
+  / - if @roles_user.errors.any?
+  /   #error_explanation
+  /     %h2
+  /       = pluralize(@roles_user.errors.count, "error")
+  /       prohibited
+  /       this roles_user from being saved:
+  /     %ul
+  /       - @roles_user.errors.full_messages.each do |msg|
+  /         %li= msg
+  / .field
