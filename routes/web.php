@@ -11,6 +11,7 @@
 |
 */
 
+Route::get('/oauth-dashboard', 'HomeController@oauth')->name('home');
 Route::get('/', function () {
     return view('welcome');
 });
