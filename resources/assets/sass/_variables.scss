@@ -1,3 +1,14 @@
+// Structure
+$xs: 400px;   $xs-up: $xs+1;
+$s:  550px;   $s-up:  $s+1;
+$m:  750px;   $m-up:  $m+1;
+$l:  1000px;  $l-up:  $l+1;
+$xl: 1200px;  $xl-up: $xl+1;
+
+// Typography
+$t-line-height-base: 1.6;
+$t-font-size-base:   1.6em;
+
 
 // Body
 $body-bg: #f5f8fa;
@@ -20,7 +31,6 @@ $brand-danger: #bf5329;
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 $font-family-sans-serif: "Raleway", sans-serif;
 $font-size-base: 14px;
-$line-height-base: 1.6;
 $text-color: #636b6f;
 
 // Navbar
