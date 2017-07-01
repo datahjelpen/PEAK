@@ -45,6 +45,35 @@ class CreatePostTables extends Migration
             $t->integer('rights');
             $t->timestamps();
         });
+
+        Schema::create('post_categories', function (Blueprint $t) {
+            $t->string('name');
+            $t->string('slug')->nullable(false)->change();
+            $t->index('slug');
+            $t->string('image');
+            $t->integer('parent');
+            $t->integer('template');
+            $t->integer('rights');
+
+            $t->integer('post_type')->unsigned();
+            $t->foreign('post_type')->references('id')->on('post_types')->onDelete('cascade');
+
+            $t->unique( ['slug','post_type'] );
+
+            $t->timestamps();
+        });
+
+        Schema::create('post_category_links', function (Blueprint $t) {
+            $t->integer('post')->unsigned();
+            $t->foreign('post')->references('id')->on('post_types')->onDelete('cascade');
+
+            $t->integer('post_category')->unsigned();
+            $t->foreign('post_category')->references('id')->on('post_types')->onDelete('cascade');
+            
+            $t->unique( ['post','post_category'] );
+
+            $t->timestamps();
+        });
     }
 
     /**
