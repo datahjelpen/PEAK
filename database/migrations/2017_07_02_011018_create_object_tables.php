@@ -17,7 +17,7 @@ class CreateObjectTables extends Migration
             $t->increments('id');
             $t->string('name');
             $t->string('slug')->unique();
-            $t->unsignedInteger('template');
+            $t->unsignedInteger('template')->nullable()->default(null);
             // $t->foreign('template')->references('id')->on('templates');
             $t->timestamps();
         });
@@ -38,13 +38,13 @@ class CreateObjectTables extends Migration
             $t->increments('id');
             $t->string('name');
             $t->string('slug');
-            $t->text('text');
-            $t->text('excrept');
+            $t->text('text')->nullable()->default(null);
+            $t->text('excrept')->nullable()->default(null);
             $t->unsignedInteger('object_type');
             $t->foreign('object_type')->references('id')->on('object_types')->onDelete('cascade');
             $t->unsignedInteger('author');
             $t->foreign('author')->references('id')->on('users');
-            $t->unsignedInteger('template');
+            $t->unsignedInteger('template')->nullable()->default(null);
             // $t->foreign('template')->references('id')->on('templates');
             $t->boolean('comments');
             $t->unsignedInteger('status');
@@ -72,8 +72,8 @@ class CreateObjectTables extends Migration
             $t->increments('id');
             $t->string('name');
             $t->string('slug');
-            $t->unsignedInteger('parent')->default(null);
-            $t->unsignedInteger('template');
+            $t->unsignedInteger('parent')->nullable()->default(null);
+            $t->unsignedInteger('template')->nullable()->default(null);
             // $t->foreign('template')->references('id')->on('templates');
             $t->unsignedInteger('taxonomy');
             $t->foreign('taxonomy')->references('id')->on('object_taxonomies')->onDelete('cascade');
