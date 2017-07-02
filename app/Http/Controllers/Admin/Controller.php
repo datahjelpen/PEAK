@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use \Illuminate\Http\Request;
 
-class HomeController extends Controller
+class Controller extends \App\Http\Controllers\Controller
 {
     /**
      * Create a new controller instance.
@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('admin.index');
     }
 
     public function oauth()

@@ -13,9 +13,31 @@
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/oauth-dashboard', 'HomeController@oauth')->name('home');
+Route::prefix('admin')->group(function () {
+
+	Route::get('/', 'Admin\Controller@index')->name('admin.dashboard');
+
+	Route::prefix('builder')->group(function () {
+
+		Route::resource('object_type', 'Admin\ObjectTypeController', ['except' => [ 'show' ]]);
+
+		Route::prefix('{object_type}')->group(function () {
+			// Route::resource('object_category', 'ObjectCategoryController', ['except' => [ 'show' ]]);
+			// Route::resource('object_tag',      'ObjectTagController',      ['except' => [ 'show' ]]);
+			// Route::resource('object',          'ObjectController',         ['except' => [ 'show' ]]);
+		});
+
+	});
+
+	Route::get('oauth-dashboard', 'Admin\Controller@oauth')->name('oauth-dashboard');
+});
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('welcome', compact('types'));
+})->name('frontpage');
+
+Route::prefix('{object_type}')->group(function ($object_type) {
+	// Route::resource('object_category', 'ObjectCategoryController', ['only' => [ 'index', 'show' ]]);
+	// Route::resource('object_tag',      'ObjectTagController',      ['only' => [ 'index', 'show' ]]);
+	// Route::resource('object',          'ObjectController',         ['only' => [ 'index', 'show' ]]);
 });
