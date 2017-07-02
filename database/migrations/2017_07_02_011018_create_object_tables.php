@@ -44,15 +44,18 @@ class CreateObjectTables extends Migration
         });
 
         Schema::create('object_taxonomies', function (Blueprint $t) {
+            $t->increments('id');
             $t->string('name');
             $t->string('slug')->nullable(false)->change();
             $t->index('slug');
             $t->integer('object_type')->unsigned();
             $t->foreign('object_type')->references('id')->on('object_types')->onDelete('cascade');
             $t->boolean('hierarchical')->default(true);
+            $t->timestamps();
         });
 
         Schema::create('object_term', function (Blueprint $t) {
+            $t->increments('id');
             $t->string('name');
             $t->string('slug')->nullable(false)->change();
             $t->index('slug');
@@ -68,6 +71,7 @@ class CreateObjectTables extends Migration
         });
 
         Schema::create('object_term_relationships', function (Blueprint $t) {
+            $t->increments('id');
             $t->integer('object')->unsigned();
             $t->foreign('object')->references('id')->on('object_types')->onDelete('cascade');
 
@@ -89,5 +93,8 @@ class CreateObjectTables extends Migration
     {
         Schema::dropIfExists('objects');
         Schema::dropIfExists('object_types');
+        Schema::dropIfExists('object_taxonomies');
+        Schema::dropIfExists('object_term');
+        Schema::dropIfExists('object_term_relationships');
     }
 }
