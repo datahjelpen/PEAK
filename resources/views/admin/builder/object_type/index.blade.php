@@ -15,8 +15,8 @@
 
 					<button class="modal-trigger" data-modal="#show-object-type-{{ $object_type->slug }}">Quick-view</button>
 					<div id="show-object-type-{{ $object_type->slug }}" class="modal">
-						<button><a href="{{ route('object_type.show', $object_type->slug) }}">Open</a></button>
-						<button><a href="{{ route('object_type.show', $object_type->slug) }}" target="_blank">Open in new tab</a></button>
+						<a href="{{ route('object_type.show', $object_type->slug) }}">Open</a>
+						<a href="{{ route('object_type.show', $object_type->slug) }}" target="_blank">Open in new tab</a>
 						@include('object_type.content-main', ['object_type' => $object_type])
 					</div>
 					
@@ -29,6 +29,8 @@
 					<div id="delete-object-type-{{ $object_type->slug }}" class="modal">
 						@include('admin.builder.object_type.form-delete', ['object_type' => $object_type])
 					</div>
+
+					<a href="{{ route('object_taxonomy.index', $object_type->slug) }}">Taxonomies</a>
 				</li>
 			@endforeach
 		</ul>

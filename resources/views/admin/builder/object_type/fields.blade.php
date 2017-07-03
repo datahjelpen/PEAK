@@ -7,11 +7,11 @@
 	}
 @endphp
 
-<label for="">name</label>
-<input type="text" name="name" placeholder="name" value="{{ $object_type->name }}">
+<label for="object-type-name">name</label>
+<input type="text" id="object-type-name" class="autofocus" name="name" placeholder="name" value="{{ $object_type->name }}" required autofocus>
 
-<label for="">slug</label>
-<input type="text" name="slug" placeholder="slug" value="{{ $object_type->slug }}">
+<label for="object-type-slug">slug</label>
+<input type="text" id="object-type-slug" name="slug" placeholder="slug" value="{{ $object_type->slug }}">
 
-<label for="">template</label>
-<input type="text" name="template" placeholder="template" value="{{ $object_type->template }}">
+<label for="object-type-template">template</label>
+<input type="number" id="object-type-template" name="template" placeholder="template" value="{{ $object_type->template }}" >
