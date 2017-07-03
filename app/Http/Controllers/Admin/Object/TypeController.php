@@ -1,42 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Object;
 
 use Session;
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\Validator;
 
-use \App\Object_type;
+use \App\Model\Object\Type;
 
-class ObjectTypeController extends Controller
+class TypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $types = Object_type::all();
+        $types = Type::all();
         return view('admin.builder.object_type.index', compact('types'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('admin.builder.object_type.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         if (!$request->slug && $request->name) {
@@ -49,7 +33,7 @@ class ObjectTypeController extends Controller
             'template'  => 'integer|nullable',
         ]);
 
-        Object_type::create(request([
+        Type::create(request([
             'name',
             'slug',
             'template',
@@ -59,24 +43,12 @@ class ObjectTypeController extends Controller
         return back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Object_type  $type
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Object_type $type)
+    public function show(Type $type)
     {
         return redirect()->route('object.type.show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Object_type  $type
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Object_type $type)
+    public function edit(Type $type)
     {
         if (session('_old_input') !== null) {
             $slug = $type->slug; // Keep the original slug to prevent url issues
@@ -88,14 +60,7 @@ class ObjectTypeController extends Controller
         return view('admin.builder.object_type.edit', compact('type'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Object_type  $type
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Object_type $type)
+    public function update(Request $request, Type $type)
     {
         if (!$request->slug && $request->name) {
             $request->merge(['slug' => str_slug($request->name, '-')]);
@@ -129,13 +94,7 @@ class ObjectTypeController extends Controller
         return back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Object_type  $type
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Object_type $type)
+    public function destroy(Type $type)
     {
         $type->delete();
 
