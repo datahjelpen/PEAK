@@ -37,6 +37,7 @@ Route::get('/', function () {
 })->name('frontpage');
 
 Route::prefix('{object_type}')->group(function ($object_type) {
+	Route::get('/', 'ObjectTypeController@show')->name('object_type.show');
 	// Route::resource('object_category', 'ObjectCategoryController', ['only' => [ 'index', 'show' ]]);
 	// Route::resource('object_tag',      'ObjectTagController',      ['only' => [ 'index', 'show' ]]);
 	// Route::resource('object',          'ObjectController',         ['only' => [ 'index', 'show' ]]);

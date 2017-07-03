@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use Session;
-use \App\Object_type;
 use \Illuminate\Http\Request;
+use \Illuminate\Support\Facades\Validator;
+
+use \App\Object_type;
 
 class ObjectTypeController extends Controller
 {
@@ -26,7 +28,7 @@ class ObjectTypeController extends Controller
      */
     public function create()
     {
-        return view('admin.builder.object_type.make');
+        return view('admin.builder.object_type.create');
     }
 
     /**
@@ -65,7 +67,7 @@ class ObjectTypeController extends Controller
      */
     public function show(Object_type $object_type)
     {
-        return view('admin.builder.object_type.show');
+        return redirect()->route('object_type.show');
     }
 
     /**
@@ -76,7 +78,13 @@ class ObjectTypeController extends Controller
      */
     public function edit(Object_type $object_type)
     {
-        return view('admin.builder.object_type.make');
+        if (session('_old_input') !== null) {
+            $old_ID = $object_type->id;
+            $object_type = json_decode(json_encode(session('_old_input')), false);
+            $object_type->id = $old_ID;
+        }
+
+        return view('admin.builder.object_type.edit', compact('object_type'));
     }
 
     /**
@@ -92,11 +100,16 @@ class ObjectTypeController extends Controller
             $request->merge(['slug' => str_slug($request->name, '-')]);
         }
 
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'name'      => 'required|string|min:2',
-            'slug'      => 'required|unique:object_types,slug,'.$object_type->slug.'|string|min:2',
+            'slug'      => 'required|unique:object_types,slug,'.$object_type->id.'|string|min:2',
             'template'  => 'integer|nullable',
         ]);
+
+        if ($validator->fails()) {
+            Session::flash('alert-danger', 'Couldn\'t update ' . $object_type->name . '.');
+            return redirect()->route('object_type.edit', $object_type->id)->withErrors($validator)->withInput();
+        }
 
         $object_type->name     = $request->name;
         $object_type->slug     = $request->slug;
