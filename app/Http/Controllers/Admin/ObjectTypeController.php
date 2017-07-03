@@ -37,21 +37,23 @@ class ObjectTypeController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$request->slug && $request->name) {
+            $request->merge(['slug' => str_slug($request->name, '-')]);
+        }
+
         $this->validate($request, [
             'name'      => 'required|string|min:2',
-            'slug'      => 'required|string|min:2',
-            'template'  => 'required|integer',
-            'rights'    => 'required|integer'
+            'slug'      => 'required|unique:object_types|string|min:2',
+            'template'  => 'integer|nullable',
         ]);
 
         Object_type::create(request([
             'name',
             'slug',
             'template',
-            'rights'
         ]));
 
-        Session::flash('alert-success', 'Successfully created object type!');
+        Session::flash('alert-success', 'Successfully created ' . $request->name . '.');
         return back();
     }
 
@@ -86,7 +88,24 @@ class ObjectTypeController extends Controller
      */
     public function update(Request $request, Object_type $object_type)
     {
-        //
+        if (!$request->slug && $request->name) {
+            $request->merge(['slug' => str_slug($request->name, '-')]);
+        }
+
+        $this->validate($request, [
+            'name'      => 'required|string|min:2',
+            'slug'      => 'required|unique:object_types,slug,'.$object_type->slug.'|string|min:2',
+            'template'  => 'integer|nullable',
+        ]);
+
+        $object_type->name     = $request->name;
+        $object_type->slug     = $request->slug;
+        $object_type->template = $request->template;
+
+        $object_type->save();
+
+        Session::flash('alert-success', 'Successfully updated ' . $object_type->name . '.');
+        return back();
     }
 
     /**
@@ -97,6 +116,9 @@ class ObjectTypeController extends Controller
      */
     public function destroy(Object_type $object_type)
     {
-        //
+        $object_type->delete();
+
+        Session::flash('alert-success', 'Successfully deleted ' . $object_type->name . '.');
+        return back();
     }
 }

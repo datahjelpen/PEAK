@@ -10,6 +10,5 @@ class Object_type extends Model
         'name',
         'slug',
         'template',
-        'rights'
     ];
 }
