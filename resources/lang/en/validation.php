@@ -99,12 +99,15 @@ return [
     |
     */
 
-    'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
+    'failed' => [
+        'update' => 'Couldn\'t update ":name".'
     ],
 
+    'succeeded' => [
+        'create' => 'Successfully created ":name".',
+        'update' => 'Successfully updated ":name".',
+        'delete' => 'Successfully deleted ":name".'
+    ],
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes
