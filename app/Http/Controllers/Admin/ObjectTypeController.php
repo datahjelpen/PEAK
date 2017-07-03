@@ -79,9 +79,7 @@ class ObjectTypeController extends Controller
     public function edit(Object_type $object_type)
     {
         if (session('_old_input') !== null) {
-            $old_ID = $object_type->id;
             $object_type = json_decode(json_encode(session('_old_input')), false);
-            $object_type->id = $old_ID;
         }
 
         return view('admin.builder.object_type.edit', compact('object_type'));
@@ -108,7 +106,7 @@ class ObjectTypeController extends Controller
 
         if ($validator->fails()) {
             Session::flash('alert-danger', 'Couldn\'t update ' . $object_type->name . '.');
-            return redirect()->route('object_type.edit', $object_type->id)->withErrors($validator)->withInput();
+            return redirect()->route('object_type.edit', $object_type->slug)->withErrors($validator)->withInput();
         }
 
         $object_type->name     = $request->name;

@@ -10,23 +10,23 @@
 	@if (count($object_types))
 		<ul id="object-types-list">
 			@foreach ($object_types as $object_type)
-				<li id="object-types-list-item-{{ $object_type->id }}" class="object-types-list-item">
+				<li id="object-types-list-item-{{ $object_type->slug }}" class="object-types-list-item">
 					{{ $object_type->name }}
 
-					<button class="modal-trigger" data-modal="#show-object-type-{{ $object_type->id }}">Quick-view</button>
-					<div id="show-object-type-{{ $object_type->id }}" class="modal">
-						<button><a href="{{ route('object_type.show', $object_type->id) }}">Open</a></button>
-						<button><a href="{{ route('object_type.show', $object_type->id) }}" target="_blank">Open in new tab</a></button>
+					<button class="modal-trigger" data-modal="#show-object-type-{{ $object_type->slug }}">Quick-view</button>
+					<div id="show-object-type-{{ $object_type->slug }}" class="modal">
+						<button><a href="{{ route('object_type.show', $object_type->slug) }}">Open</a></button>
+						<button><a href="{{ route('object_type.show', $object_type->slug) }}" target="_blank">Open in new tab</a></button>
 						@include('object_type.content-main', ['object_type' => $object_type])
 					</div>
 					
-					<button class="modal-trigger" data-modal="#edit-object-type-{{ $object_type->id }}">Edit</button>
-					<div id="edit-object-type-{{ $object_type->id }}" class="modal">
+					<button class="modal-trigger" data-modal="#edit-object-type-{{ $object_type->slug }}">Edit</button>
+					<div id="edit-object-type-{{ $object_type->slug }}" class="modal">
 						@include('admin.builder.object_type.form-edit', ['object_type' => $object_type])
 					</div>
 
-					<button class="modal-trigger" data-modal="#delete-object-type-{{ $object_type->id }}">Delete</button>
-					<div id="delete-object-type-{{ $object_type->id }}" class="modal">
+					<button class="modal-trigger" data-modal="#delete-object-type-{{ $object_type->slug }}">Delete</button>
+					<div id="delete-object-type-{{ $object_type->slug }}" class="modal">
 						@include('admin.builder.object_type.form-delete', ['object_type' => $object_type])
 					</div>
 				</li>

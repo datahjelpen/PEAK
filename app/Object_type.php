@@ -11,4 +11,9 @@ class Object_type extends Model
         'slug',
         'template',
     ];
+
+	public function getRouteKeyName()
+	{
+		return 'slug';
+	}
 }
