@@ -4,7 +4,7 @@
 	<h1>Object types</h1>
 	
 	<hr>
-	@include('admin.builder.object_type.form-create')
+	@include('admin.builder.object.type.form-create')
 	<hr>
 
 	@if (count($types))
@@ -17,17 +17,17 @@
 					<div id="show-object-type-{{ $type->slug }}" class="modal">
 						<a href="{{ route('object.type.show', $type->slug) }}">Open</a>
 						<a href="{{ route('object.type.show', $type->slug) }}" target="_blank">Open in new tab</a>
-						@include('object_type.content-main', ['object_type' => $type])
+						@include('object.type.content-main', ['type' => $type])
 					</div>
 					
 					<button class="modal-trigger" data-modal="#edit-object-type-{{ $type->slug }}">Edit</button>
 					<div id="edit-object-type-{{ $type->slug }}" class="modal">
-						@include('admin.builder.object_type.form-edit', ['object_type' => $type])
+						@include('admin.builder.object.type.form-edit', ['type' => $type])
 					</div>
 
 					<button class="modal-trigger" data-modal="#delete-object-type-{{ $type->slug }}">Delete</button>
 					<div id="delete-object-type-{{ $type->slug }}" class="modal">
-						@include('admin.builder.object_type.form-delete', ['object_type' => $type])
+						@include('admin.builder.object.type.form-delete', ['type' => $type])
 					</div>
 
 					<a href="{{ route('object.taxonomies.index', $type->slug) }}">Taxonomies</a>

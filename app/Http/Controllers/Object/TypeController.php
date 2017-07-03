@@ -9,6 +9,6 @@ class TypeController extends Controller
 {
     public function show(Type $type)
     {
-        return view('object_type.show', compact('type'));
+        return view('object.type.show', compact('type'));
     }
 }

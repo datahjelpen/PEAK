@@ -13,12 +13,12 @@ class TypeController extends Controller
     public function index()
     {
         $types = Type::all();
-        return view('admin.builder.object_type.index', compact('types'));
+        return view('admin.builder.object.type.index', compact('types'));
     }
 
     public function create()
     {
-        return view('admin.builder.object_type.create');
+        return view('admin.builder.object.type.create');
     }
 
     public function store(Request $request)
@@ -57,7 +57,7 @@ class TypeController extends Controller
             $type->slug = $slug;
         }
 
-        return view('admin.builder.object_type.edit', compact('type'));
+        return view('admin.builder.object.type.edit', compact('type'));
     }
 
     public function update(Request $request, Type $type)
