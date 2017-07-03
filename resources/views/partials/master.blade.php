@@ -2,7 +2,7 @@
 <body>
     @include('partials.flash-messages')
 
-	@include('admin.partials.navigation')
+	@include('partials.navigation')
 	
 	@include('partials.main')
 	
