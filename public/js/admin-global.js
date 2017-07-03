@@ -10,23 +10,16 @@
 			});
 		});
 
-		$('img').each(function() {
-			$(this).css({ width: $(this).innerWidth() });
-			$(this).addClass('pulse');
-			this.setAttribute('src', this.getAttribute('data-highres'));
+		$('img.comp').each(function() {
+			var img = $(this);
+			var newImg = new Image();
+			newImg.src = img.attr('data-highres');
 
-
-			this.onload = function() {
-				$(this).removeClass('pulse');
-			};
+			$(newImg).ready(function() {
+				img.css({ width: img.innerWidth() });
+				img.attr('src', newImg.src);
+				// img.removeClass('pulse');
+			});
 		});
 	}
 })(window);
-
-// function showModal(modal) {
-
-// }
-
-// function getCsrfToken() {
-// 	return $('meta[name="csrf-token"]').attr('content');
-// }
