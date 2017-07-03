@@ -10,11 +10,11 @@ class ObjectTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Object_type  $object_type
+     * @param  \App\Object_type  $type
      * @return \Illuminate\Http\Response
      */
-    public function show(Object_type $object_type)
+    public function show(Object_type $type)
     {
-        return view('object_type.show', compact('object_type'));
+        return view('object_type.show', compact('type'));
     }
 }

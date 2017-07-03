@@ -19,7 +19,8 @@ Route::prefix('admin')->group(function () {
 
 	Route::prefix('builder')->group(function () {
 
-		Route::resource('object_type', 'Admin\ObjectTypeController', ['except' => [ 'show' ]]);
+		Route::resource('type', 'Admin\ObjectTypeController', ['except' => [ 'index', 'show' ], 'as' => 'object']);
+		Route::resource('types', 'Admin\ObjectTypeController', ['only' => [ 'index' ], 'as' => 'object']);
 
 		Route::prefix('{object_type}')->group(function () {
 			// Route::resource('object_category', 'ObjectCategoryController', ['except' => [ 'show' ]]);
@@ -36,8 +37,8 @@ Route::get('/', function () {
 	return view('welcome', compact('types'));
 })->name('frontpage');
 
-Route::prefix('{object_type}')->group(function ($object_type) {
-	Route::get('/', 'ObjectTypeController@show')->name('object_type.show');
+Route::prefix('{type}')->group(function () {
+	Route::get('/', 'ObjectTypeController@show')->name('object.type.show');
 	// Route::resource('object_category', 'ObjectCategoryController', ['only' => [ 'index', 'show' ]]);
 	// Route::resource('object_tag',      'ObjectTagController',      ['only' => [ 'index', 'show' ]]);
 	// Route::resource('object',          'ObjectController',         ['only' => [ 'index', 'show' ]]);

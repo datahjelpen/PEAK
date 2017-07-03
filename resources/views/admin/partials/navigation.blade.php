@@ -5,10 +5,7 @@
 			<span>Builder</span>
 			<ul>
 				<li>
-					<a href="{{ route('object_type.index') }}">Object types</a>
-					<ul>
-						<li><a href="{{ route('object_type.create') }}">Create</a></li>
-					</ul>
+					<a href="{{ route('object.types.index') }}">Object types</a>
 				</li>
 			</ul>
 		</li>

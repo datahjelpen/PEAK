@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('object_type.destroy', $object_type->slug) }}">
+<form method="POST" action="{{ route('object.type.destroy', $type->slug) }}">
 	{{ method_field('DELETE') }}
 	{{ csrf_field() }}
 	

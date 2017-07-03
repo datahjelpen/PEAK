@@ -17,8 +17,8 @@ class ObjectTypeController extends Controller
      */
     public function index()
     {
-        $object_types = Object_type::all();
-        return view('admin.builder.object_type.index', compact('object_types'));
+        $types = Object_type::all();
+        return view('admin.builder.object_type.index', compact('types'));
     }
 
     /**
@@ -55,44 +55,47 @@ class ObjectTypeController extends Controller
             'template',
         ]));
 
-        Session::flash('alert-success', 'Successfully created ' . $request->name . '.');
+        Session::flash('alert-success', __('validation.succeeded.create', ['name' => $request->name]));
         return back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Object_type  $object_type
+     * @param  \App\Object_type  $type
      * @return \Illuminate\Http\Response
      */
-    public function show(Object_type $object_type)
+    public function show(Object_type $type)
     {
-        return redirect()->route('object_type.show');
+        return redirect()->route('object.type.show');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Object_type  $object_type
+     * @param  \App\Object_type  $type
      * @return \Illuminate\Http\Response
      */
-    public function edit(Object_type $object_type)
+    public function edit(Object_type $type)
     {
         if (session('_old_input') !== null) {
-            $object_type = json_decode(json_encode(session('_old_input')), false);
+            $slug = $type->slug; // Keep the original slug to prevent url issues
+            $type = json_decode(json_encode(session('_old_input')), false); // Fill object with old input values
+            $type->_old_slug = $type->slug;
+            $type->slug = $slug;
         }
 
-        return view('admin.builder.object_type.edit', compact('object_type'));
+        return view('admin.builder.object_type.edit', compact('type'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Object_type  $object_type
+     * @param  \App\Object_type  $type
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Object_type $object_type)
+    public function update(Request $request, Object_type $type)
     {
         if (!$request->slug && $request->name) {
             $request->merge(['slug' => str_slug($request->name, '-')]);
@@ -100,36 +103,43 @@ class ObjectTypeController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name'      => 'required|string|min:2',
-            'slug'      => 'required|unique:object_types,slug,'.$object_type->id.'|string|min:2',
+            'slug'      => 'required|unique:object_types,slug,'.$type->id.'|string|min:2',
             'template'  => 'integer|nullable',
         ]);
 
         if ($validator->fails()) {
-            Session::flash('alert-danger', 'Couldn\'t update ' . $object_type->name . '.');
-            return redirect()->route('object_type.edit', $object_type->slug)->withErrors($validator)->withInput();
+            Session::flash('alert-danger', __('validation.failed.update', ['name' => $type->name]));
+            return redirect()->route('object.type.edit', $type->slug)->withErrors($validator)->withInput();
         }
 
-        $object_type->name     = $request->name;
-        $object_type->slug     = $request->slug;
-        $object_type->template = $request->template;
+        $slug_changed = ($type->slug == $request->slug) ? false : true;
 
-        $object_type->save();
+        $type->name     = $request->name;
+        $type->slug     = $request->slug;
+        $type->template = $request->template;
 
-        Session::flash('alert-success', 'Successfully updated ' . $object_type->name . '.');
+        $type->save();
+
+        Session::flash('alert-success', __('validation.succeeded.update', ['name' => $type->name]));
+
+        if ($slug_changed) {
+            return redirect()->route('object.type.edit', $type->slug);
+        }
+
         return back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Object_type  $object_type
+     * @param  \App\Object_type  $type
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Object_type $object_type)
+    public function destroy(Object_type $type)
     {
-        $object_type->delete();
+        $type->delete();
 
-        Session::flash('alert-success', 'Successfully deleted ' . $object_type->name . '.');
+        Session::flash('alert-success', __('validation.succeeded.delete', ['name' => $type->name]));
         return back();
     }
 }

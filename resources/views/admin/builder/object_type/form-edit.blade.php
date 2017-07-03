@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('object_type.update', $object_type->slug) }}">
+<form method="POST" action="{{ route('object.type.update', $type->slug) }}">
 	{{ method_field('PATCH') }}
 	{{ csrf_field() }}
 

@@ -1,5 +1,5 @@
 <ul>
-	<li>id:       {{ $object_type->id }}</li>
-	<li>slug:     {{ $object_type->slug }}</li>
-	<li>template: {{ $object_type->template }}</li>
+	<li>id:       {{ $type->id }}</li>
+	<li>slug:     {{ $type->slug }}</li>
+	<li>template: {{ $type->template }}</li>
 </ul>

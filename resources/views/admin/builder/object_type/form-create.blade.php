@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('object_type.store') }}">
+<form method="POST" action="{{ route('object.type.store') }}">
 	{{ csrf_field() }}
 
 	@include('admin.builder.object_type.fields')
