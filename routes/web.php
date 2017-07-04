@@ -24,6 +24,8 @@ Route::prefix('admin')->group(function () {
 
 		Route::prefix('{object_type}')->group(function () {
 			// Route::resource('object_category', 'ObjectCategoryController', ['except' => [ 'show' ]]);
+			Route::resource('taxonomy', 'Admin\Object\TaxonomyController', ['except' => [ 'index', 'show' ], 'as' => 'object']);
+			Route::resource('taxonomies', 'Admin\Object\TaxonomyController', ['only' => [ 'index' ], 'as' => 'object']);
 			// Route::resource('object_tag',      'ObjectTagController',      ['except' => [ 'show' ]]);
 			// Route::resource('object',          'ObjectController',         ['except' => [ 'show' ]]);
 		});
@@ -39,6 +41,7 @@ Route::get('/', function () {
 
 Route::prefix('{type}')->group(function () {
 	Route::get('/', 'Object\TypeController@show')->name('object.type.show');
+	Route::get('{taxonomy}', 'Object\TaxonomyController@show')->name('object.taxonomy.show');
 	// Route::resource('object_category', 'ObjectCategoryController', ['only' => [ 'index', 'show' ]]);
 	// Route::resource('object_tag',      'ObjectTagController',      ['only' => [ 'index', 'show' ]]);
 	// Route::resource('object',          'ObjectController',         ['only' => [ 'index', 'show' ]]);

@@ -1,36 +1,36 @@
 @extends('admin.partials.master')
 
 @section('content-main')
-	<h1>{{ $object_type->name }} taxonomies</h1>
+	<h1>{{ $type->name }} taxonomies</h1>
 	
 	<hr>
-	@include('admin.builder.object_taxonomy.form-create')
+	@include('admin.builder.object.taxonomy.form-create')
 	<hr>
 
-	@if (count($object_taxonomies))
+	@if (count($taxonomies))
 		<ul id="object-types-list">
-			@foreach ($object_taxonomies as $object_taxonomy)
-				<li id="object-types-list-item-{{ $object_taxonomy->id }}" class="object-types-list-item">
-					{{ $object_taxonomy->name }}
+			@foreach ($taxonomies as $taxonomy)
+				<li id="object-types-list-item-{{ $taxonomy->id }}" class="object-types-list-item">
+					{{ $taxonomy->name }}
 
- 					<button class="modal-trigger" data-modal="#show-object-type-{{ $object_taxonomy->id }}">Quick-view</button>
-					<div id="show-object-type-{{ $object_taxonomy->id }}" class="modal">
-						<a href="{{ route('object.taxonomy.show', [$object_type->slug, $object_taxonomy->slug]) }}">Open</a>
-						<a href="{{ route('object.taxonomy.show', [$object_type->slug, $object_taxonomy->slug]) }}" target="_blank">Open in new tab</a>
-						@include('object_taxonomy.content-main', ['object_taxonomy' => $object_taxonomy])
+ 					<button class="modal-trigger" data-modal="#show-object-type-{{ $taxonomy->id }}">Quick-view</button>
+					<div id="show-object-type-{{ $taxonomy->id }}" class="modal">
+						<a href="{{ route('object.taxonomy.show', [$type->slug, $taxonomy->slug]) }}">Open</a>
+						<a href="{{ route('object.taxonomy.show', [$type->slug, $taxonomy->slug]) }}" target="_blank">Open in new tab</a>
+						@include('object.taxonomy.content-main', ['taxonomy' => $taxonomy])
 					</div>
 					
-					<button class="modal-trigger" data-modal="#edit-object-type-{{ $object_taxonomy->id }}">Edit</button>
-					<div id="edit-object-type-{{ $object_taxonomy->id }}" class="modal">
-						@include('admin.builder.object_taxonomy.form-edit', [$object_type->slug, $object_taxonomy->slug])
+					<button class="modal-trigger" data-modal="#edit-object-type-{{ $taxonomy->id }}">Edit</button>
+					<div id="edit-object-type-{{ $taxonomy->id }}" class="modal">
+						@include('admin.builder.object.taxonomy.form-edit', [$type->slug, $taxonomy->slug])
 					</div>
 
-					<button class="modal-trigger" data-modal="#delete-object-type-{{ $object_taxonomy->id }}">Delete</button>
-					<div id="delete-object-type-{{ $object_taxonomy->id }}" class="modal">
-						@include('admin.builder.object_taxonomy.form-delete', [$object_type->slug, $object_taxonomy->slug])
+					<button class="modal-trigger" data-modal="#delete-object-type-{{ $taxonomy->id }}">Delete</button>
+					<div id="delete-object-type-{{ $taxonomy->id }}" class="modal">
+						@include('admin.builder.object.taxonomy.form-delete', [$type->slug, $taxonomy->slug])
 					</div>
 
-					<a href="{{-- {{ route('object_taxonomies.index', $object_taxonomy->slug) }} --}}">Terms</a>
+					<a href="{{-- {{ route('object_taxonomies.index', $taxonomy->slug) }} --}}">Terms</a>
 				</li>
 			@endforeach
 		</ul>
