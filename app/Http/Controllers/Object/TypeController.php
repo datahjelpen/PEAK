@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Object;
 
-use \App\Model\Object\Type;
 use \Illuminate\Http\Request;
+
+use \App\Model\Object\Type;
 
 class TypeController extends Controller
 {
