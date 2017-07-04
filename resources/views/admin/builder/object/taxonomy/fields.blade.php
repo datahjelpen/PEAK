@@ -11,11 +11,11 @@
 	}
 @endphp
 
-<label for="object-taxonomy-name">name</label>
+<label for="object-taxonomy-name">{{ __('general.name') }}</label>
 <input type="text" id="object-taxonomy-name" class="autofocus" name="name" placeholder="name" value="{{ $taxonomy->name }}" autofocus>
 
-<label for="object-taxonomy-slug">slug</label>
+<label for="object-taxonomy-slug">{{ __('general.slug') }}</label>
 <input type="text" id="object-taxonomy-slug" name="slug" placeholder="slug" value="{{ $taxonomy->slug }}">
 
-<label for="object-taxonomy-hierarchical">hierarchical</label>
+<label for="object-taxonomy-hierarchical">{{ __('general.hierarchical') }}</label>
 <input type="checkbox" id="object-taxonomy-hierarchical" name="hierarchical" placeholder="hierarchical" {{ $taxonomy->hierarchical ? 'checked' : null }}>

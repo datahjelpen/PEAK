@@ -11,11 +11,11 @@
 	}
 @endphp
 
-<label for="object-type-name">name</label>
+<label for="object-type-name">{{ __('general.name') }}</label>
 <input type="text" id="object-type-name" class="autofocus" name="name" placeholder="name" value="{{ $type->name }}" required autofocus>
 
-<label for="object-type-slug">slug</label>
+<label for="object-type-slug">{{ __('general.slug') }}</label>
 <input type="text" id="object-type-slug" name="slug" placeholder="slug" value="{{ $type->slug }}">
 
-<label for="object-type-template">template</label>
+<label for="object-type-template">{{ __('general.template') }}</label>
 <input type="number" id="object-type-template" name="template" placeholder="template" value="{{ $type->template }}" >

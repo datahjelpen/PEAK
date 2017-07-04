@@ -13,19 +13,19 @@
 				<li id="object-types-list-item-{{ $type->slug }}" class="object-types-list-item">
 					{{ $type->name }}
 
-					<button class="modal-trigger" data-modal="#show-object-type-{{ $type->slug }}">Quick-view</button>
+					<button class="modal-trigger" data-modal="#show-object-type-{{ $type->slug }}">{{ __('navigation.actions.view_quick') }}</button>
 					<div id="show-object-type-{{ $type->slug }}" class="modal">
-						<a href="{{ route('object.type.show', $type->slug) }}">Open</a>
-						<a href="{{ route('object.type.show', $type->slug) }}" target="_blank">Open in new tab</a>
+						<a href="{{ route('object.type.show', $type->slug) }}">{{ __('general.actions.open') }}</a>
+						<a href="{{ route('object.type.show', $type->slug) }}" target="_blank">{{ __('navigation.actions.open_new_tab') }}</a>
 						@include('object.type.content-main', ['type' => $type])
 					</div>
 					
-					<button class="modal-trigger" data-modal="#edit-object-type-{{ $type->slug }}">Edit</button>
+					<button class="modal-trigger" data-modal="#edit-object-type-{{ $type->slug }}">{{ __('general.actions.edit') }}</button>
 					<div id="edit-object-type-{{ $type->slug }}" class="modal">
 						@include('admin.builder.object.type.form-edit', ['type' => $type])
 					</div>
 
-					<button class="modal-trigger" data-modal="#delete-object-type-{{ $type->slug }}">Delete</button>
+					<button class="modal-trigger" data-modal="#delete-object-type-{{ $type->slug }}">{{ __('general.actions.delete') }}</button>
 					<div id="delete-object-type-{{ $type->slug }}" class="modal">
 						@include('admin.builder.object.type.form-delete', ['type' => $type])
 					</div>
