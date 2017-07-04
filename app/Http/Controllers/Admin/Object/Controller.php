@@ -6,7 +6,7 @@ use Session;
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\Validator;
 
-class Controller extends \App\Http\Controllers\Controller
+class Controller extends \App\Http\Controllers\Admin\Controller
 {
 
 }
