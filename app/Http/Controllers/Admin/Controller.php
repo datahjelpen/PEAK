@@ -17,19 +17,4 @@ class Controller extends \App\Http\Controllers\Controller
     {
         $this->middleware('auth');
     }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('admin.index');
-    }
-
-    public function oauth()
-    {
-        return view('auth.oauth-dashboard');
-    }
 }

@@ -15,7 +15,7 @@ Auth::routes();
 
 Route::prefix('admin')->group(function () {
 
-	Route::get('/', 'Admin\Controller@index')->name('admin.dashboard');
+	Route::get('/', 'Admin\DashboardController@index')->name('admin.dashboard');
 
 	Route::prefix('builder')->group(function () {
 
@@ -31,7 +31,7 @@ Route::prefix('admin')->group(function () {
 
 	});
 
-	Route::get('oauth-dashboard', 'Admin\Controller@oauth')->name('oauth-dashboard');
+	Route::get('oauth-dashboard', 'Admin\DashboardController@oauth')->name('oauth-dashboard');
 });
 
 Route::get('/', function () {
