@@ -179,6 +179,8 @@ return [
 
         Laravel\Passport\PassportServiceProvider::class,
 
+        Felixkiss\UniqueWithValidator\ServiceProvider::class, // Adds unique_with validator
+
     ],
 
     /*
