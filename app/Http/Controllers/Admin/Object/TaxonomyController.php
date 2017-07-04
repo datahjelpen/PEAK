@@ -53,7 +53,7 @@ class TaxonomyController extends Controller
 
     public function edit(Type $type, Taxonomy $taxonomy)
     {
-        $taxonomy = Taxonomy::where(['slug' => $taxonomy->slug, 'object_type' => $type->id])->first();
+        $taxonomy = Taxonomy::getSingle($type, $taxonomy);
 
         if (session('_old_input') !== null) {
             $slug = $taxonomy->slug; // Keep the original slug to prevent url issues
@@ -67,7 +67,7 @@ class TaxonomyController extends Controller
 
     public function update(Type $type, Request $request, Taxonomy $taxonomy)
     {
-        $taxonomy = Taxonomy::where(['slug' => $taxonomy->slug, 'object_type' => $type->id])->first();
+        $taxonomy = Taxonomy::getSingle($type, $taxonomy);
 
         if (!$request->slug && $request->name) $request->merge(['slug' => str_slug($request->name, '-')]);
 
@@ -105,7 +105,7 @@ class TaxonomyController extends Controller
 
     public function destroy(Type $type, Taxonomy $taxonomy)
     {
-        $taxonomy = Taxonomy::where(['slug' => $taxonomy->slug, 'object_type' => $type->id])->first();
+        $taxonomy = Taxonomy::getSingle($type, $taxonomy);
 
         $taxonomy->delete();
 
