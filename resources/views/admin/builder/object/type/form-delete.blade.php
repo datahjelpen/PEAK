@@ -2,7 +2,7 @@
 	{{ method_field('DELETE') }}
 	{{ csrf_field() }}
 	
-	<h1>Are you sure you want to delete this object type?</h1>
-	<button class="autofocus" type="submit" autofocus>Yes, delete</button>
-	<button type="button" class="modal-close">No, cancel.</button>
+	<h1>{{ __('forms.confirm.delete.ask', ['name' => $type->name]) }}</h1>
+	<button class="autofocus" type="submit" autofocus>{{ __('forms.confirm.delete.yes') }}</button>
+	<button type="button" class="modal-close">{{ __('forms.confirm.delete.no') }}</button>
 </form>
