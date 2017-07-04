@@ -1,0 +1,12 @@
+/*! Datahjelpen AS - Botu */
+
+@import "_variables";
+@import "vendor/normalize";
+// @import "vendor/skeleton";
+
+body {
+	margin: 0;
+}
+@import "components/_typography";
+
+@import "components/_grid"; // Bootstrap 4 grid
