@@ -19,12 +19,22 @@ Route::prefix('admin')->group(function () {
 
 	Route::prefix('builder')->group(function () {
 
-		Route::resource('type', 'Admin\Object\TypeController', ['except' => [ 'index', 'show' ], 'as' => 'object']);
-		Route::resource('types', 'Admin\Object\TypeController', ['only' => [ 'index' ], 'as' => 'object']);
+		Route::get('types',            'Admin\Object\TypeController@index')->name('object.types.index');
+		Route::get('type/new',         'Admin\Object\TypeController@create')->name('object.type.create');
+		Route::post('type/create',     'Admin\Object\TypeController@store')->name('object.type.store');
+		Route::get('{type}/edit',      'Admin\Object\TypeController@edit')->name('object.type.edit');
+		Route::patch('{type}/update',  'Admin\Object\TypeController@update')->name('object.type.update');
+		Route::delete('{type}/delete', 'Admin\Object\TypeController@destroy')->name('object.type.destroy');
 
 		Route::prefix('{type}')->group(function () {
-			Route::resource('taxonomy', 'Admin\Object\TaxonomyController', ['except' => [ 'index', 'show' ], 'as' => 'object']);
-			Route::resource('taxonomies', 'Admin\Object\TaxonomyController', ['only' => [ 'index' ], 'as' => 'object']);
+			Route::get('taxonomies',           'Admin\Object\TaxonomyController@index')->name('object.taxonomies.index');
+			Route::get('taxonomy/new',         'Admin\Object\TaxonomyController@create')->name('object.taxonomy.create');
+			Route::post('taxonomy/create',     'Admin\Object\TaxonomyController@store')->name('object.taxonomy.store');
+			Route::get('{taxonomy}/edit',      'Admin\Object\TaxonomyController@edit')->name('object.taxonomy.edit');
+			Route::patch('{taxonomy}/update',  'Admin\Object\TaxonomyController@update')->name('object.taxonomy.update');
+			Route::delete('{taxonomy}/delete', 'Admin\Object\TaxonomyController@destroy')->name('object.taxonomy.destroy');
+			
+			});
 			// Route::resource('object_tag',      'ObjectTagController',      ['except' => [ 'show' ]]);
 			// Route::resource('object',          'ObjectController',         ['except' => [ 'show' ]]);
 		});
