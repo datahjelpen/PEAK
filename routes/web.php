@@ -19,11 +19,10 @@ Route::prefix('admin')->group(function () {
 
 	Route::prefix('builder')->group(function () {
 
-		Route::resource('type', 'Admin\ObjectTypeController', ['except' => [ 'index', 'show' ], 'as' => 'object']);
-		Route::resource('types', 'Admin\ObjectTypeController', ['only' => [ 'index' ], 'as' => 'object']);
+		Route::resource('type', 'Admin\Object\TypeController', ['except' => [ 'index', 'show' ], 'as' => 'object']);
+		Route::resource('types', 'Admin\Object\TypeController', ['only' => [ 'index' ], 'as' => 'object']);
 
-		Route::prefix('{object_type}')->group(function () {
-			// Route::resource('object_category', 'ObjectCategoryController', ['except' => [ 'show' ]]);
+		Route::prefix('{type}')->group(function () {
 			Route::resource('taxonomy', 'Admin\Object\TaxonomyController', ['except' => [ 'index', 'show' ], 'as' => 'object']);
 			Route::resource('taxonomies', 'Admin\Object\TaxonomyController', ['only' => [ 'index' ], 'as' => 'object']);
 			// Route::resource('object_tag',      'ObjectTagController',      ['except' => [ 'show' ]]);
