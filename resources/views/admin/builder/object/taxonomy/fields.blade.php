@@ -18,4 +18,4 @@
 <input type="text" id="object-taxonomy-slug" name="slug" placeholder="slug" value="{{ $taxonomy->slug }}">
 
 <label for="object-taxonomy-hierarchical">hierarchical</label>
-<input type="checkbox" id="object-taxonomy-hierarchical" name="hierarchical" placeholder="hierarchical" {{ $taxonomy->hierarchical ? 'value="on"' : null }}>
+<input type="checkbox" id="object-taxonomy-hierarchical" name="hierarchical" placeholder="hierarchical" {{ $taxonomy->hierarchical ? 'checked' : null }}>
