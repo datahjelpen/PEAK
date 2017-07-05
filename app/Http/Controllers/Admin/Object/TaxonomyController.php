@@ -46,11 +46,6 @@ class TaxonomyController extends Controller
         return back();
     }
 
-    public function show(Type $type, Taxonomy $taxonomy)
-    {
-        return redirect()->route('object.taxonomy.show');
-    }
-
     public function edit(Type $type, Taxonomy $taxonomy)
     {
         $taxonomy = Taxonomy::getSingle($type, $taxonomy);

@@ -43,11 +43,6 @@ class TypeController extends Controller
         return back();
     }
 
-    public function show(Type $type)
-    {
-        return redirect()->route('object.type.show');
-    }
-
     public function edit(Type $type)
     {
         if (session('_old_input') !== null) {
