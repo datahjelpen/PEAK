@@ -34,6 +34,13 @@ Route::prefix('admin')->group(function () {
 			Route::patch('{taxonomy}/update',  'Admin\Object\TaxonomyController@update')->name('object.taxonomy.update');
 			Route::delete('{taxonomy}/delete', 'Admin\Object\TaxonomyController@destroy')->name('object.taxonomy.destroy');
 			
+			Route::prefix('{taxonomy}')->group(function () {
+				Route::get('terms',            'Admin\Object\TermController@index')->name('object.terms.index');
+				Route::get('term/new',         'Admin\Object\TermController@create')->name('object.term.create');
+				Route::post('term/create',     'Admin\Object\TermController@store')->name('object.term.store');
+				Route::get('{term}/edit',      'Admin\Object\TermController@edit')->name('object.term.edit');
+				Route::patch('{term}/update',  'Admin\Object\TermController@update')->name('object.term.update');
+				Route::delete('{term}/delete', 'Admin\Object\TermController@destroy')->name('object.term.destroy');
 			});
 			// Route::resource('object_tag',      'ObjectTagController',      ['except' => [ 'show' ]]);
 			// Route::resource('object',          'ObjectController',         ['except' => [ 'show' ]]);
@@ -50,7 +57,10 @@ Route::get('/', function () {
 
 Route::prefix('{type}')->group(function () {
 	Route::get('/', 'Object\TypeController@show')->name('object.type.show');
-	Route::get('{taxonomy}', 'Object\TaxonomyController@show')->name('object.taxonomy.show');
+	Route::prefix('{taxonomy}')->group(function () {
+		Route::get('/',      'Object\TaxonomyController@show')->name('object.taxonomy.show');
+		Route::get('{term}', 'Object\TermController@show')->name('object.term.show');
+	});
 	// Route::resource('object_category', 'ObjectCategoryController', ['only' => [ 'index', 'show' ]]);
 	// Route::resource('object_tag',      'ObjectTagController',      ['only' => [ 'index', 'show' ]]);
 	// Route::resource('object',          'ObjectController',         ['only' => [ 'index', 'show' ]]);
