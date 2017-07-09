@@ -18,4 +18,27 @@ class Term extends Model
 		$taxonomy = Taxonomy::getSingle($type, $taxonomy);
 		return Term::where(['slug' => $term->slug, 'taxonomy' => $taxonomy->id])->first();
 	}
+
+	function hasChildren() {
+		$this->getChildren();
+		return count($this->children);
+	}
+
+	function getChildren() {
+		$children = Term::where(['parent' => $this->id])->get();
+
+		if (count($children)) {
+			$this->children = $children;
+		}
+	}
+
+	function getChildrenRecursively() {
+		if ($this->hasChildren()) {
+			$this->getChildren();
+
+			foreach ($this->children as $child) {
+				$child->getChildrenRecursively();
+			}
+		}
+	}
 }
