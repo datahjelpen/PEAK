@@ -15,13 +15,21 @@ class TermController extends Controller
     public function index(Type $type, Taxonomy $taxonomy)
     {
         $taxonomy = Taxonomy::getSingle($type, $taxonomy);
-        $terms = Term::all()->where('taxonomy', $taxonomy->id);
-        return view('admin.builder.object.term.index', compact('type', 'taxonomy', 'terms'));
+        $terms = Term::where('taxonomy', $taxonomy->id)->get();
+        $parents = Term::where(['taxonomy' => $taxonomy->id, 'parent' => null])->get();
+
+        foreach ($parents as $parent) {
+            $parent->getChildrenRecursively();
+        }
+
+        return view('admin.builder.object.term.index', compact('type', 'taxonomy', 'parents', 'terms'));
     }
 
     public function create(Type $type, Taxonomy $taxonomy)
     {
-        return view('admin.builder.object.term.create');
+        $taxonomy = Taxonomy::getSingle($type, $taxonomy);
+        $terms = Term::where('taxonomy', $taxonomy->id)->get();
+        return view('admin.builder.object.term.create', compact('type', 'taxonomy', 'terms'));
     }
 
     public function store(Type $type, Taxonomy $taxonomy, Request $request)
@@ -54,6 +62,7 @@ class TermController extends Controller
     {
         $taxonomy = Taxonomy::getSingle($type, $taxonomy);
         $term = Term::getSingle($type, $taxonomy, $term);
+        $terms = Term::where('taxonomy', $taxonomy->id)->get();
 
         if (session('_old_input') !== null) {
             $slug = $term->slug; // Keep the original slug to prevent url issues
@@ -62,7 +71,7 @@ class TermController extends Controller
             $term->slug = $slug;
         }
 
-        return view('admin.builder.object.term.edit', compact('type', 'taxonomy', 'term'));
+        return view('admin.builder.object.term.edit', compact('type', 'taxonomy', 'term', 'terms'));
     }
 
     public function update(Type $type, Taxonomy $taxonomy, Request $request, Term $term)
@@ -90,7 +99,7 @@ class TermController extends Controller
 
         $term->name     = $request->name;
         $term->slug     = $request->slug;
-        $term->parent = $request->parent;
+        $term->parent   = $request->parent;
         $term->template = $request->template;
 
         $term->save();
