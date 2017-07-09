@@ -4,7 +4,7 @@
 	<h1>{{ $type->name }} taxonomies</h1>
 	
 	<hr>
-	@include('admin.builder.object.taxonomy.form-create')
+	@include('admin.superadmin.object.taxonomy.form-create')
 	<hr>
 
 	@if (count($taxonomies))
@@ -22,15 +22,13 @@
 					
 					<button class="modal-trigger" data-modal="#edit-object-type-{{ $taxonomy->id }}">{{ __('general.actions.edit') }}</button>
 					<div id="edit-object-type-{{ $taxonomy->id }}" class="modal">
-						@include('admin.builder.object.taxonomy.form-edit', [$type->slug, $taxonomy->slug])
+						@include('admin.superadmin.object.taxonomy.form-edit', [$type->slug, $taxonomy->slug])
 					</div>
 
 					<button class="modal-trigger" data-modal="#delete-object-type-{{ $taxonomy->id }}">{{ __('general.actions.delete') }}</button>
 					<div id="delete-object-type-{{ $taxonomy->id }}" class="modal">
-						@include('admin.builder.object.taxonomy.form-delete', [$type->slug, $taxonomy->slug])
+						@include('admin.superadmin.object.taxonomy.form-delete', [$type->slug, $taxonomy->slug])
 					</div>
-
-					<a href="{{ route('object.terms.index', [$type->slug, $taxonomy->slug]) }}">Terms</a>
 				</li>
 			@endforeach
 		</ul>

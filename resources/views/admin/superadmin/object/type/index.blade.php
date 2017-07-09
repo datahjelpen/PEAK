@@ -4,7 +4,7 @@
 	<h1>Object types</h1>
 	
 	<hr>
-	@include('admin.builder.object.type.form-create')
+	@include('admin.superadmin.object.type.form-create')
 	<hr>
 
 	@if (count($types))
@@ -22,15 +22,15 @@
 					
 					<button class="modal-trigger" data-modal="#edit-object-type-{{ $type->slug }}">{{ __('general.actions.edit') }}</button>
 					<div id="edit-object-type-{{ $type->slug }}" class="modal">
-						@include('admin.builder.object.type.form-edit', ['type' => $type])
+						@include('admin.superadmin.object.type.form-edit', ['type' => $type])
 					</div>
 
 					<button class="modal-trigger" data-modal="#delete-object-type-{{ $type->slug }}">{{ __('general.actions.delete') }}</button>
 					<div id="delete-object-type-{{ $type->slug }}" class="modal">
-						@include('admin.builder.object.type.form-delete', ['type' => $type])
+						@include('admin.superadmin.object.type.form-delete', ['type' => $type])
 					</div>
 
-					<a href="{{ route('object.taxonomies.index', $type->slug) }}">Taxonomies</a>
+					<a href="{{ route('superadmin.object.taxonomies', $type->slug) }}">Taxonomies</a>
 				</li>
 			@endforeach
 		</ul>

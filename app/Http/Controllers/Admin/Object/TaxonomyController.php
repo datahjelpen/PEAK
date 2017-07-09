@@ -14,12 +14,12 @@ class TaxonomyController extends Controller
     public function index(Type $type)
     {
         $taxonomies = Taxonomy::all()->where('object_type', $type->id);
-        return view('admin.builder.object.taxonomy.index', compact('type', 'taxonomies'));
+        return view('admin.superadmin.object.taxonomy.index', compact('type', 'taxonomies'));
     }
 
     public function create(Type $type)
     {
-        return view('admin.builder.object.taxonomy.create');
+        return view('admin.superadmin.object.taxonomy.create');
     }
 
     public function store(Type $type, Request $request)
@@ -57,7 +57,7 @@ class TaxonomyController extends Controller
             $taxonomy->slug = $slug;
         }
 
-        return view('admin.builder.object.taxonomy.edit', compact('type', 'taxonomy'));
+        return view('admin.superadmin.object.taxonomy.edit', compact('type', 'taxonomy'));
     }
 
     public function update(Type $type, Request $request, Taxonomy $taxonomy)
@@ -78,7 +78,7 @@ class TaxonomyController extends Controller
 
         if ($validator->fails()) {
             Session::flash('alert-danger', __('validation.failed.update', ['name' => $taxonomy->name]));
-            return redirect()->route('object.taxonomy.edit', [$type->slug, $taxonomy->slug])->withErrors($validator)->withInput();
+            return redirect()->route('superadmin.object.taxonomy.edit', [$type->slug, $taxonomy->slug])->withErrors($validator)->withInput();
         }
 
         $slug_changed = ($taxonomy->slug == $request->slug) ? false : true;
@@ -92,7 +92,7 @@ class TaxonomyController extends Controller
         Session::flash('alert-success', __('validation.succeeded.update', ['name' => $taxonomy->name]));
 
         if ($slug_changed) {
-            return redirect()->route('object.taxonomy.edit', [$type->slug, $taxonomy->slug]);
+            return redirect()->route('superadmin.object.taxonomy.edit', [$type->slug, $taxonomy->slug]);
         }
 
         return back();

@@ -2,10 +2,10 @@
 <nav>
 	<ul>
 		<li>
-			<span>Builder</span>
+			<span>Superadmin</span>
 			<ul>
 				<li>
-					<a href="{{ route('object.types.index') }}">Object types</a>
+					<a href="{{ route('superadmin.object.types') }}">Object types</a>
 				</li>
 			</ul>
 		</li>

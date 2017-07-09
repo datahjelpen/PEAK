@@ -7,10 +7,10 @@
 
 <button class="modal-trigger" data-modal="#edit-object-type-{{ $term->id }}">{{ __('general.actions.edit') }}</button>
 <div id="edit-object-type-{{ $term->id }}" class="modal">
-	@include('admin.builder.object.term.form-edit', [$type->slug, $taxonomy->slug, $term->slug])
+	@include('admin.object.term.form-edit', [$type->slug, $taxonomy->slug, $term->slug])
 </div>
 
 <button class="modal-trigger" data-modal="#delete-object-type-{{ $term->id }}">{{ __('general.actions.delete') }}</button>
 <div id="delete-object-type-{{ $term->id }}" class="modal">
-	@include('admin.builder.object.term.form-delete', [$type->slug, $taxonomy->slug, $term->slug])
+	@include('admin.object.term.form-delete', [$type->slug, $taxonomy->slug, $term->slug])
 </div>

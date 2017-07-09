@@ -1,16 +1,16 @@
 @extends('admin.partials.master')
 
 @section('content-main')
-	<h1>{{ $taxonomy->name }} terms</h1>
+	<h1>{{ str_plural($taxonomy->name) }}</h1>
 	
 	<hr>
-	@include('admin.builder.object.term.form-create')
+	@include('admin.object.term.form-create')
 	<hr>
 
 	@if (count($parents))
 		<ul id="object-terms-list">
 			@foreach ($parents as $parent)
-				@include('admin.builder.object.term.list-item-parent')
+				@include('admin.object.term.list-item-parent')
 			@endforeach
 		</ul>
 	@endif

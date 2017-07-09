@@ -22,14 +22,14 @@ class TermController extends Controller
             $parent->getChildrenRecursively();
         }
 
-        return view('admin.builder.object.term.index', compact('type', 'taxonomy', 'parents', 'terms'));
+        return view('admin.object.term.index', compact('type', 'taxonomy', 'parents', 'terms'));
     }
 
     public function create(Type $type, Taxonomy $taxonomy)
     {
         $taxonomy = Taxonomy::getSingle($type, $taxonomy);
         $terms = Term::where('taxonomy', $taxonomy->id)->get();
-        return view('admin.builder.object.term.create', compact('type', 'taxonomy', 'terms'));
+        return view('admin.object.term.create', compact('type', 'taxonomy', 'terms'));
     }
 
     public function store(Type $type, Taxonomy $taxonomy, Request $request)
@@ -71,7 +71,7 @@ class TermController extends Controller
             $term->slug = $slug;
         }
 
-        return view('admin.builder.object.term.edit', compact('type', 'taxonomy', 'term', 'terms'));
+        return view('admin.object.term.edit', compact('type', 'taxonomy', 'term', 'terms'));
     }
 
     public function update(Type $type, Taxonomy $taxonomy, Request $request, Term $term)
@@ -92,7 +92,7 @@ class TermController extends Controller
 
         if ($validator->fails()) {
             Session::flash('alert-danger', __('validation.failed.update', ['name' => $term->name]));
-            return redirect()->route('object.term.edit', [$type->slug, $taxonomy->slug, $term->slug])->withErrors($validator)->withInput();
+            return redirect()->route('admin.object.term.edit', [$type->slug, $taxonomy->slug, $term->slug])->withErrors($validator)->withInput();
         }
 
         $slug_changed = ($term->slug == $request->slug) ? false : true;
@@ -107,7 +107,7 @@ class TermController extends Controller
         Session::flash('alert-success', __('validation.succeeded.update', ['name' => $term->name]));
 
         if ($slug_changed) {
-            return redirect()->route('object.term.edit', [$type->slug, $taxonomy->slug, $term->slug]);
+            return redirect()->route('admin.object.term.edit', [$type->slug, $taxonomy->slug, $term->slug]);
         }
 
         return back();
