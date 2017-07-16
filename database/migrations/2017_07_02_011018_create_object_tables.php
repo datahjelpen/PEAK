@@ -39,7 +39,7 @@ class CreateObjectTables extends Migration
             $t->string('name');
             $t->string('slug');
             $t->text('text')->nullable()->default(null);
-            $t->text('excrept')->nullable()->default(null);
+            $t->text('excerpt')->nullable()->default(null);
             $t->unsignedInteger('object_type');
             $t->foreign('object_type')->references('id')->on('object_types')->onDelete('cascade');
             $t->unsignedInteger('author');
