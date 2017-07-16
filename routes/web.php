@@ -75,5 +75,4 @@ Route::prefix('{type}')->group(function () {
 		Route::get('{term}', 'Object\TermController@show')->name('object.term.show');
 	});
 
-	// Route::resource('object',          'ObjectController',         ['only' => [ 'index', 'show' ]]);
 });
