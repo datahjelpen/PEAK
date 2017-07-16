@@ -8,9 +8,10 @@ return [
 		'open'     => 'open',
 	],
 
-	'name'     => 'name',
-	'parent'   => 'parent',
-	'slug'     => 'slug',
-	'taxonomy' => 'taxonomy',
-	'template' => 'template'
+	'hierarchical' => 'hierarchical',
+	'name'         => 'name',
+	'parent'       => 'parent',
+	'slug'         => 'slug',
+	'taxonomy'     => 'taxonomy',
+	'template'     => 'template',
 ];
