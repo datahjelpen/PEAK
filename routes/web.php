@@ -40,7 +40,12 @@ Route::prefix('admin')->group(function () {
 	});
 
 	Route::prefix('{type}')->group(function () {
-		Route::get('/', 'Admin\Object\TypeController@index')->name('admin.object.types');
+		Route::get('/',                  'Admin\Object\ObjectController@index')->name('admin.objects');
+		Route::get('new',                'Admin\Object\ObjectController@create')->name('admin.object.create');
+		Route::post('create',            'Admin\Object\ObjectController@store')->name('admin.object.store');
+		Route::get('{object}/edit',      'Admin\Object\ObjectController@edit')->name('admin.object.edit');
+		Route::patch('{object}/update',  'Admin\Object\ObjectController@update')->name('admin.object.update');
+		Route::delete('{object}/delete', 'Admin\Object\ObjectController@destroy')->name('admin.object.destroy');
 
 		Route::prefix('{taxonomy}')->group(function () {
 			Route::get('/',                'Admin\Object\TermController@index')->name('admin.object.terms');
@@ -59,8 +64,12 @@ Route::get('/', function () {
 	return view('welcome', compact('types'));
 })->name('frontpage');
 
+
 Route::prefix('{type}')->group(function () {
 	Route::get('/', 'Object\TypeController@show')->name('object.type.show');
+
+	Route::get('{object}', 'Object\ObjectController@show')->name('object.show');
+
 	Route::prefix('{taxonomy}')->group(function () {
 		Route::get('/',      'Object\TaxonomyController@show')->name('object.taxonomy.show');
 		Route::get('{term}', 'Object\TermController@show')->name('object.term.show');
