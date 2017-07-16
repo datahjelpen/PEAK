@@ -71,7 +71,6 @@ Route::prefix('{type}')->group(function () {
 	Route::get('{object}', 'Object\ObjectController@show')->name('object.show');
 
 	Route::prefix('{taxonomy}')->group(function () {
-		Route::get('/',      'Object\TaxonomyController@show')->name('object.taxonomy.show');
 		Route::get('{term}', 'Object\TermController@show')->name('object.term.show');
 	});
 
