@@ -16,3 +16,9 @@ textarea {
 	-moz-appearance: none;
 	appearance: none;
 }
+
+label {
+	// Temp style for easier dev
+	display: block;
+	margin-top: 1em;
+}
