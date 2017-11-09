@@ -1,0 +1,13 @@
+// Brands
+$brand-primary: #00ffff;
+$brand-info:    #000fff;
+$brand-success: #00ff00;
+$brand-warning: #ffff00;
+$brand-danger:  #ff0000;
+
+.alert {
+	&-danger  { background-color: $brand-danger;  }
+	&-warning { background-color: $brand-warning; }
+	&-success { background-color: $brand-success; }
+	&-info    { background-color: $brand-info;    }
+}
