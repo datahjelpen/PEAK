@@ -1,12 +1,26 @@
 /*! Datahjelpen AS - Botu */
 
-@import "_variables";
 @import "vendor/normalize";
+
+@import "_variables";
+@import "_helpers";
 // @import "vendor/skeleton";
 
 body {
 	margin: 0;
 }
+
+@import "components/_colors";
 @import "components/_typography";
+@import "components/_buttons";
+@import "components/_forms";
+@import "components/_modals";
 
 @import "components/_grid"; // Bootstrap 4 grid
+
+
+@media (min-width: $xs) {}
+@media (min-width: $s) {}
+@media (min-width: $m) {}
+@media (min-width: $l) {}
+@media (min-width: $xl) {}
