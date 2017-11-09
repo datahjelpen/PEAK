@@ -1,11 +1,11 @@
 // 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
-//    controls in Android 4.
+//		controls in Android 4.
 // 2. Correct the inability to style clickable types in iOS and Safari.
 button,
 html [type="button"], // 1
 [type="reset"],
 [type="submit"] {
-  -webkit-appearance: button; // 2
+	-webkit-appearance: button; // 2
 }
 
 .button,
@@ -14,27 +14,19 @@ input[type="submit"],
 input[type="reset"],
 input[type="button"] {
 	display: inline-block;
-	height: 38px;
-	padding: 0 30px;
-	color: #555;
-	text-align: center;
-	font-size: 11px;
-	font-weight: 600;
-	line-height: 38px;
-	letter-spacing: .1rem;
-	text-transform: uppercase;
-	text-decoration: none;
 	white-space: nowrap;
-	background-color: transparent;
-	border-radius: 4px;
-	border: 1px solid #bbb;
 	cursor: pointer;
-	box-sizing: border-box;
+	color: #fff;
+	background: #000;
+	border-color: #000;
+
+	&:focus {
+		outline: 0;
+	}
 
 	&:focus,
 	&:hover {
-		color: #333;
-		border-color: #888;
-		outline: 0;
+		color: #000;
+		background: #fff;
 	}
 }
