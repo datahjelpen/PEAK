@@ -29,6 +29,8 @@
 					<div id="delete-object-type-{{ $taxonomy->id }}" class="modal">
 						@include('admin.superadmin.object.taxonomy.form-delete', [$type->slug, $taxonomy->slug])
 					</div>
+
+					<a href="{{ route('admin.object.terms', [$type->slug, $taxonomy->slug]) }}">Terms</a>
 				</li>
 			@endforeach
 		</ul>
