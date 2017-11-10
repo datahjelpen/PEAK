@@ -64,14 +64,25 @@ Route::get('/', function () {
 	return view('welcome', compact('types'));
 })->name('frontpage');
 
-
 Route::prefix('{type}')->group(function () {
+
 	Route::get('/', 'Object\TypeController@show')->name('object.type.show');
 
-	Route::get('{object}', 'Object\ObjectController@show')->name('object.show');
+	// $type = Type::where(['slug' => Request::segment(1)])->first();
+
+	// if ($type) {
+	// 	$object = Object::where(['slug' => Request::segment(2), 'object_type' => $type->id])->first();
+	// 	if ($object) {
+	// 		Route::get('{object}', 'Object\ObjectController@show');
+	// 	}
+	// }
 
 	Route::prefix('{taxonomy}')->group(function () {
-		Route::get('{term}', 'Object\TermController@show')->name('object.term.show');
+		Route::get('/', 'Object\TaxonomyController@show')->name('object.taxonomy.show');
+		
+		Route::prefix('{term}')->group(function () {
+			Route::get('/', 'Object\TermController@show')->name('object.term.show');
+			Route::get('{object}', 'Object\ObjectController@show')->name('object.show');
+		});
 	});
-
 });
