@@ -7,5 +7,11 @@ return [
             'yes' => 'Yes, delete',
             'no' => 'No, cancel'
         ]
+    ],
+    'select' => [
+        'value' => [
+            'normal' => 'Select a',
+            'please' => 'Please select a'
+        ]
     ]
 ];
