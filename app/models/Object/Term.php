@@ -33,12 +33,16 @@ class Term extends Model
 	}
 
 	function getChildrenRecursively() {
+
 		if ($this->hasChildren()) {
+			$this->hasChildren = true;
 			$this->getChildren();
 
 			foreach ($this->children as $child) {
 				$child->getChildrenRecursively();
 			}
+		} else {
+			$this->hasChildren = false;
 		}
 	}
 }
