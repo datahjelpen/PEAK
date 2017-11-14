@@ -28,6 +28,21 @@
 <label for="object-object-excerpt">{{ __('general.excerpt') }}</label>
 <input type="text" id="object-object-excerpt" name="excerpt" placeholder="excerpt" value="{{ $object->excerpt }}">
 
+
+@foreach ($taxonomies as $taxonomy)
+	<label for="object-term-{{ $taxonomy->slug }}">{{ $taxonomy->name }}</label>
+
+	<select name="parent" id="object-term-parent">
+			<option></option>
+			@foreach ($terms as $term)
+				@if ($term['taxonomy'] == $taxonomy->id)
+					<option value="{{ $term['id'] }}">{{ $term['name'] }}</option>
+				@endif
+			@endforeach
+	</select>
+@endforeach
+
+
 <label for="object-object-author">{{ __('general.author') }}</label>
 <input type="text" id="object-object-author" name="author" placeholder="author" value="{{ $object->author }}">
 
