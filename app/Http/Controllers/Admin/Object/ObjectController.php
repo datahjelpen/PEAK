@@ -7,6 +7,8 @@ use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\Validator;
 
 use \App\Model\Object\Type;
+use \App\Model\Object\Taxonomy;
+use \App\Model\Object\Term;
 use \App\Model\Object\Object;
 
 class ObjectController extends Controller
@@ -14,7 +16,17 @@ class ObjectController extends Controller
     public function index(Type $type)
     {
         $objects = Object::all()->where('object_type', $type->id);
-        return view('admin.object.index', compact('type', 'objects'));
+        $taxonomies = Taxonomy::all()->where('object_type', $type->id);
+
+        $terms = [];
+        foreach ($taxonomies as $taxonomy) {
+            $term = Term::all()->where('taxonomy', $taxonomy->id);
+            array_push($terms, $term);
+        }
+
+        $terms = $terms[0]->toArray();
+
+        return view('admin.object.index', compact('type', 'taxonomies', 'terms', 'objects'));
     }
 
     public function create(Type $type)
