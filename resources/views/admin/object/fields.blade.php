@@ -28,9 +28,8 @@
 <label for="object-object-excerpt">{{ __('general.excerpt') }}</label>
 <input type="text" id="object-object-excerpt" name="excerpt" placeholder="excerpt" value="{{ $object->excerpt }}">
 
-
 @foreach ($taxonomies as $taxonomy)
-	<label for="object-term-{{ $taxonomy->slug }}">{{ $taxonomy->name }}</label>
+	<label for="object-term-{{ $taxonomy->slug }}">{{ str_singular($taxonomy->name) }}</label>
 
 	<select name="parent" id="object-term-parent">
 			<option></option>
