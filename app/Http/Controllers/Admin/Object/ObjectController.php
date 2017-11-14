@@ -18,13 +18,14 @@ class ObjectController extends Controller
         $objects = Object::all()->where('object_type', $type->id);
         $taxonomies = Taxonomy::all()->where('object_type', $type->id);
 
-        $terms = [];
         foreach ($taxonomies as $taxonomy) {
-            $term = Term::all()->where('taxonomy', $taxonomy->id);
-            array_push($terms, $term);
+            $terms = Term::where(['taxonomy' => $taxonomy->id, 'parent' => null])->get();
+
+            foreach ($terms as $term) {
+                $term->getChildrenRecursively();
+            }
         }
 
-        $terms = $terms[0]->toArray();
 
         return view('admin.object.index', compact('type', 'taxonomies', 'terms', 'objects'));
     }

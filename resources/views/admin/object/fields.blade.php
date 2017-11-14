@@ -32,10 +32,18 @@
 	<label for="object-term-{{ $taxonomy->slug }}">{{ str_singular($taxonomy->name) }}</label>
 
 	<select name="parent" id="object-term-parent">
-			<option></option>
+			<option value="" selected>{{ __('forms.select.value.normal') . ' ' . str_singular($taxonomy->name) }}</option>
 			@foreach ($terms as $term)
 				@if ($term['taxonomy'] == $taxonomy->id)
 					<option value="{{ $term['id'] }}">{{ $term['name'] }}</option>
+				@endif
+
+				@if ($term['hasChildren'])
+					<optgroup>
+						@foreach ($term['children'] as $child)
+							<option value="{{ $child['id'] }}">{{ $child['name'] }}</option>
+						@endforeach
+					</optgroup>
 				@endif
 			@endforeach
 	</select>
