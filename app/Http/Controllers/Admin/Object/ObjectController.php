@@ -53,6 +53,7 @@ class ObjectController extends Controller
             'template'      => 'required|integer',
             'comments'      => 'required|boolean',
             // 'status'        => 'required|unique_with:objects,status,'.$request->status.'|integer',
+            'terms'         => 'required'
         ]);
 
         $object = Object::create(request([
