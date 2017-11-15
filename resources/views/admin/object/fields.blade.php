@@ -29,24 +29,30 @@
 <input type="text" id="object-object-excerpt" name="excerpt" placeholder="excerpt" value="{{ $object->excerpt }}">
 
 @foreach ($taxonomies as $taxonomy)
-	<label for="object-term-{{ $taxonomy->slug }}">{{ str_singular($taxonomy->name) }}</label>
+	<label for="object-term-{{ $taxonomy->slug }}">{{ $taxonomy->name }}</label>
 
-	<select name="parent" id="object-term-parent">
-			<option value="" selected>{{ __('forms.select.value.normal') . ' ' . str_singular($taxonomy->name) }}</option>
-			@foreach ($terms as $term)
-				@if ($term['taxonomy'] == $taxonomy->id)
-					<option value="{{ $term['id'] }}">{{ $term['name'] }}</option>
-				@endif
+	<ul>
+		@foreach ($terms as $term)
+			@if ($term['taxonomy'] == $taxonomy->id)
+				<li>
+					<label>{{ $term['name'] }}</label>
+					<input type="checkbox" name="terms[]" value="{{ $term['id'] }}">
 
-				@if ($term['hasChildren'])
-					<optgroup>
-						@foreach ($term['children'] as $child)
-							<option value="{{ $child['id'] }}">{{ $child['name'] }}</option>
-						@endforeach
-					</optgroup>
-				@endif
-			@endforeach
-	</select>
+					@if ($term['hasChildren'])
+						<ul>
+							@foreach ($term['children'] as $child)
+								<li>
+									<label>{{ $child['name'] }}</label>
+									<input type="checkbox" name="terms[]" value="{{ $child['id'] }}">
+								</li>
+							@endforeach
+						</ul>
+					@endif
+				</li>
+			@endif
+
+		@endforeach
+	</ul>
 @endforeach
 
 

@@ -9,6 +9,7 @@ use \Illuminate\Support\Facades\Validator;
 use \App\Model\Object\Type;
 use \App\Model\Object\Taxonomy;
 use \App\Model\Object\Term;
+use \App\Model\Object\TermRelationship;
 use \App\Model\Object\Object;
 
 class ObjectController extends Controller
@@ -54,7 +55,7 @@ class ObjectController extends Controller
             'status'        => 'required|unique_with:objects,status,'.$request->status.'integer|'
         ]);
 
-        Object::create(request([
+        $object = Object::create(request([
             'name',
             'slug',
             'text',
@@ -65,6 +66,15 @@ class ObjectController extends Controller
             'comments',
             'status'
         ]));
+
+        if (count($request['terms']) != 0) {
+            foreach ($request['terms'] as $term) {
+                TermRelationship::create([
+                    'object' => $object->id,
+                    'object_term' => $term
+                ]);
+            }
+        }
 
         Session::flash('alert-success', __('validation.succeeded.create', ['name' => $request->name]));
         return back();
