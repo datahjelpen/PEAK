@@ -52,7 +52,7 @@ class ObjectController extends Controller
             'author'        => 'required|integer',
             'template'      => 'required|integer',
             'comments'      => 'required|boolean',
-            'status'        => 'required|unique_with:objects,status,'.$request->status.'integer|'
+            // 'status'        => 'required|unique_with:objects,status,'.$request->status.'|integer',
         ]);
 
         $object = Object::create(request([
@@ -64,7 +64,7 @@ class ObjectController extends Controller
             'author',
             'template',
             'comments',
-            'status'
+            // 'status'
         ]));
 
         if (count($request['terms']) != 0) {
