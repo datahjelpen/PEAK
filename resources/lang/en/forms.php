@@ -5,7 +5,9 @@ return [
         'delete' => [
             'ask' => 'Are you sure you want to delete ":name"?',
             'yes' => 'Yes, delete',
-            'no' => 'No, cancel'
+            'yes-icon' => 'check',
+            'no' => 'No, cancel',
+            'no-icon' => 'x'
         ]
     ],
     'select' => [
