@@ -49,3 +49,6 @@ if (token) {
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
+
+window.feather = require('feather-icons');
+window.feather.replace();
