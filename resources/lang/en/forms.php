@@ -11,9 +11,13 @@ return [
         ]
     ],
     'select' => [
-        'value' => [
+        'singular' => [
             'normal' => 'Select a',
             'please' => 'Please select a'
+        ],
+        'plural' => [
+            'normal' => 'Select',
+            'please' => 'Please select'
         ]
     ]
 ];
