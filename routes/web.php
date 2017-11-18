@@ -69,15 +69,6 @@ Route::prefix('{type}')->group(function () {
 
 	Route::get('/', 'Object\TypeController@show')->name('object.type.show');
 
-	// $type = Type::where(['slug' => Request::segment(1)])->first();
-
-	// if ($type) {
-	// 	$object = Object::where(['slug' => Request::segment(2), 'object_type' => $type->id])->first();
-	// 	if ($object) {
-	// 		Route::get('{object}', 'Object\ObjectController@show');
-	// 	}
-	// }
-
 	Route::prefix('{taxonomy}')->group(function () {
 		Route::get('/', 'Object\TaxonomyController@show')->name('object.taxonomy.show');
 		
