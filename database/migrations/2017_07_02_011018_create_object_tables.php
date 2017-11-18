@@ -83,14 +83,14 @@ class CreateObjectTables extends Migration
             $t->timestamps();
         });
 
-        Schema::create('object_term_relationships', function (Blueprint $t) {
+        Schema::create('object_term', function (Blueprint $t) {
             $t->increments('id');
-            $t->unsignedInteger('object');
-            $t->foreign('object')->references('id')->on('objects')->onDelete('cascade');
-            $t->unsignedInteger('object_term');
-            $t->foreign('object_term')->references('id')->on('object_terms')->onDelete('cascade');
+            $t->unsignedInteger('object_id');
+            $t->foreign('object_id')->references('id')->on('objects')->onDelete('cascade');
+            $t->unsignedInteger('term_id');
+            $t->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
 
-            $t->unique( ['object', 'object_term'] );
+            $t->unique( ['object_id', 'term_id'] );
 
             $t->timestamps();
         });

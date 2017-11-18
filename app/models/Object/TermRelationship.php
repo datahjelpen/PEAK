@@ -4,10 +4,10 @@ namespace App\Model\Object;
 
 class TermRelationship extends Model
 {
-	protected $table = 'object_term_relationships';
+	protected $table = 'object_term';
 
     protected $fillable = [
-        'object',
-        'object_term'
+        'object_id',
+        'term_id'
     ];
 }
