@@ -23,9 +23,12 @@ Route::prefix('admin')->group(function () {
 			Route::get('taxonomies',           'Admin\Object\TaxonomyController@index')->name('superadmin.object.taxonomies');
 			Route::get('taxonomy/new',         'Admin\Object\TaxonomyController@create')->name('superadmin.object.taxonomy.create');
 			Route::post('taxonomy/create',     'Admin\Object\TaxonomyController@store')->name('superadmin.object.taxonomy.store');
-			Route::get('{taxonomy}/edit',      'Admin\Object\TaxonomyController@edit')->name('superadmin.object.taxonomy.edit');
-			Route::patch('{taxonomy}/update',  'Admin\Object\TaxonomyController@update')->name('superadmin.object.taxonomy.update');
-			Route::delete('{taxonomy}/delete', 'Admin\Object\TaxonomyController@destroy')->name('superadmin.object.taxonomy.destroy');
+			Route::prefix('taxonomy')->group(function () {
+				Route::get('{taxonomy}/edit',      'Admin\Object\TaxonomyController@edit')->name('superadmin.object.taxonomy.edit');
+				Route::patch('{taxonomy}/update',  'Admin\Object\TaxonomyController@update')->name('superadmin.object.taxonomy.update');
+				Route::delete('{taxonomy}/delete', 'Admin\Object\TaxonomyController@destroy')->name('superadmin.object.taxonomy.destroy');
+			});
+
 			Route::get('statuses',           'Admin\Object\StatusController@index')->name('superadmin.statuses');
 			Route::get('status/new',         'Admin\Object\StatusController@create')->name('superadmin.status.create');
 			Route::post('status/create',     'Admin\Object\StatusController@store')->name('superadmin.status.store');
