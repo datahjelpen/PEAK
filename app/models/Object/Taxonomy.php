@@ -4,7 +4,7 @@ namespace App\Model\Object;
 
 class Taxonomy extends Model
 {
-	protected $table = 'object_taxonomies';
+	protected $table = 'taxonomies';
 
     protected $fillable = [
         'name',

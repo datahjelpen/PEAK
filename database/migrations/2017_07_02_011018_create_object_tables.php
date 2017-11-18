@@ -22,7 +22,7 @@ class CreateObjectTables extends Migration
             $t->timestamps();
         });
 
-        Schema::create('object_statuses', function (Blueprint $t) {
+        Schema::create('statuses', function (Blueprint $t) {
             $t->increments('id');
             $t->string('name');
             $t->string('slug');
@@ -48,14 +48,14 @@ class CreateObjectTables extends Migration
             // $t->foreign('template')->references('id')->on('templates');
             $t->boolean('comments');
             $t->unsignedInteger('status');
-            $t->foreign('status')->references('id')->on('object_statuses');
+            $t->foreign('status')->references('id')->on('statuses');
 
             $t->unique( ['slug', 'object_type', 'status'] );
 
             $t->timestamps();
         });
 
-        Schema::create('object_taxonomies', function (Blueprint $t) {
+        Schema::create('taxonomies', function (Blueprint $t) {
             $t->increments('id');
             $t->string('name');
             $t->string('slug');
@@ -68,7 +68,7 @@ class CreateObjectTables extends Migration
             $t->timestamps();
         });
 
-        Schema::create('object_terms', function (Blueprint $t) {
+        Schema::create('terms', function (Blueprint $t) {
             $t->increments('id');
             $t->string('name');
             $t->string('slug');
@@ -76,7 +76,7 @@ class CreateObjectTables extends Migration
             $t->unsignedInteger('template')->nullable()->default(null);
             // $t->foreign('template')->references('id')->on('templates');
             $t->unsignedInteger('taxonomy');
-            $t->foreign('taxonomy')->references('id')->on('object_taxonomies')->onDelete('cascade');
+            $t->foreign('taxonomy')->references('id')->on('taxonomies')->onDelete('cascade');
 
             $t->unique( ['slug', 'taxonomy'] );
 
@@ -105,8 +105,8 @@ class CreateObjectTables extends Migration
     {
         Schema::dropIfExists('objects');
         Schema::dropIfExists('object_types');
-        Schema::dropIfExists('object_taxonomies');
+        Schema::dropIfExists('taxonomies');
+        Schema::dropIfExists('terms');
         Schema::dropIfExists('object_term');
-        Schema::dropIfExists('object_term_relationships');
     }
 }

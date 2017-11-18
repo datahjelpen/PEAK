@@ -31,7 +31,7 @@ class TaxonomyController extends Controller
 
         $this->validate($request, [
             'name'          => 'required|string|min:2',
-            'slug'          => 'required|unique_with:object_taxonomies,object_type|string|min:2',
+            'slug'          => 'required|unique_with:taxonomies,object_type|string|min:2',
             'hierarchical'  => 'required|boolean',
         ]);
 
@@ -72,7 +72,7 @@ class TaxonomyController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name'          => 'required|string|min:2',
-            'slug'          => 'required|unique_with:object_taxonomies,object_type,'.$taxonomy->id.'|string|min:2',
+            'slug'          => 'required|unique_with:taxonomies,object_type,'.$taxonomy->id.'|string|min:2',
             'hierarchical'  => 'required|boolean',
         ]);
 

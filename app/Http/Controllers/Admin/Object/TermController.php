@@ -41,7 +41,7 @@ class TermController extends Controller
 
         $this->validate($request, [
             'name'          => 'required|string|min:2',
-            'slug'          => 'required|unique_with:object_terms,taxonomy|string|min:2',
+            'slug'          => 'required|unique_with:terms,taxonomy|string|min:2',
             'parent'        => 'integer|nullable',
             'template'      => 'integer|nullable',
         ]);
@@ -85,7 +85,7 @@ class TermController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name'          => 'required|string|min:2',
-            'slug'          => 'required|unique_with:object_terms,taxonomy,'.$term->id.'|string|min:2',
+            'slug'          => 'required|unique_with:terms,taxonomy,'.$term->id.'|string|min:2',
             'parent'        => 'integer|nullable',
             'template'      => 'integer|nullable',
         ]);
