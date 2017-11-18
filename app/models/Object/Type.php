@@ -11,4 +11,10 @@ class Type extends Model
         'slug',
         'template',
     ];
+
+    public function statuses()
+    {
+        return $this->hasMany('App\Model\Object\Status');
+    }
+
 }

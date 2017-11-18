@@ -26,10 +26,10 @@ class CreateObjectTables extends Migration
             $t->increments('id');
             $t->string('name');
             $t->string('slug');
-            $t->unsignedInteger('object_type');
-            $t->foreign('object_type')->references('id')->on('object_types')->onDelete('cascade');
+            $t->unsignedInteger('type_id');
+            $t->foreign('type_id')->references('id')->on('object_types')->onDelete('cascade');
             
-            $t->unique( ['slug', 'object_type'] );
+            $t->unique( ['slug', 'type_id'] );
 
             $t->timestamps();
         });

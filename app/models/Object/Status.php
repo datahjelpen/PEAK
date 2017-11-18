@@ -12,7 +12,8 @@ class Status extends Model
 		'object_type'
 	];
 
-	static function getSingle(Type $type, Status $status) {
-		return Status::where(['slug' => $status->slug, 'object_type' => $type->id])->first();
+	public function type()
+	{
+			return $this->belongsTo('App\Model\Object\Type');
 	}
 }
