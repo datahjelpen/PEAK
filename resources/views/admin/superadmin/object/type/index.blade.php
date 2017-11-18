@@ -31,6 +31,7 @@
 					</div>
 
 					<a href="{{ route('superadmin.object.taxonomies', $type->slug) }}">Taxonomies</a>
+					<a href="{{ route('superadmin.statuses', $type->slug) }}">Statuses</a>
 				</li>
 			@endforeach
 		</ul>

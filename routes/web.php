@@ -26,6 +26,14 @@ Route::prefix('admin')->group(function () {
 			Route::get('{taxonomy}/edit',      'Admin\Object\TaxonomyController@edit')->name('superadmin.object.taxonomy.edit');
 			Route::patch('{taxonomy}/update',  'Admin\Object\TaxonomyController@update')->name('superadmin.object.taxonomy.update');
 			Route::delete('{taxonomy}/delete', 'Admin\Object\TaxonomyController@destroy')->name('superadmin.object.taxonomy.destroy');
+			Route::get('statuses',           'Admin\Object\StatusController@index')->name('superadmin.statuses');
+			Route::get('status/new',         'Admin\Object\StatusController@create')->name('superadmin.status.create');
+			Route::post('status/create',     'Admin\Object\StatusController@store')->name('superadmin.status.store');
+			Route::prefix('status')->group(function () {
+				Route::get('{status}/edit',      'Admin\Object\StatusController@edit')->name('superadmin.status.edit');
+				Route::patch('{status}/update',  'Admin\Object\StatusController@update')->name('superadmin.status.update');
+				Route::delete('{status}/delete', 'Admin\Object\StatusController@destroy')->name('superadmin.status.destroy');
+			});
 		});
 	});
 
