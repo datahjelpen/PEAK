@@ -95,6 +95,7 @@ class ObjectController extends Controller
 
     public function update(Type $type, Request $request, Object $object)
     {
+        $slug_changed = $object->slug_changed($object->slug, $request->slug);
         $object = Object::getSingle($type, $object);
 
         if (!$request->slug && $request->name) $request->merge(['slug' => str_slug($request->name, '-')]);
@@ -119,8 +120,6 @@ class ObjectController extends Controller
             Session::flash('alert-danger', __('validation.failed.update', ['name' => $object->name]));
             return redirect()->route('admin.object.edit', [$type->slug, $object->slug])->withErrors($validator)->withInput();
         }
-
-        $slug_changed = ($object->slug == $request->slug) ? false : true;
 
         $object->name        = $request->name;
         $object->slug        = $request->slug;
