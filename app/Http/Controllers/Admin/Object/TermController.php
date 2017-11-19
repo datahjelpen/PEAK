@@ -92,7 +92,7 @@ class TermController extends Controller
 
         if ($validator->fails()) {
             Session::flash('alert-danger', __('validation.failed.update', ['name' => $term->name]));
-            return redirect()->route('admin.object.term.edit', [$type->slug, $taxonomy->slug, $term->slug])->withErrors($validator)->withInput();
+            return redirect()->route('admin.term.edit', [$type->slug, $taxonomy->slug, $term->slug])->withErrors($validator)->withInput();
         }
 
         $slug_changed = ($term->slug == $request->slug) ? false : true;
@@ -107,7 +107,7 @@ class TermController extends Controller
         Session::flash('alert-success', __('validation.succeeded.update', ['name' => $term->name]));
 
         if ($slug_changed) {
-            return redirect()->route('admin.object.term.edit', [$type->slug, $taxonomy->slug, $term->slug]);
+            return redirect()->route('admin.term.edit', [$type->slug, $taxonomy->slug, $term->slug]);
         }
 
         return back();

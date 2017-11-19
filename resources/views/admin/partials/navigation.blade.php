@@ -5,7 +5,7 @@
 			<span>Superadmin</span>
 			<ul>
 				<li>
-					<a href="{{ route('superadmin.object.types') }}">Object types</a>
+					<a href="{{ route('superadmin.types') }}">Types</a>
 				</li>
 			</ul>
 		</li>

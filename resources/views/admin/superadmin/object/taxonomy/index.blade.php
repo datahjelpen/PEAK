@@ -15,8 +15,8 @@
 
  					<button class="modal-trigger" data-modal="#show-object-type-{{ $taxonomy->id }}">{{ __('navigation.actions.view_quick') }}</button>
 					<div id="show-object-type-{{ $taxonomy->id }}" class="modal">
-						<a href="{{ route('object.taxonomy.show', [$type->slug, $taxonomy->slug]) }}">{{ __('general.actions.open') }}</a>
-						<a href="{{ route('object.taxonomy.show', [$type->slug, $taxonomy->slug]) }}" target="_blank">{{ __('navigation.actions.open_new_tab') }}</a>
+						<a href="{{ route('taxonomy.show', [$type->slug, $taxonomy->slug]) }}">{{ __('general.actions.open') }}</a>
+						<a href="{{ route('taxonomy.show', [$type->slug, $taxonomy->slug]) }}" target="_blank">{{ __('navigation.actions.open_new_tab') }}</a>
 						@include('object.taxonomy.content-main', ['taxonomy' => $taxonomy])
 					</div>
 					
@@ -30,7 +30,7 @@
 						@include('admin.superadmin.object.taxonomy.form-delete', [$type->slug, $taxonomy->slug])
 					</div>
 
-					<a href="{{ route('admin.object.terms', [$type->slug, $taxonomy->slug]) }}">Terms</a>
+					<a href="{{ route('admin.terms', [$type->slug, $taxonomy->slug]) }}">Terms</a>
 				</li>
 			@endforeach
 		</ul>

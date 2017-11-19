@@ -78,7 +78,7 @@ class TaxonomyController extends Controller
 
         if ($validator->fails()) {
             Session::flash('alert-danger', __('validation.failed.update', ['name' => $taxonomy->name]));
-            return redirect()->route('superadmin.object.taxonomy.edit', [$type->slug, $taxonomy->slug])->withErrors($validator)->withInput();
+            return redirect()->route('superadmin.taxonomy.edit', [$type->slug, $taxonomy->slug])->withErrors($validator)->withInput();
         }
 
         $slug_changed = ($taxonomy->slug == $request->slug) ? false : true;
@@ -92,7 +92,7 @@ class TaxonomyController extends Controller
         Session::flash('alert-success', __('validation.succeeded.update', ['name' => $taxonomy->name]));
 
         if ($slug_changed) {
-            return redirect()->route('superadmin.object.taxonomy.edit', [$type->slug, $taxonomy->slug]);
+            return redirect()->route('superadmin.taxonomy.edit', [$type->slug, $taxonomy->slug])->withErrors($validator)->withInput();
         }
 
         return back();

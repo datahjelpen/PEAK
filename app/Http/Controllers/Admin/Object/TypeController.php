@@ -68,7 +68,7 @@ class TypeController extends Controller
 
         if ($validator->fails()) {
             Session::flash('alert-danger', __('validation.failed.update', ['name' => $type->name]));
-            return redirect()->route('superadmin.object.type.edit', $type->slug)->withErrors($validator)->withInput();
+            return redirect()->route('superadmin.type.edit', $type->slug)->withErrors($validator)->withInput();
         }
 
         $slug_changed = ($type->slug == $request->slug) ? false : true;
@@ -82,7 +82,7 @@ class TypeController extends Controller
         Session::flash('alert-success', __('validation.succeeded.update', ['name' => $type->name]));
 
         if ($slug_changed) {
-            return redirect()->route('superadmin.object.type.edit', $type->slug);
+            return redirect()->route('superadmin.type.edit', $type->slug);
         }
 
         return back();

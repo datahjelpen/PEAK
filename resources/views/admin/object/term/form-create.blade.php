@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('admin.object.term.store', [$type->slug, $taxonomy->slug]) }}">
+<form method="POST" action="{{ route('admin.term.store', [$type->slug, $taxonomy->slug]) }}">
 	{{ csrf_field() }}
 
 	@include('admin.object.term.fields')
