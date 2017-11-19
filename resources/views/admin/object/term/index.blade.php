@@ -7,11 +7,9 @@
 	@include('admin.object.term.form-create')
 	<hr>
 
-	@if (count($parents))
-		<ul id="object-terms-list">
-			@foreach ($parents as $parent)
-				@include('admin.object.term.list-item-parent')
-			@endforeach
-		</ul>
-	@endif
+	<ul id="object-terms-list">
+		@foreach ($parents as $parent)
+			@include('admin.object.term.list-item-parent')
+		@endforeach
+	</ul>
 @endsection

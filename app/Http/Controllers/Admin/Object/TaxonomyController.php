@@ -35,6 +35,7 @@ class TaxonomyController extends Controller
 
         $taxonomy->slug = $request->slug;
         $taxonomy->name = $request->name;
+        $taxonomy->hierarchical = $request->hierarchical;
         $taxonomy->type()->associate($type);
 
         $taxonomy->save();

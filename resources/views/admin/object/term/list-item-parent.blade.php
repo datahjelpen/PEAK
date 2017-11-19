@@ -3,7 +3,7 @@
 
 	@include('admin.object.term.list-item', ['term' => $parent])
 
-	@if (isset($parent->children))
+	@if ($taxonomy->hierarchical && $parent->hasChildren)
 		<ul>
 			@foreach ($parent->children as $child)
 				@include('admin.object.term.list-item-child', ['term' => $child])

@@ -34,33 +34,21 @@ class Term extends Model
 		return $this->hasMany('App\Model\Object\Term', 'parent_id');
 	}
 
+	# Will make "hasChildren" and "children" properties in object
 	function hasChildren()
 	{
-		$this->getChildren();
-		return count($this->children);
+		$this->children = $this->children()->get();
+		$this->hasChildren = count($this->children) ? true : false;
+		return $this->hasChildren;
 	}
 
-	function getChildren()
-	{
-		$children = Term::where(['parent_id' => $this->id])->get();
-
-		if (count($children)) {
-			$this->children = $children;
-		}
-	}
-
+	# Will make "hasChildren" and "children" properties in object recursively into the children
 	function getChildrenRecursively()
 	{
-
 		if ($this->hasChildren()) {
-			$this->hasChildren = true;
-			$this->getChildren();
-
 			foreach ($this->children as $child) {
 				$child->getChildrenRecursively();
 			}
-		} else {
-			$this->hasChildren = false;
 		}
 	}
 }

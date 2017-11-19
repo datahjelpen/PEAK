@@ -3,7 +3,7 @@
 
 	@include('admin.object.term.list-item', ['term' => $term])
 
-	@if (isset($term->children))
+	@if ($term->hasChildren)
 		<button class="modal-trigger" data-modal="#show_children-object-type-{{ $term->id }}">{{ __('general.actions.show_children') }}</button>
 		<div id="show_children-object-type-{{ $term->id }}" class="modal">
 			<ul>
