@@ -23,10 +23,10 @@
 <input type="text" id="object-object-slug" name="slug" placeholder="slug" value="{{ $object->slug }}">
 
 <label for="object-object-text">{{ __('general.text') }}</label>
-<input type="text" id="object-object-text" name="text" placeholder="text" value="{{ $object->text }}">
+<textarea id="object-object-text" name="text" placeholder="text">{{ $object->text }}</textarea>
 
 <label for="object-object-excerpt">{{ __('general.excerpt') }}</label>
-<input type="text" id="object-object-excerpt" name="excerpt" placeholder="excerpt" value="{{ $object->excerpt }}">
+<textarea id="object-object-excerpt" name="excerpt" placeholder="excerpt">{{ $object->excerpt }}</textarea>
 
 @foreach ($taxonomies as $taxonomy)
 	<label for="object-term-{{ $taxonomy->slug }}">{{ $taxonomy->name }}</label>
