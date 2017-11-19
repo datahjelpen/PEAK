@@ -50,6 +50,8 @@ Route::prefix('admin')->group(function () {
 		Route::patch('{object}/update',  'Admin\Object\ObjectController@update')->name('admin.object.update');
 		Route::delete('{object}/delete', 'Admin\Object\ObjectController@destroy')->name('admin.object.destroy');
 
+		///            /admin/posts/categories will get the wrong one.
+		//     TODO: Fix slug fetching in db, so it looks at assoicated type
 		Route::prefix('{taxonomy}')->group(function () {
 			Route::get('/',                'Admin\Object\TermController@index')->name('admin.terms');
 			Route::get('term/new',         'Admin\Object\TermController@create')->name('admin.term.create');

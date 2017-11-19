@@ -15,8 +15,8 @@
 
 					<button class="modal-trigger" data-modal="#show-object-type-{{ $object->id }}">{{ __('navigation.actions.view_quick') }}</button>
 					<div id="show-object-type-{{ $object->id }}" class="modal">
-						<a href="{{ route('object.show', [$type->slug, $object->slug]) }}">{{ __('general.actions.open') }}</a>
-						<a href="{{ route('object.show', [$type->slug, $object->slug]) }}" target="_blank">{{ __('navigation.actions.open_new_tab') }}</a>
+						{{-- <a href="{{ route('object.show', [$type->slug, $object->slug]) }}">{{ __('general.actions.open') }}</a> --}}
+						{{-- <a href="{{ route('object.show', [$type->slug, $object->slug]) }}" target="_blank">{{ __('navigation.actions.open_new_tab') }}</a> --}}
 						<button class="modal-close"><i data-feather="x-square"></i></button>
 						@include('object.content-main', ['object' => $object])
 					</div>

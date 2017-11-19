@@ -1,4 +1,8 @@
 <h1>This is an object</h1>
+<pre>
+	{{ dump($object) }}
+	{{ dump($object->terms) }}
+</pre>
 <ul>
 	<li>id:       {{ $object->id }}</li>
 	<li>name:     {{ $object->name }}</li>

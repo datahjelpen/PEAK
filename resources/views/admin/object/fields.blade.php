@@ -14,6 +14,10 @@
 	if (isset($object->_old_slug)) {
 		$object->slug = $object->_old_slug;
 	}
+
+	echo "<pre>";
+	var_dump($object);
+	echo "</pre>";
 @endphp
 
 <label for="object-object-name">{{ __('general.name') }}</label>
@@ -29,21 +33,20 @@
 <textarea id="object-object-excerpt" name="excerpt" placeholder="excerpt">{{ $object->excerpt }}</textarea>
 
 @foreach ($taxonomies as $taxonomy)
-	<label for="object-term-{{ $taxonomy->slug }}">{{ $taxonomy->name }}</label>
-
+	<p><strong>{{ $taxonomy->name }}</strong></p>
 	<ul>
 		@foreach ($terms as $term)
 			@if ($term['taxonomy'] == $taxonomy->id)
 				<li>
-					<label>{{ $term['name'] }}</label>
-					<input type="checkbox" name="terms[]" value="{{ $term['id'] }}">
+					<label for="term-{{ $term['id'] }}">{{ $term['name'] }}</label>
+					<input id="term-{{ $term['id'] }}" type="checkbox" name="terms[]" value="{{ $term['id'] }}" {{ $term['id'] == $term->parent ? 'selected' : null }}>
 
 					@if ($term['hasChildren'])
 						<ul>
 							@foreach ($term['children'] as $child)
 								<li>
-									<label>{{ $child['name'] }}</label>
-									<input type="checkbox" name="terms[]" value="{{ $child['id'] }}">
+									<label for="term-{{ $child['id'] }}">{{ $child['name'] }}</label>
+									<input id="term-{{ $child['id'] }}" type="checkbox" name="terms[]" value="{{ $child['id'] }}">
 								</li>
 							@endforeach
 						</ul>

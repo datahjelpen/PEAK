@@ -14,9 +14,12 @@ class TermController extends Controller
 {
     public function index(Type $type, Taxonomy $taxonomy)
     {
-        dump($taxonomy->hierarchical);
         if ($taxonomy->hierarchical) {
-            $parents = $taxonomy->terms()->where(['parent_id' => null])->get();
+            // $parents = $taxonomy->terms()->where(['parent_id' => null])->get();
+            // $parents = $taxonomy->terms()->get();
+            $parents = $taxonomy;
+
+            dd($parents);
             foreach ($parents as $parent) $parent->getChildrenRecursively();
         } else {
             $parents = $taxonomy->terms()->get();
