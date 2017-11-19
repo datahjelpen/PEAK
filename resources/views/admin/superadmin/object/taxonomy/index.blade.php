@@ -7,9 +7,9 @@
 	@include('admin.superadmin.object.taxonomy.form-create')
 	<hr>
 
-	@if (count($taxonomies))
+	@if (count($type->taxonomies))
 		<ul id="object-types-list">
-			@foreach ($taxonomies as $taxonomy)
+			@foreach ($type->taxonomies as $taxonomy)
 				<li id="object-types-list-item-{{ $taxonomy->id }}" class="object-types-list-item">
 					{{ $taxonomy->name }}
 
