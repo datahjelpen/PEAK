@@ -1,5 +1,5 @@
 <li>
-	@include('admin.object.term.field-item', ['term' => $parent])
+	@include('admin.object.term.field-item', ['_term' => $parent])
 
 	@if ($parent->hasChildren)
 		<ul>

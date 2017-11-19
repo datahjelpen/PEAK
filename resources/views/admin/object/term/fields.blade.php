@@ -5,7 +5,7 @@
 <input type="text" id="object-term-slug" name="slug" placeholder="slug" value="{{ old('slug', isset($term->slug) ? $term->slug : null) }}">
 
 @if ($taxonomy->hierarchical)
-	<label for="object-term-parent">{{ __('general.parent') }}</label>
+	<p>{{ __('general.parent') }}</p>
 	<ul>
 		@foreach ($parents as $parent)
 			@include('admin.object.term.field-item-parent')

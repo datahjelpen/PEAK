@@ -56,7 +56,14 @@ class TermController extends Controller
 
     public function edit(Type $type, Taxonomy $taxonomy, Term $term)
     {
-        return view('admin.object.term.edit', compact('type', 'taxonomy', 'term', 'terms'));
+        if ($taxonomy->hierarchical) {
+            $parents = $taxonomy->terms()->where(['parent_id' => null])->get();
+            foreach ($parents as $parent) $parent->getChildrenRecursively();
+        } else {
+            $parents = $taxonomy->terms()->get();
+        }
+
+        return view('admin.object.term.edit', compact('type', 'taxonomy', 'term', 'parents'));
     }
 
     public function update(Type $type, Taxonomy $taxonomy, Request $request, Term $term)
