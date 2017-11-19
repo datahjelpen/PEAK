@@ -12,9 +12,6 @@ class TermController extends Controller
 {
     public function show(Type $type, Taxonomy $taxonomy, Term $term)
     {
-        $taxonomy = Taxonomy::getSingle($type, $taxonomy);
-        $term = Term::getSingle($type, $taxonomy, $term);
-
         return view('object.term.show', compact('type', 'taxonomy', 'term'));
     }
 }
