@@ -43,13 +43,6 @@ class TypeController extends Controller
 
     public function edit(Type $type)
     {
-        if (session('_old_input') !== null) {
-            $slug = $type->slug; // Keep the original slug to prevent url issues
-            $type = json_decode(json_encode(session('_old_input')), false); // Fill object with old input values
-            $type->_old_slug = $type->slug;
-            $type->slug = $slug;
-        }
-
         return view('admin.superadmin.object.type.edit', compact('type'));
     }
 

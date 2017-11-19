@@ -45,13 +45,6 @@ class TaxonomyController extends Controller
 
     public function edit(Type $type, Taxonomy $taxonomy)
     {
-        if (session('_old_input') !== null) {
-            $slug = $taxonomy->slug; // Keep the original slug to prevent url issues
-            $taxonomy = json_decode(json_encode(session('_old_input')), false); // Fill object with old input values
-            $taxonomy->_old_slug = $taxonomy->slug;
-            $taxonomy->slug = $slug;
-        }
-
         return view('admin.superadmin.object.taxonomy.edit', compact('type', 'taxonomy'));
     }
 
