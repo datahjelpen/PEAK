@@ -43,7 +43,7 @@ class TermController extends Controller
         $term->slug = $request->slug;
         $term->name = $request->name;
         $term->template = $request->template;
-        $term->parent = $request->parent;
+        $term->parent()->associate($request->parent_id);
         $term->taxonomy()->associate($taxonomy);
 
         $term->save();
@@ -83,10 +83,13 @@ class TermController extends Controller
 
         $slug_changed = ($term->slug == $request->slug) ? false : true;
 
+
         $term->name     = $request->name;
         $term->slug     = $request->slug;
         $term->parent   = $request->parent;
+        // $term->parent_id= $request->parent_id;
         $term->template = $request->template;
+        $term->parent()->associate($request->parent_id);
         $term->taxonomy()->associate($taxonomy);
 
         $term->save();
