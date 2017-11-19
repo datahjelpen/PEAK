@@ -17,4 +17,13 @@ class Type extends Model
         return $this->hasMany('App\Model\Object\Status');
     }
 
+    public function taxonomies()
+    {
+        return $this->hasMany('App\Model\Object\Taxonomy');
+    }
+
+    public function terms()
+    {
+        return $this->hasManyThrough('App\Model\Object\Term', 'App\Model\Object\Taxonomy');
+    }
 }

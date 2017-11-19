@@ -13,5 +13,13 @@ class Taxonomy extends Model
         'object_type'
     ];
 
+    public function type()
+    {
+        return $this->belongsTo('App\Model\Object\Type');
+    }
+
+    public function terms()
+    {
+        return $this->hasMany('App\Model\Object\Term');
     }
 }
