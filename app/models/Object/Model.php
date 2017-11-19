@@ -14,6 +14,8 @@ class Model extends \Illuminate\Database\Eloquent\Model
 	{
 		if (!$request->slug && $request->name) {
 			$request->merge(['slug' => str_slug($request->name, '-')]);
+		} else if ($request->slug) {
+			$request->slug = str_slug($request->slug);
 		}
 
 		return $request->slug;
