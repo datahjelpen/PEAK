@@ -56,7 +56,11 @@
 
 
 <label for="object-object-author">{{ __('general.author') }}</label>
-<input type="text" id="object-object-author" name="author" placeholder="author" value="{{ $object->author }}">
+<select id="object-object-author" name="author">
+	<option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
+</select>
+
+{{-- <input type="text" id="object-object-author" name="author" placeholder="author" value="{{ $object->author }}"> --}}
 
 <label for="object-object-template">{{ __('general.template') }}</label>
 <input type="text" id="object-object-template" name="template" placeholder="template" value="{{ $object->template }}">
