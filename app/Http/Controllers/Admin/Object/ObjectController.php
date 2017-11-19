@@ -9,8 +9,8 @@ use \Illuminate\Support\Facades\Validator;
 use \App\Model\Object\Type;
 use \App\Model\Object\Taxonomy;
 use \App\Model\Object\Term;
-use \App\Model\Object\TermRelationship;
 use \App\Model\Object\Object;
+use \App\Model\Object\Status;
 
 class ObjectController extends Controller
 {
@@ -27,8 +27,9 @@ class ObjectController extends Controller
             }
         }
 
+        $statuses = Status::all()->where('object_type', $type->id);
 
-        return view('admin.object.index', compact('type', 'taxonomies', 'terms', 'objects'));
+        return view('admin.object.index', compact('type', 'taxonomies', 'terms', 'objects', 'statuses'));
     }
 
     public function create(Type $type)
@@ -52,7 +53,7 @@ class ObjectController extends Controller
             'author'        => 'required|integer',
             'template'      => 'required|integer',
             'comments'      => 'required|boolean',
-            // 'status'        => 'required|unique_with:objects,status,'.$request->status.'|integer',
+            'status'        => 'required|unique_with:objects,status,'.$request->status.'|integer',
             'terms'         => 'required'
         ]);
 
@@ -65,7 +66,7 @@ class ObjectController extends Controller
             'author',
             'template',
             'comments',
-            // 'status'
+            'status'
         ]));
 
         if (count($request['terms']) != 0) {

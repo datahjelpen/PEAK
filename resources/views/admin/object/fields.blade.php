@@ -50,7 +50,6 @@
 					@endif
 				</li>
 			@endif
-
 		@endforeach
 	</ul>
 @endforeach
@@ -62,8 +61,18 @@
 <label for="object-object-template">{{ __('general.template') }}</label>
 <input type="text" id="object-object-template" name="template" placeholder="template" value="{{ $object->template }}">
 
-<label for="object-object-status">{{ __('general.status') }}</label>
-<input type="text" id="object-object-status" name="status" placeholder="status" value="{{ $object->status }}">
+{{-- <label for="object-object-status">{{ __('general.status') }}</label>
+<input type="text" id="object-object-status" name="status" placeholder="status" value="{{ $object->status }}"> --}}
+
+<p><strong>Statuses</strong></p>
+<select name="status">
+	@foreach ($statuses as $status)
+		<option value="{{ $status['id'] }}">{{ $status['name'] }}</option>
+
+		{{-- {{ $status['id'] == $object->status ? 'selected' : null }} --}}
+
+	@endforeach
+</select>
 
 <label for="object-object-comments">{{ __('general.comments') }}</label>
 <input type="checkbox" id="object-object-comments" name="comments" placeholder="comments" {{ $object->comments ? 'checked' : null }}>
