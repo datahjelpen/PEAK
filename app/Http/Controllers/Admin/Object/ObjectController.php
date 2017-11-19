@@ -71,10 +71,7 @@ class ObjectController extends Controller
 
         if (count($request['terms']) != 0) {
             foreach ($request['terms'] as $term) {
-                TermRelationship::create([
-                    'object' => $object->id,
-                    'object_term' => $term
-                ]);
+                $object->terms()->attach($term);
             }
         }
 
