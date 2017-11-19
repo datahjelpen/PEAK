@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('superadmin.object.type.store') }}">
+<form method="POST" action="{{ route('superadmin.type.store') }}">
 	{{ csrf_field() }}
 
 	@include('admin.superadmin.object.type.fields')

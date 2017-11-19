@@ -40,8 +40,8 @@ class CreateObjectTables extends Migration
             $t->string('slug');
             $t->text('text')->nullable()->default(null);
             $t->text('excerpt')->nullable()->default(null);
-            $t->unsignedInteger('object_type');
-            $t->foreign('object_type')->references('id')->on('object_types')->onDelete('cascade');
+            $t->unsignedInteger('type_id');
+            $t->foreign('type_id')->references('id')->on('object_types')->onDelete('cascade');
             $t->unsignedInteger('author');
             $t->foreign('author')->references('id')->on('users');
             $t->unsignedInteger('template')->nullable()->default(null);
@@ -50,7 +50,7 @@ class CreateObjectTables extends Migration
             $t->unsignedInteger('status');
             $t->foreign('status')->references('id')->on('statuses');
 
-            $t->unique( ['slug', 'object_type', 'status'] );
+            $t->unique( ['slug', 'type_id', 'status'] );
 
             $t->timestamps();
         });
@@ -59,11 +59,11 @@ class CreateObjectTables extends Migration
             $t->increments('id');
             $t->string('name');
             $t->string('slug');
-            $t->unsignedInteger('object_type');
-            $t->foreign('object_type')->references('id')->on('object_types')->onDelete('cascade');
+            $t->unsignedInteger('type_id');
+            $t->foreign('type_id')->references('id')->on('object_types')->onDelete('cascade');
             $t->boolean('hierarchical')->default(true);
 
-            $t->unique( ['slug', 'object_type'] );
+            $t->unique( ['slug', 'type_id'] );
 
             $t->timestamps();
         });
@@ -72,13 +72,14 @@ class CreateObjectTables extends Migration
             $t->increments('id');
             $t->string('name');
             $t->string('slug');
-            $t->unsignedInteger('parent')->nullable()->default(null);
+            $t->unsignedInteger('parent_id')->nullable()->default(null);
+            $t->foreign('parent_id')->references('id')->on('terms')->onDelete('cascade');
             $t->unsignedInteger('template')->nullable()->default(null);
             // $t->foreign('template')->references('id')->on('templates');
-            $t->unsignedInteger('taxonomy');
-            $t->foreign('taxonomy')->references('id')->on('taxonomies')->onDelete('cascade');
+            $t->unsignedInteger('taxonomy_id');
+            $t->foreign('taxonomy_id')->references('id')->on('taxonomies')->onDelete('cascade');
 
-            $t->unique( ['slug', 'taxonomy'] );
+            $t->unique( ['slug', 'taxonomy_id'] );
 
             $t->timestamps();
         });

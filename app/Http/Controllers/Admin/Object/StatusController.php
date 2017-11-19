@@ -13,8 +13,7 @@ class StatusController extends Controller
 {
     public function index(Type $type)
     {
-        $statuses = Status::all()->where('type_id', $type->id);
-        return view('admin.superadmin.object.status.index', compact('type', 'statuses'));
+        return view('admin.superadmin.object.status.index', compact('type'));
     }
 
     public function create(Type $type)
@@ -29,7 +28,7 @@ class StatusController extends Controller
 
         $this->validate($request, [
             'name' => 'required|string|min:2',
-            'slug' => 'required|unique_with:statuses,type_id|string|min:2'
+            'slug' => 'required|unique:statuses,slug,NULL,NULL,type_id,'.$type->id.'|string|min:2'
         ]);
 
         $status->slug = $request->slug;
@@ -44,13 +43,6 @@ class StatusController extends Controller
 
     public function edit(Type $type, Status $status)
     {
-        if (session('_old_input') !== null) {
-            $slug = $status->slug; // Keep the original slug to prevent url issues
-            $status = json_decode(json_encode(session('_old_input')), false); // Fill object with old input values
-            $status->_old_slug = $status->slug;
-            $status->slug = $slug;
-        }
-
         return view('admin.superadmin.object.status.edit', compact('type', 'status'));
     }
 
@@ -60,7 +52,7 @@ class StatusController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:2',
-            'slug' => 'required|unique_with:statuses,type_id,'.$status->id.'|string|min:2',
+            'slug' => 'required|unique:statuses,slug,'.$status->id.',id,type_id,'.$type->id.'|string|min:2'
         ]);
 
         if ($validator->fails()) {

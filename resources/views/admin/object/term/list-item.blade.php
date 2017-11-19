@@ -1,7 +1,7 @@
 <button class="modal-trigger" data-modal="#show-object-type-{{ $term->id }}">{{ __('navigation.actions.view_quick') }}</button>
 <div id="show-object-type-{{ $term->id }}" class="modal">
-	<a href="{{ route('object.term.show', [$type->slug, $taxonomy->slug, $term->slug]) }}">{{ __('general.actions.open') }}</a>
-	<a href="{{ route('object.term.show', [$type->slug, $taxonomy->slug, $term->slug]) }}" target="_blank">{{ __('navigation.actions.open_new_tab') }}</a>
+	<a href="{{ route('term.show', [$type->slug, $taxonomy->slug, $term->slug]) }}">{{ __('general.actions.open') }}</a>
+	<a href="{{ route('term.show', [$type->slug, $taxonomy->slug, $term->slug]) }}" target="_blank">{{ __('navigation.actions.open_new_tab') }}</a>
 	@include('object.term.content-main', ['term' => $term])
 </div>
 

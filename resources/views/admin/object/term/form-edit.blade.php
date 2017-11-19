@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('admin.object.term.update', [$type->slug, $taxonomy->slug, $term->slug]) }}">
+<form method="POST" action="{{ route('admin.term.update', [$type->slug, $taxonomy->slug, $term->slug]) }}">
 	{{ method_field('PATCH') }}
 	{{ csrf_field() }}
 

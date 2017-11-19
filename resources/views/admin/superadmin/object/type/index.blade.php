@@ -30,7 +30,7 @@
 						@include('admin.superadmin.object.type.form-delete', ['type' => $type])
 					</div>
 
-					<a href="{{ route('superadmin.object.taxonomies', $type->slug) }}">Taxonomies</a>
+					<a href="{{ route('superadmin.taxonomies', $type->slug) }}">Taxonomies</a>
 					<a href="{{ route('superadmin.statuses', $type->slug) }}">Statuses</a>
 				</li>
 			@endforeach

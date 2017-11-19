@@ -14,9 +14,7 @@ class TermController extends Controller
 {
     public function index(Type $type, Taxonomy $taxonomy)
     {
-        $taxonomy = Taxonomy::getSingle($type, $taxonomy);
-        $terms = Term::where('taxonomy', $taxonomy->id)->get();
-        $parents = Term::where(['taxonomy' => $taxonomy->id, 'parent' => null])->get();
+        $parents = $taxonomy->terms()->where(['taxonomy_id' => $taxonomy->id, 'parent_id' => null])->get();
 
         foreach ($parents as $parent) {
             $parent->getChildrenRecursively();
@@ -27,32 +25,28 @@ class TermController extends Controller
 
     public function create(Type $type, Taxonomy $taxonomy)
     {
-        $taxonomy = Taxonomy::getSingle($type, $taxonomy);
-        $terms = Term::where('taxonomy', $taxonomy->id)->get();
         return view('admin.object.term.create', compact('type', 'taxonomy', 'terms'));
     }
 
     public function store(Type $type, Taxonomy $taxonomy, Request $request)
     {
-        $taxonomy = Taxonomy::getSingle($type, $taxonomy);
-        $request->merge(['taxonomy' => $taxonomy->id]);
-
-        if (!$request->slug && $request->name) $request->merge(['slug' => str_slug($request->name, '-')]);
+        $term = new Term;
+        $request->slug = $term->make_slug($request);
 
         $this->validate($request, [
-            'name'          => 'required|string|min:2',
-            'slug'          => 'required|unique_with:terms,taxonomy|string|min:2',
-            'parent'        => 'integer|nullable',
-            'template'      => 'integer|nullable',
+            'name'      => 'required|string|min:2',
+            'slug'      => 'required|unique:terms,slug,NULL,NULL,taxonomy_id,'.$taxonomy->id.'|string|min:2',
+            'parent_id' => 'integer|nullable',
+            'template'  => 'integer|nullable',
         ]);
 
-        Term::create(request([
-            'name',
-            'slug',
-            'parent',
-            'template',
-            'taxonomy'
-        ]));
+        $term->slug = $request->slug;
+        $term->name = $request->name;
+        $term->template = $request->template;
+        $term->parent = $request->parent;
+        $term->taxonomy()->associate($taxonomy);
+
+        $term->save();
 
         Session::flash('alert-success', __('validation.succeeded.create', ['name' => $request->name]));
         return back();
@@ -60,10 +54,6 @@ class TermController extends Controller
 
     public function edit(Type $type, Taxonomy $taxonomy, Term $term)
     {
-        $taxonomy = Taxonomy::getSingle($type, $taxonomy);
-        $term = Term::getSingle($type, $taxonomy, $term);
-        $terms = Term::where('taxonomy', $taxonomy->id)->get();
-
         if (session('_old_input') !== null) {
             $slug = $term->slug; // Keep the original slug to prevent url issues
             $term = json_decode(json_encode(session('_old_input')), false); // Fill object with old input values
@@ -76,23 +66,19 @@ class TermController extends Controller
 
     public function update(Type $type, Taxonomy $taxonomy, Request $request, Term $term)
     {
-        $taxonomy = Taxonomy::getSingle($type, $taxonomy);
-        $term = Term::getSingle($type, $taxonomy, $term);
-
-        if (!$request->slug && $request->name) $request->merge(['slug' => str_slug($request->name, '-')]);
-        
-        $request->merge(['taxonomy' => $taxonomy->id]);
+        $slug_changed = $taxonomy->slug_changed($taxonomy->slug, $request->slug);
+        $request->slug = $taxonomy->make_slug($request);
 
         $validator = Validator::make($request->all(), [
-            'name'          => 'required|string|min:2',
-            'slug'          => 'required|unique_with:terms,taxonomy,'.$term->id.'|string|min:2',
-            'parent'        => 'integer|nullable',
-            'template'      => 'integer|nullable',
+            'name'      => 'required|string|min:2',
+            'slug'      => 'required|unique_with:terms,taxonomy_id,'.$term->id.'|string|min:2',
+            'parent_id' => 'integer|nullable',
+            'template'  => 'integer|nullable',
         ]);
 
         if ($validator->fails()) {
             Session::flash('alert-danger', __('validation.failed.update', ['name' => $term->name]));
-            return redirect()->route('admin.object.term.edit', [$type->slug, $taxonomy->slug, $term->slug])->withErrors($validator)->withInput();
+            return redirect()->route('admin.term.edit', [$type->slug, $taxonomy->slug, $term->slug])->withErrors($validator)->withInput();
         }
 
         $slug_changed = ($term->slug == $request->slug) ? false : true;
@@ -101,13 +87,14 @@ class TermController extends Controller
         $term->slug     = $request->slug;
         $term->parent   = $request->parent;
         $term->template = $request->template;
+        $term->taxonomy()->associate($taxonomy);
 
         $term->save();
 
         Session::flash('alert-success', __('validation.succeeded.update', ['name' => $term->name]));
 
         if ($slug_changed) {
-            return redirect()->route('admin.object.term.edit', [$type->slug, $taxonomy->slug, $term->slug]);
+            return redirect()->route('admin.term.edit', [$type->slug, $taxonomy->slug, $term->slug]);
         }
 
         return back();
@@ -115,10 +102,10 @@ class TermController extends Controller
 
     public function destroy(Type $type, Taxonomy $taxonomy, Term $term)
     {
-        $taxonomy = Taxonomy::getSingle($type, $taxonomy);
-        $term = Term::getSingle($type, $taxonomy, $term);
+        // $term->getChildrenRecursively();
+        dd($term->parent());
 
-        $term->delete();
+        // $term->delete();
 
         Session::flash('alert-success', __('validation.succeeded.delete', ['name' => $term->name]));
         return back();

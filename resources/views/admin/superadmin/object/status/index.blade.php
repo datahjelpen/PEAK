@@ -7,9 +7,9 @@
 	@include('admin.superadmin.object.status.form-create')
 	<hr>
 
-	@if (count($statuses))
+	@if (count($type->statuses))
 		<ul id="object-types-list">
-			@foreach ($statuses as $status)
+			@foreach ($type->statuses as $status)
 				<li id="object-types-list-item-{{ $status->id }}" class="object-types-list-item">
 					{{ $status->name }}
 					

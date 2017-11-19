@@ -18,7 +18,5 @@ class Object extends Model
         'status'
     ];
 
-	static function getSingle(Type $type, Object $object) {
-		return Object::where(['slug' => $object->slug, 'object_type' => $type->id])->first();
 	}
 }
