@@ -66,9 +66,9 @@ class TermController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name'      => 'required|string|min:2',
-            'slug'      => 'required|unique_with:terms,taxonomy_id,'.$term->id.'|string|min:2',
             'parent_id' => 'integer|nullable',
             'template'  => 'integer|nullable',
+            'slug'      => 'required|unique:terms,slug,'.$term->id.',id,taxonomy_id,'.$taxonomy->id.'|string|min:2',
         ]);
 
         if ($validator->fails()) {

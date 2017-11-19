@@ -57,7 +57,7 @@ class TaxonomyController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name'         => 'required|string|min:2',
-            'slug'         => 'required|unique:taxonomies,slug,NULL,NULL,type_id,'.$type->id.'|string|min:2',
+            'slug'         => 'required|unique:taxonomies,slug,'.$taxonomy->id.',id,type_id,'.$type->id.'|string|min:2',
             'hierarchical' => 'required|boolean'
         ]);
 
