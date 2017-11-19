@@ -14,9 +14,6 @@ class Term extends Model
 			'taxonomy'
 		];
 
-	static function getSingle(Type $type, Taxonomy $taxonomy, Term $term) {
-		$taxonomy = Taxonomy::getSingle($type, $taxonomy);
-		return Term::where(['slug' => $term->slug, 'taxonomy' => $taxonomy->id])->first();
 	}
 
 	function hasChildren() {
