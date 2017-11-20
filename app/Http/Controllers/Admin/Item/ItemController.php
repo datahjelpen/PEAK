@@ -46,14 +46,13 @@ class ItemController extends Controller
 
         $this->validate($request, [
             'name'      => 'required|string|min:2',
-            'slug'      => 'required|unique_with:items,item_type,'.$item_type->id.'|string|min:2',
+            'slug'      => 'required|unique:items,slug,NULL,NULL,item_type_id,'.$item_type->id.'|string|min:2',
             'text'      => 'required|string',
             'excerpt'   => 'required|string',
-            'item_type' => 'required|integer',
             'author'    => 'required|integer',
             'template'  => 'required|integer',
             'comments'  => 'required|boolean',
-            'status'    => 'required|unique_with:items,status,'.$request->status.'|integer',
+            'status'    => 'required|integer',
             'terms'     => 'required'
         ]);
 
