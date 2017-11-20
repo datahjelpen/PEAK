@@ -11,9 +11,10 @@ use \App\Model\Object\Taxonomy;
 
 class TaxonomyController extends Controller
 {
-    public function index(Type $type)
+    public function index(Type $type, Taxonomy $taxonomy)
     {
-        return view('admin.superadmin.object.taxonomy.index', compact('type'));
+        $taxonomy = $taxonomy->getSingle($type);
+        return view('admin.superadmin.object.taxonomy.index', compact('type', 'taxonomy'));
     }
 
     public function create(Type $type)
@@ -46,11 +47,14 @@ class TaxonomyController extends Controller
 
     public function edit(Type $type, Taxonomy $taxonomy)
     {
+        $taxonomy = $taxonomy->getSingle($type);
         return view('admin.superadmin.object.taxonomy.edit', compact('type', 'taxonomy'));
     }
 
     public function update(Type $type, Request $request, Taxonomy $taxonomy)
     {
+        $taxonomy = $taxonomy->getSingle($type);
+
         $slug_changed = $taxonomy->slug_changed($taxonomy->slug, $request->slug);
         $request->slug = $taxonomy->make_slug($request);
         $request->merge(['hierarchical' => ($request->hierarchical ? true : false) ]);
@@ -84,6 +88,8 @@ class TaxonomyController extends Controller
 
     public function destroy(Type $type, Taxonomy $taxonomy)
     {
+        $taxonomy = $taxonomy->getSingle($type);
+
         $taxonomy->delete();
 
         Session::flash('alert-success', __('validation.succeeded.delete', ['name' => $taxonomy->name]));

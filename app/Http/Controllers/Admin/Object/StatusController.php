@@ -11,9 +11,10 @@ use \App\Model\Object\Status;
 
 class StatusController extends Controller
 {
-    public function index(Type $type)
+    public function index(Type $type, Status $status)
     {
-        return view('admin.superadmin.object.status.index', compact('type'));
+        $status = $status->getSingle($type);
+        return view('admin.superadmin.object.status.index', compact('type', 'status'));
     }
 
     public function create(Type $type)
@@ -43,11 +44,14 @@ class StatusController extends Controller
 
     public function edit(Type $type, Status $status)
     {
+        $status = $status->getSingle($type);
         return view('admin.superadmin.object.status.edit', compact('type', 'status'));
     }
 
     public function update(Type $type, Request $request, Status $status)
     {
+        $status = $status->getSingle($type);
+
         $request->slug = $status->make_slug($request);
 
         $validator = Validator::make($request->all(), [
@@ -77,6 +81,8 @@ class StatusController extends Controller
 
     public function destroy(Type $type, Status $status)
     {
+        $status = $status->getSingle($type);
+
         $status->delete();
 
         Session::flash('alert-success', __('validation.succeeded.delete', ['name' => $status->name]));

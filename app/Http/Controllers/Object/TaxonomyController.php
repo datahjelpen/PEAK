@@ -11,6 +11,7 @@ class TaxonomyController extends Controller
 {
 	public function show(Type $type, Taxonomy $taxonomy)
 	{
+		$taxonomy = $taxonomy->getSingle($type);
 		return view('object.taxonomy.show', compact('type', 'taxonomy'));
 	}
 }

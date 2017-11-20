@@ -14,12 +14,10 @@ class TermController extends Controller
 {
     public function index(Type $type, Taxonomy $taxonomy)
     {
-        if ($taxonomy->hierarchical) {
-            // $parents = $taxonomy->terms()->where(['parent_id' => null])->get();
-            // $parents = $taxonomy->terms()->get();
-            $parents = $taxonomy;
+        $taxonomy = $taxonomy->getSingle($type);
 
-            dd($parents);
+        if ($taxonomy->hierarchical) {
+            $parents = $taxonomy->terms()->where(['parent_id' => null])->get();
             foreach ($parents as $parent) $parent->getChildrenRecursively();
         } else {
             $parents = $taxonomy->terms()->get();
@@ -30,11 +28,22 @@ class TermController extends Controller
 
     public function create(Type $type, Taxonomy $taxonomy)
     {
-        return view('admin.object.term.create', compact('type', 'taxonomy', 'terms'));
+        $taxonomy = $taxonomy->getSingle($type);
+
+        if ($taxonomy->hierarchical) {
+            $parents = $taxonomy->terms()->where(['parent_id' => null])->get();
+            foreach ($parents as $parent) $parent->getChildrenRecursively();
+        } else {
+            $parents = $taxonomy->terms()->get();
+        }
+
+        return view('admin.object.term.create', compact('type', 'taxonomy', 'parents'));
     }
 
     public function store(Type $type, Taxonomy $taxonomy, Request $request)
     {
+        $taxonomy = $taxonomy->getSingle($type);
+
         $term = new Term;
         $request->slug = $term->make_slug($request);
 
@@ -59,6 +68,9 @@ class TermController extends Controller
 
     public function edit(Type $type, Taxonomy $taxonomy, Term $term)
     {
+        $taxonomy = $taxonomy->getSingle($type);
+        $term = $term->getSingle($taxonomy);
+
         if ($taxonomy->hierarchical) {
             $parents = $taxonomy->terms()->where(['parent_id' => null])->get();
             foreach ($parents as $parent) $parent->getChildrenRecursively();
@@ -71,6 +83,9 @@ class TermController extends Controller
 
     public function update(Type $type, Taxonomy $taxonomy, Request $request, Term $term)
     {
+        $taxonomy = $taxonomy->getSingle($type);
+        $term = $term->getSingle($taxonomy);
+
         $slug_changed = $taxonomy->slug_changed($taxonomy->slug, $request->slug);
         $request->slug = $taxonomy->make_slug($request);
 
@@ -105,6 +120,9 @@ class TermController extends Controller
 
     public function destroy(Type $type, Taxonomy $taxonomy, Term $term)
     {
+        $taxonomy = $taxonomy->getSingle($type);
+        $term = $term->getSingle($taxonomy);
+
         $term->delete();
 
         Session::flash('alert-success', __('validation.succeeded.delete', ['name' => $term->name]));

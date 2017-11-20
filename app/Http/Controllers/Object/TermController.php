@@ -10,8 +10,10 @@ use \App\Model\Object\Term;
 
 class TermController extends Controller
 {
-    public function show(Type $type, Taxonomy $taxonomy, Term $term)
-    {
-        return view('object.term.show', compact('type', 'taxonomy', 'term'));
-    }
+	public function show(Type $type, Taxonomy $taxonomy, Term $term)
+	{
+		$taxonomy = $taxonomy->getSingle($type);
+		$term = $term->getSingle($taxonomy);
+		return view('object.term.show', compact('type', 'taxonomy', 'term'));
+	}
 }
