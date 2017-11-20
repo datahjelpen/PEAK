@@ -14,6 +14,11 @@ class Term extends Model
 		'taxonomy'
 	];
 
+	public function getSingle(Taxonomy $taxonomy)
+	{
+		return $taxonomy->terms()->where('slug', '=', $this->slug)->get()->first();
+	}
+
 	public function taxonomy()
 	{
 		return $this->belongsTo('App\Model\Object\Taxonomy');

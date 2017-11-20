@@ -18,6 +18,11 @@ class Object extends Model
 		'status'
 	];
 
+	public function getSingle(Term $term)
+	{
+		return $term->objects()->where('slug', '=', $this->slug)->get()->first();
+	}
+
 	public function terms()
 	{
 		return $this->belongsToMany('App\Model\Object\Term');

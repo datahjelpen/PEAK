@@ -13,6 +13,11 @@ class Taxonomy extends Model
         'object_type'
     ];
 
+    public function getSingle(Type $type)
+    {
+        return $type->taxonomies()->where('slug', '=', $this->slug)->get()->first();
+    }
+
     public function type()
     {
         return $this->belongsTo('App\Model\Object\Type');
