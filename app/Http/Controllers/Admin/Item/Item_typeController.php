@@ -12,12 +12,12 @@ class Item_typeController extends Controller
 {
     public function index()
     {
-        return view('admin.superadmin.item.type.index');
+        return view('admin.superadmin.item.item_type.index');
     }
 
     public function create()
     {
-        return view('admin.superadmin.item.type.create');
+        return view('admin.superadmin.item.item_type.create');
     }
 
     public function store(Request $request)
@@ -43,7 +43,7 @@ class Item_typeController extends Controller
 
     public function edit(Item_type $item_type)
     {
-        return view('admin.superadmin.item.type.edit', compact('item_type'));
+        return view('admin.superadmin.item.item_type.edit', compact('item_type'));
     }
 
     public function update(Request $request, Item_type $item_type)
@@ -59,7 +59,7 @@ class Item_typeController extends Controller
 
         if ($validator->fails()) {
             Session::flash('alert-danger', __('validation.failed.update', ['name' => $item_type->name]));
-            return redirect()->route('superadmin.type.edit', $item_type->slug)->withErrors($validator)->withInput();
+            return redirect()->route('superadmin.item_type.edit', $item_type->slug)->withErrors($validator)->withInput();
         }
 
         $item_type->name     = $request->name;
@@ -71,7 +71,7 @@ class Item_typeController extends Controller
         Session::flash('alert-success', __('validation.succeeded.update', ['name' => $item_type->name]));
 
         if ($slug_changed) {
-            return redirect()->route('superadmin.type.edit', $item_type->slug);
+            return redirect()->route('superadmin.item_type.edit', $item_type->slug);
         }
 
         return back();
