@@ -1,7 +1,7 @@
-<form method="POST" action="{{ route('admin.object.store', [$type->slug]) }}">
+<form method="POST" action="{{ route('admin.item.store', [$item_type->slug]) }}">
 	{{ csrf_field() }}
 
-	@include('admin.object.fields')
+	@include('admin.item.fields')
 
 	<input type="submit">
 </form>

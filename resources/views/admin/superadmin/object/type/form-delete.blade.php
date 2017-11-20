@@ -1,8 +1,8 @@
-<form method="POST" action="{{ route('superadmin.type.destroy', $type->slug) }}">
+<form method="POST" action="{{ route('superadmin.type.destroy', $item_type->slug) }}">
 	{{ method_field('DELETE') }}
 	{{ csrf_field() }}
 	
-	<h1>{{ __('forms.confirm.delete.ask', ['name' => $type->name]) }}</h1>
+	<h1>{{ __('forms.confirm.delete.ask', ['name' => $item_type->name]) }}</h1>
 	<button class="autofocus" type="submit" autofocus>
 		<i data-feather="{{ __('forms.confirm.delete.yes-icon') }}"></i>
 		<span>{{ __('forms.confirm.delete.yes') }}</span>

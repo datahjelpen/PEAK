@@ -1,36 +1,36 @@
 @extends('admin.partials.master')
 
 @section('content-main')
-	<h1>{{ str_plural($type->name) }}</h1>
+	<h1>{{ str_plural($item_type->name) }}</h1>
 	
 	<hr>
-	@include('admin.object.form-create')
+	@include('admin.item.form-create')
 	<hr>
 
-	@if (count($objects))
-		<ul id="object-terms-list">
-			@foreach ($objects as $object)
-				<li id="object-types-list-item-{{ $object->id }}" class="object-types-list-item">
-					{{ $object->name }}
+	@if (count($items))
+		<ul id="item-terms-list">
+			@foreach ($items as $item)
+				<li id="item-item_types-list-item-{{ $item->id }}" class="item-item_types-list-item">
+					{{ $item->name }}
 
-					<button class="modal-trigger" data-modal="#show-object-type-{{ $object->id }}">{{ __('navigation.actions.view_quick') }}</button>
-					<div id="show-object-type-{{ $object->id }}" class="modal">
-						{{-- <a href="{{ route('object.show', [$type->slug, $object->slug]) }}">{{ __('general.actions.open') }}</a> --}}
-						{{-- <a href="{{ route('object.show', [$type->slug, $object->slug]) }}" target="_blank">{{ __('navigation.actions.open_new_tab') }}</a> --}}
+					<button class="modal-trigger" data-modal="#show-item-item_type-{{ $item->id }}">{{ __('navigation.actions.view_quick') }}</button>
+					<div id="show-item-item_type-{{ $item->id }}" class="modal">
+						{{-- <a href="{{ route('item.show', [$item_type->slug, $item->slug]) }}">{{ __('general.actions.open') }}</a> --}}
+						{{-- <a href="{{ route('item.show', [$item_type->slug, $item->slug]) }}" target="_blank">{{ __('navigation.actions.open_new_tab') }}</a> --}}
 						<button class="modal-close"><i data-feather="x-square"></i></button>
-						@include('object.content-main', ['object' => $object])
+						@include('item.content-main', ['item' => $item])
 					</div>
 
-					<button class="modal-trigger" data-modal="#edit-object-type-{{ $object->id }}">{{ __('general.actions.edit') }}</button>
-					<div id="edit-object-type-{{ $object->id }}" class="modal">
+					<button class="modal-trigger" data-modal="#edit-item-item_type-{{ $item->id }}">{{ __('general.actions.edit') }}</button>
+					<div id="edit-item-item_type-{{ $item->id }}" class="modal">
 						<button class="modal-close"><i data-feather="x-square"></i></button>
-						@include('admin.object.form-edit', [$type->slug, $object->slug])
+						@include('admin.item.form-edit', [$item_type->slug, $item->slug])
 					</div>
 
-					<button class="modal-trigger" data-modal="#delete-object-type-{{ $object->id }}">{{ __('general.actions.delete') }}</button>
-					<div id="delete-object-type-{{ $object->id }}" class="modal">
+					<button class="modal-trigger" data-modal="#delete-item-item_type-{{ $item->id }}">{{ __('general.actions.delete') }}</button>
+					<div id="delete-item-item_type-{{ $item->id }}" class="modal">
 						<button class="modal-close"><i data-feather="x-square"></i></button>
-						@include('admin.object.form-delete', [$type->slug, $object->slug])
+						@include('admin.item.form-delete', [$item_type->slug, $item->slug])
 					</div>
 				</li>
 			@endforeach

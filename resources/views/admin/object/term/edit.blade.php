@@ -1,5 +1,5 @@
 @extends('admin.partials.master')
 
 @section('content-main')
-	@include('admin.object.term.form-edit')
+	@include('admin.item.term.form-edit')
 @endsection

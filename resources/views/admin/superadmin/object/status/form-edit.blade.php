@@ -1,8 +1,8 @@
-<form method="POST" action="{{ route('superadmin.status.update', [$type->slug, $status->slug]) }}">
+<form method="POST" action="{{ route('superadmin.status.update', [$item_type->slug, $status->slug]) }}">
 	{{ method_field('PATCH') }}
 	{{ csrf_field() }}
 
-	@include('admin.superadmin.object.status.fields')
+	@include('admin.superadmin.item.status.fields')
 
 	<input type="submit">
 </form>

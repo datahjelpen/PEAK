@@ -1,36 +1,36 @@
 @php
-	if (!isset($object)) {
-		$object = new stdClass();
-		$object->name = old('name');
-		$object->slug = old('slug');
-		$object->text = old('text');
-		$object->excerpt = old('excerpt');
-		$object->author = old('author');
-		$object->template = old('template');
-		$object->status = old('status');
-		$object->comments = old('comments');
+	if (!isset($item)) {
+		$item = new stdClass();
+		$item->name = old('name');
+		$item->slug = old('slug');
+		$item->text = old('text');
+		$item->excerpt = old('excerpt');
+		$item->author = old('author');
+		$item->template = old('template');
+		$item->status = old('status');
+		$item->comments = old('comments');
 	}
 
-	if (isset($object->_old_slug)) {
-		$object->slug = $object->_old_slug;
+	if (isset($item->_old_slug)) {
+		$item->slug = $item->_old_slug;
 	}
 
 	echo "<pre>";
-	var_dump($object);
+	var_dump($item);
 	echo "</pre>";
 @endphp
 
-<label for="object-object-name">{{ __('general.name') }}</label>
-<input type="text" id="object-object-name" class="autofocus" name="name" placeholder="name" value="{{ $object->name }}" autofocus>
+<label for="item-item-name">{{ __('general.name') }}</label>
+<input type="text" id="item-item-name" class="autofocus" name="name" placeholder="name" value="{{ $item->name }}" autofocus>
 
-<label for="object-object-slug">{{ __('general.slug') }}</label>
-<input type="text" id="object-object-slug" name="slug" placeholder="slug" value="{{ $object->slug }}">
+<label for="item-item-slug">{{ __('general.slug') }}</label>
+<input type="text" id="item-item-slug" name="slug" placeholder="slug" value="{{ $item->slug }}">
 
-<label for="object-object-text">{{ __('general.text') }}</label>
-<textarea id="object-object-text" name="text" placeholder="text">{{ $object->text }}</textarea>
+<label for="item-item-text">{{ __('general.text') }}</label>
+<textarea id="item-item-text" name="text" placeholder="text">{{ $item->text }}</textarea>
 
-<label for="object-object-excerpt">{{ __('general.excerpt') }}</label>
-<textarea id="object-object-excerpt" name="excerpt" placeholder="excerpt">{{ $object->excerpt }}</textarea>
+<label for="item-item-excerpt">{{ __('general.excerpt') }}</label>
+<textarea id="item-item-excerpt" name="excerpt" placeholder="excerpt">{{ $item->excerpt }}</textarea>
 
 @foreach ($taxonomies as $taxonomy)
 	<p><strong>{{ $taxonomy->name }}</strong></p>
@@ -58,28 +58,28 @@
 @endforeach
 
 
-<label for="object-object-author">{{ __('general.author') }}</label>
-<select id="object-object-author" name="author">
+<label for="item-item-author">{{ __('general.author') }}</label>
+<select id="item-item-author" name="author">
 	<option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
 </select>
 
-{{-- <input type="text" id="object-object-author" name="author" placeholder="author" value="{{ $object->author }}"> --}}
+{{-- <input type="text" id="item-item-author" name="author" placeholder="author" value="{{ $item->author }}"> --}}
 
-<label for="object-object-template">{{ __('general.template') }}</label>
-<input type="text" id="object-object-template" name="template" placeholder="template" value="{{ $object->template }}">
+<label for="item-item-template">{{ __('general.template') }}</label>
+<input type="text" id="item-item-template" name="template" placeholder="template" value="{{ $item->template }}">
 
-{{-- <label for="object-object-status">{{ __('general.status') }}</label>
-<input type="text" id="object-object-status" name="status" placeholder="status" value="{{ $object->status }}"> --}}
+{{-- <label for="item-item-status">{{ __('general.status') }}</label>
+<input type="text" id="item-item-status" name="status" placeholder="status" value="{{ $item->status }}"> --}}
 
 <p><strong>Statuses</strong></p>
 <select name="status">
 	@foreach ($statuses as $status)
 		<option value="{{ $status['id'] }}">{{ $status['name'] }}</option>
 
-		{{-- {{ $status['id'] == $object->status ? 'selected' : null }} --}}
+		{{-- {{ $status['id'] == $item->status ? 'selected' : null }} --}}
 
 	@endforeach
 </select>
 
-<label for="object-object-comments">{{ __('general.comments') }}</label>
-<input type="checkbox" id="object-object-comments" name="comments" placeholder="comments" {{ $object->comments ? 'checked' : null }}>
+<label for="item-item-comments">{{ __('general.comments') }}</label>
+<input type="checkbox" id="item-item-comments" name="comments" placeholder="comments" {{ $item->comments ? 'checked' : null }}>

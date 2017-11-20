@@ -4,12 +4,12 @@
 	<h1>{{ str_plural($taxonomy->name) }}</h1>
 	
 	<hr>
-	@include('admin.object.term.form-create')
+	@include('admin.item.term.form-create')
 	<hr>
 
-	<ul id="object-terms-list">
+	<ul id="item-terms-list">
 		@foreach ($parents as $parent)
-			@include('admin.object.term.list-item-parent')
+			@include('admin.item.term.list-item-parent')
 		@endforeach
 	</ul>
 @endsection

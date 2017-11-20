@@ -1,5 +1,5 @@
 @extends('admin.partials.master')
 
 @section('content-main')
-	@include('admin.superadmin.object.type.form-create')
+	@include('admin.superadmin.item.item_type.form-create')
 @endsection

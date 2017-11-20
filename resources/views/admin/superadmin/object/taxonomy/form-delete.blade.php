@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('superadmin.taxonomy.destroy', [$type->slug, $taxonomy->slug]) }}">
+<form method="POST" action="{{ route('superadmin.taxonomy.destroy', [$item_type->slug, $taxonomy->slug]) }}">
 	{{ method_field('DELETE') }}
 	{{ csrf_field() }}
 	

@@ -1,5 +1,5 @@
 @extends('partials.master')
 
 @section('content-main')
-	@include('object.type.content-main')
+	@include('item.item_type.content-main')
 @endsection
