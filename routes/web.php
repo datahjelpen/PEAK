@@ -1,9 +1,9 @@
 <?php
 
-use \App\Model\Object\Type;
-use \App\Model\Object\Term;
-use \App\Model\Object\Object;
-use \App\Model\Object\Taxonomy;
+use \App\Model\Item\Item_type;
+use \App\Model\Item\Term;
+use \App\Model\Item\Item;
+use \App\Model\Item\Taxonomy;
 
 Auth::routes();
 
@@ -12,51 +12,53 @@ Route::prefix('admin')->group(function () {
 	Route::get('/', 'Admin\DashboardController@index')->name('admin.dashboard');
 
 	Route::prefix('superadmin')->group(function () {
-		Route::get('types',            'Admin\Object\TypeController@index')->name('superadmin.types');
-		Route::get('type/new',         'Admin\Object\TypeController@create')->name('superadmin.type.create');
-		Route::post('type/create',     'Admin\Object\TypeController@store')->name('superadmin.type.store');
-		Route::prefix('type')->group(function () {
-			Route::get('{type}/edit',      'Admin\Object\TypeController@edit')->name('superadmin.type.edit');
-			Route::patch('{type}/update',  'Admin\Object\TypeController@update')->name('superadmin.type.update');
-			Route::delete('{type}/delete', 'Admin\Object\TypeController@destroy')->name('superadmin.type.destroy');
+
+		Route::get('item_types',        'Admin\Item\TypeController@index')->name('superadmin.item_types');
+		Route::get('item_type/new',     'Admin\Item\TypeController@create')->name('superadmin.item_type.create');
+		Route::post('item_type/create', 'Admin\Item\TypeController@store')->name('superadmin.item_type.store');
+		Route::prefix('item_type')->group(function () {
+			Route::get('{item_type}/edit',      'Admin\Item\TypeController@edit')->name('superadmin.item_type.edit');
+			Route::patch('{item_type}/update',  'Admin\Item\TypeController@update')->name('superadmin.item_type.update');
+			Route::delete('{item_type}/delete', 'Admin\Item\TypeController@destroy')->name('superadmin.item_type.destroy');
 		});
 
-		Route::prefix('{type}')->group(function () {
-			Route::get('taxonomies',           'Admin\Object\TaxonomyController@index')->name('superadmin.taxonomies');
-			Route::get('taxonomy/new',         'Admin\Object\TaxonomyController@create')->name('superadmin.taxonomy.create');
-			Route::post('taxonomy/create',     'Admin\Object\TaxonomyController@store')->name('superadmin.taxonomy.store');
+		Route::prefix('{item_type}')->group(function () {
+			Route::get('taxonomies',       'Admin\Item\TaxonomyController@index')->name('superadmin.taxonomies');
+			Route::get('taxonomy/new',     'Admin\Item\TaxonomyController@create')->name('superadmin.taxonomy.create');
+			Route::post('taxonomy/create', 'Admin\Item\TaxonomyController@store')->name('superadmin.taxonomy.store');
 			Route::prefix('taxonomy')->group(function () {
-				Route::get('{taxonomy}/edit',      'Admin\Object\TaxonomyController@edit')->name('superadmin.taxonomy.edit');
-				Route::patch('{taxonomy}/update',  'Admin\Object\TaxonomyController@update')->name('superadmin.taxonomy.update');
-				Route::delete('{taxonomy}/delete', 'Admin\Object\TaxonomyController@destroy')->name('superadmin.taxonomy.destroy');
+				Route::get('{taxonomy}/edit',      'Admin\Item\TaxonomyController@edit')->name('superadmin.taxonomy.edit');
+				Route::patch('{taxonomy}/update',  'Admin\Item\TaxonomyController@update')->name('superadmin.taxonomy.update');
+				Route::delete('{taxonomy}/delete', 'Admin\Item\TaxonomyController@destroy')->name('superadmin.taxonomy.destroy');
 			});
 
-			Route::get('statuses',           'Admin\Object\StatusController@index')->name('superadmin.statuses');
-			Route::get('status/new',         'Admin\Object\StatusController@create')->name('superadmin.status.create');
-			Route::post('status/create',     'Admin\Object\StatusController@store')->name('superadmin.status.store');
+			Route::get('statuses',       'Admin\Item\StatusController@index')->name('superadmin.statuses');
+			Route::get('status/new',     'Admin\Item\StatusController@create')->name('superadmin.status.create');
+			Route::post('status/create', 'Admin\Item\StatusController@store')->name('superadmin.status.store');
 			Route::prefix('status')->group(function () {
-				Route::get('{status}/edit',      'Admin\Object\StatusController@edit')->name('superadmin.status.edit');
-				Route::patch('{status}/update',  'Admin\Object\StatusController@update')->name('superadmin.status.update');
-				Route::delete('{status}/delete', 'Admin\Object\StatusController@destroy')->name('superadmin.status.destroy');
+				Route::get('{status}/edit',      'Admin\Item\StatusController@edit')->name('superadmin.status.edit');
+				Route::patch('{status}/update',  'Admin\Item\StatusController@update')->name('superadmin.status.update');
+				Route::delete('{status}/delete', 'Admin\Item\StatusController@destroy')->name('superadmin.status.destroy');
 			});
 		});
+
 	});
 
-	Route::prefix('{type}')->group(function () {
-		Route::get('/',                  'Admin\Object\ObjectController@index')->name('admin.objects');
-		Route::get('new',                'Admin\Object\ObjectController@create')->name('admin.object.create');
-		Route::post('create',            'Admin\Object\ObjectController@store')->name('admin.object.store');
-		Route::get('{object}/edit',      'Admin\Object\ObjectController@edit')->name('admin.object.edit');
-		Route::patch('{object}/update',  'Admin\Object\ObjectController@update')->name('admin.object.update');
-		Route::delete('{object}/delete', 'Admin\Object\ObjectController@destroy')->name('admin.object.destroy');
+	Route::prefix('{item_type}')->group(function () {
+		Route::get('/',                'Admin\Item\ItemController@index')->name('admin.items');
+		Route::get('new',              'Admin\Item\ItemController@create')->name('admin.item.create');
+		Route::post('create',          'Admin\Item\ItemController@store')->name('admin.item.store');
+		Route::get('{item}/edit',      'Admin\Item\ItemController@edit')->name('admin.item.edit');
+		Route::patch('{item}/update',  'Admin\Item\ItemController@update')->name('admin.item.update');
+		Route::delete('{item}/delete', 'Admin\Item\ItemController@destroy')->name('admin.item.destroy');
 
 		Route::prefix('{taxonomy}')->group(function () {
-			Route::get('/',                'Admin\Object\TermController@index')->name('admin.terms');
-			Route::get('term/new',         'Admin\Object\TermController@create')->name('admin.term.create');
-			Route::post('term/create',     'Admin\Object\TermController@store')->name('admin.term.store');
-			Route::get('{term}/edit',      'Admin\Object\TermController@edit')->name('admin.term.edit');
-			Route::patch('{term}/update',  'Admin\Object\TermController@update')->name('admin.term.update');
-			Route::delete('{term}/delete', 'Admin\Object\TermController@destroy')->name('admin.term.destroy');
+			Route::get('/',                'Admin\Item\TermController@index')->name('admin.terms');
+			Route::get('term/new',         'Admin\Item\TermController@create')->name('admin.term.create');
+			Route::post('term/create',     'Admin\Item\TermController@store')->name('admin.term.store');
+			Route::get('{term}/edit',      'Admin\Item\TermController@edit')->name('admin.term.edit');
+			Route::patch('{term}/update',  'Admin\Item\TermController@update')->name('admin.term.update');
+			Route::delete('{term}/delete', 'Admin\Item\TermController@destroy')->name('admin.term.destroy');
 		});
 	});
 
@@ -64,19 +66,19 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::get('/', function () {
-	return view('welcome', compact('types'));
+	return view('welcome', compact('item_types'));
 })->name('frontpage');
 
-Route::prefix('{type}')->group(function () {
+Route::prefix('{item_type}')->group(function () {
 
-	Route::get('/', 'Object\TypeController@show')->name('type.show');
+	Route::get('/', 'Item\TypeController@show')->name('item_type.show');
 
 	Route::prefix('{taxonomy}')->group(function () {
-		Route::get('/', 'Object\TaxonomyController@show')->name('taxonomy.show');
+		Route::get('/', 'Item\TaxonomyController@show')->name('taxonomy.show');
 		
 		Route::prefix('{term}')->group(function () {
-			Route::get('/', 'Object\TermController@show')->name('term.show');
-			Route::get('{object}', 'Object\ObjectController@show')->name('object.show');
+			Route::get('/', 'Item\TermController@show')->name('term.show');
+			Route::get('{item}', 'Item\ItemController@show')->name('item.show');
 		});
 	});
 });
