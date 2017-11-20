@@ -9,9 +9,8 @@ class Term extends Model
 	protected $fillable = [
 		'name',
 		'slug',
-		'parent',
 		'template',
-		'taxonomy'
+		'parent_id'
 	];
 
 	public function getSingle(Taxonomy $taxonomy)

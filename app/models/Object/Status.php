@@ -8,8 +8,7 @@ class Status extends Model
 
 	protected $fillable = [
 		'name',
-		'slug',
-		'object_type'
+		'slug'
 	];
 
 	public function getSingle(Type $type)

@@ -9,8 +9,7 @@ class Taxonomy extends Model
     protected $fillable = [
         'name',
         'slug',
-        'hierarchical',
-        'object_type'
+        'hierarchical'
     ];
 
     public function getSingle(Type $type)

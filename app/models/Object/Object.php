@@ -11,7 +11,7 @@ class Object extends Model
 		'slug',
 		'text',
 		'excerpt',
-		'object_type',
+		'type_id',
 		'author',
 		'template',
 		'comments',
