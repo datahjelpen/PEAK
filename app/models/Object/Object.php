@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Model\Object;
+namespace App\Model\Item;
 
-class Object extends Model
+class Item extends Model
 {
-	protected $table = 'objects';
+	protected $table = 'items';
 
 	protected $fillable = [
 		'name',
 		'slug',
 		'text',
 		'excerpt',
-		'type_id',
+		'item_type_id',
 		'author',
 		'template',
 		'comments',
@@ -20,11 +20,11 @@ class Object extends Model
 
 	public function getSingle(Term $term)
 	{
-		return $term->objects()->where('slug', '=', $this->slug)->get()->first();
+		return $term->items()->where('slug', '=', $this->slug)->get()->first();
 	}
 
 	public function terms()
 	{
-		return $this->belongsToMany('App\Model\Object\Term');
+		return $this->belongsToMany('App\Model\Item\Term');
 	}
 }

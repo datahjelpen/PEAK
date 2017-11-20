@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Model\Object;
+namespace App\Model\Item;
 
-class Type extends Model
+class Item_type extends Model
 {
-	protected $table = 'object_types';
+    protected $table = 'item_types';
 
     protected $fillable = [
         'name',
@@ -14,16 +14,16 @@ class Type extends Model
 
     public function statuses()
     {
-        return $this->hasMany('App\Model\Object\Status');
+        return $this->hasMany('App\Model\Item\Status');
     }
 
     public function taxonomies()
     {
-        return $this->hasMany('App\Model\Object\Taxonomy');
+        return $this->hasMany('App\Model\Item\Taxonomy');
     }
 
     public function terms()
     {
-        return $this->hasManyThrough('App\Model\Object\Term', 'App\Model\Object\Taxonomy');
+        return $this->hasManyThrough('App\Model\Item\Term', 'App\Model\Item\Taxonomy');
     }
 }

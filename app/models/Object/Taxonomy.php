@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\Object;
+namespace App\Model\Item;
 
 class Taxonomy extends Model
 {
@@ -12,18 +12,18 @@ class Taxonomy extends Model
         'hierarchical'
     ];
 
-    public function getSingle(Type $type)
+    public function getSingle(Item_type $item_type)
     {
-        return $type->taxonomies()->where('slug', '=', $this->slug)->get()->first();
+        return $item_type->taxonomies()->where('slug', '=', $this->slug)->get()->first();
     }
 
-    public function type()
+    public function item_type()
     {
-        return $this->belongsTo('App\Model\Object\Type');
+        return $this->belongsTo('App\Model\Item\Item_type');
     }
 
     public function terms()
     {
-        return $this->hasMany('App\Model\Object\Term');
+        return $this->hasMany('App\Model\Item\Term');
     }
 }

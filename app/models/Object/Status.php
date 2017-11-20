@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\Object;
+namespace App\Model\Item;
 
 class Status extends Model
 {
@@ -11,13 +11,13 @@ class Status extends Model
 		'slug'
 	];
 
-	public function getSingle(Type $type)
+	public function getSingle(Item_type $item_type)
 	{
-		return $type->satuses()->where('slug', '=', $this->slug)->get()->first();
+		return $item_type->satuses()->where('slug', '=', $this->slug)->get()->first();
 	}
 
-	public function type()
+	public function item_type()
 	{
-			return $this->belongsTo('App\Model\Object\Type');
+			return $this->belongsTo('App\Model\Item\Item_type');
 	}
 }

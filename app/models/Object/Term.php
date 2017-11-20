@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\Object;
+namespace App\Model\Item;
 
 class Term extends Model
 {
@@ -20,25 +20,25 @@ class Term extends Model
 
 	public function taxonomy()
 	{
-		return $this->belongsTo('App\Model\Object\Taxonomy');
+		return $this->belongsTo('App\Model\Item\Taxonomy');
 	}
 
-	public function objects()
+	public function items()
 	{
-		return $this->hasMany('App\Model\Object\Object');
+		return $this->hasMany('App\Model\Item\Item');
 	}
 
 	public function parent()
 	{
-		return $this->belongsTo('App\Model\Object\Term', 'parent_id');
+		return $this->belongsTo('App\Model\Item\Term', 'parent_id');
 	}
 
 	public function children()
 	{
-		return $this->hasMany('App\Model\Object\Term', 'parent_id');
+		return $this->hasMany('App\Model\Item\Term', 'parent_id');
 	}
 
-	# Will make "hasChildren" and "children" properties in object
+	# Will make "hasChildren" and "children" properties in item
 	function hasChildren()
 	{
 		$this->children = $this->children()->get();
@@ -46,7 +46,7 @@ class Term extends Model
 		return $this->hasChildren;
 	}
 
-	# Will make "hasChildren" and "children" properties in object recursively into the children
+	# Will make "hasChildren" and "children" properties in item recursively into the children
 	function getChildrenRecursively()
 	{
 		if ($this->hasChildren()) {
