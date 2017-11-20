@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateObjectTables extends Migration
+class CreateItemTables extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateObjectTables extends Migration
      */
     public function up()
     {
-        Schema::create('object_types', function (Blueprint $t) {
+        Schema::create('item_types', function (Blueprint $t) {
             $t->increments('id');
             $t->string('name');
             $t->string('slug')->unique();
@@ -26,22 +26,22 @@ class CreateObjectTables extends Migration
             $t->increments('id');
             $t->string('name');
             $t->string('slug');
-            $t->unsignedInteger('type_id');
-            $t->foreign('type_id')->references('id')->on('object_types')->onDelete('cascade');
+            $t->unsignedInteger('item_type_id');
+            $t->foreign('item_type_id')->references('id')->on('item_types')->onDelete('cascade');
             
-            $t->unique( ['slug', 'type_id'] );
+            $t->unique( ['slug', 'item_type_id'] );
 
             $t->timestamps();
         });
 
-        Schema::create('objects', function (Blueprint $t) {
+        Schema::create('items', function (Blueprint $t) {
             $t->increments('id');
             $t->string('name');
             $t->string('slug');
             $t->text('text')->nullable()->default(null);
             $t->text('excerpt')->nullable()->default(null);
-            $t->unsignedInteger('type_id');
-            $t->foreign('type_id')->references('id')->on('object_types')->onDelete('cascade');
+            $t->unsignedInteger('item_type_id');
+            $t->foreign('item_type_id')->references('id')->on('item_types')->onDelete('cascade');
             $t->unsignedInteger('author');
             $t->foreign('author')->references('id')->on('users');
             $t->unsignedInteger('template')->nullable()->default(null);
@@ -50,7 +50,7 @@ class CreateObjectTables extends Migration
             $t->unsignedInteger('status');
             $t->foreign('status')->references('id')->on('statuses');
 
-            $t->unique( ['slug', 'type_id', 'status'] );
+            $t->unique( ['slug', 'item_type_id', 'status'] );
 
             $t->timestamps();
         });
@@ -59,11 +59,11 @@ class CreateObjectTables extends Migration
             $t->increments('id');
             $t->string('name');
             $t->string('slug');
-            $t->unsignedInteger('type_id');
-            $t->foreign('type_id')->references('id')->on('object_types')->onDelete('cascade');
+            $t->unsignedInteger('item_type_id');
+            $t->foreign('item_type_id')->references('id')->on('item_types')->onDelete('cascade');
             $t->boolean('hierarchical')->default(true);
 
-            $t->unique( ['slug', 'type_id'] );
+            $t->unique( ['slug', 'item_type_id'] );
 
             $t->timestamps();
         });
@@ -84,14 +84,14 @@ class CreateObjectTables extends Migration
             $t->timestamps();
         });
 
-        Schema::create('object_term', function (Blueprint $t) {
+        Schema::create('item_term', function (Blueprint $t) {
             $t->increments('id');
-            $t->unsignedInteger('object_id');
-            $t->foreign('object_id')->references('id')->on('objects')->onDelete('cascade');
+            $t->unsignedInteger('item_id');
+            $t->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             $t->unsignedInteger('term_id');
             $t->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
 
-            $t->unique( ['object_id', 'term_id'] );
+            $t->unique( ['item_id', 'term_id'] );
 
             $t->timestamps();
         });
@@ -104,10 +104,10 @@ class CreateObjectTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('objects');
-        Schema::dropIfExists('object_types');
+        Schema::dropIfExists('items');
+        Schema::dropIfExists('item_types');
         Schema::dropIfExists('taxonomies');
         Schema::dropIfExists('terms');
-        Schema::dropIfExists('object_term');
+        Schema::dropIfExists('item_term');
     }
 }
