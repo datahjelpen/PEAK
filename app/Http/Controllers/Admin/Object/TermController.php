@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Object;
+namespace App\Http\Controllers\Admin\Item;
 
 use Session;
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\Validator;
 
-use \App\Model\Object\Type;
-use \App\Model\Object\Taxonomy;
-use \App\Model\Object\Term;
+use \App\Model\Item\Item_type;
+use \App\Model\Item\Taxonomy;
+use \App\Model\Item\Term;
 
 class TermController extends Controller
 {
-    public function index(Type $type, Taxonomy $taxonomy)
+    public function index(Item_type $item_type, Taxonomy $taxonomy)
     {
-        $taxonomy = $taxonomy->getSingle($type);
+        $taxonomy = $taxonomy->getSingle($item_type);
 
         if ($taxonomy->hierarchical) {
             $parents = $taxonomy->terms()->where(['parent_id' => null])->get();
@@ -23,12 +23,12 @@ class TermController extends Controller
             $parents = $taxonomy->terms()->get();
         }
 
-        return view('admin.object.term.index', compact('type', 'taxonomy', 'parents'));
+        return view('admin.item.term.index', compact('item_type', 'taxonomy', 'parents'));
     }
 
-    public function create(Type $type, Taxonomy $taxonomy)
+    public function create(Item_type $item_type, Taxonomy $taxonomy)
     {
-        $taxonomy = $taxonomy->getSingle($type);
+        $taxonomy = $taxonomy->getSingle($item_type);
 
         if ($taxonomy->hierarchical) {
             $parents = $taxonomy->terms()->where(['parent_id' => null])->get();
@@ -37,12 +37,12 @@ class TermController extends Controller
             $parents = $taxonomy->terms()->get();
         }
 
-        return view('admin.object.term.create', compact('type', 'taxonomy', 'parents'));
+        return view('admin.item.term.create', compact('item_type', 'taxonomy', 'parents'));
     }
 
-    public function store(Type $type, Taxonomy $taxonomy, Request $request)
+    public function store(Item_type $item_type, Taxonomy $taxonomy, Request $request)
     {
-        $taxonomy = $taxonomy->getSingle($type);
+        $taxonomy = $taxonomy->getSingle($item_type);
 
         $term = new Term;
         $request->slug = $term->make_slug($request);
@@ -66,9 +66,9 @@ class TermController extends Controller
         return back();
     }
 
-    public function edit(Type $type, Taxonomy $taxonomy, Term $term)
+    public function edit(Item_type $item_type, Taxonomy $taxonomy, Term $term)
     {
-        $taxonomy = $taxonomy->getSingle($type);
+        $taxonomy = $taxonomy->getSingle($item_type);
         $term = $term->getSingle($taxonomy);
 
         if ($taxonomy->hierarchical) {
@@ -78,12 +78,12 @@ class TermController extends Controller
             $parents = $taxonomy->terms()->get();
         }
 
-        return view('admin.object.term.edit', compact('type', 'taxonomy', 'term', 'parents'));
+        return view('admin.item.term.edit', compact('item_type', 'taxonomy', 'term', 'parents'));
     }
 
-    public function update(Type $type, Taxonomy $taxonomy, Request $request, Term $term)
+    public function update(Item_type $item_type, Taxonomy $taxonomy, Request $request, Term $term)
     {
-        $taxonomy = $taxonomy->getSingle($type);
+        $taxonomy = $taxonomy->getSingle($item_type);
         $term = $term->getSingle($taxonomy);
 
         $slug_changed = $taxonomy->slug_changed($taxonomy->slug, $request->slug);
@@ -98,7 +98,7 @@ class TermController extends Controller
 
         if ($validator->fails()) {
             Session::flash('alert-danger', __('validation.failed.update', ['name' => $term->name]));
-            return redirect()->route('admin.term.edit', [$type->slug, $taxonomy->slug, $term->slug])->withErrors($validator)->withInput();
+            return redirect()->route('admin.term.edit', [$item_type->slug, $taxonomy->slug, $term->slug])->withErrors($validator)->withInput();
         }
 
         $term->name     = $request->name;
@@ -112,15 +112,15 @@ class TermController extends Controller
         Session::flash('alert-success', __('validation.succeeded.update', ['name' => $term->name]));
 
         if ($slug_changed) {
-            return redirect()->route('admin.term.edit', [$type->slug, $taxonomy->slug, $term->slug]);
+            return redirect()->route('admin.term.edit', [$item_type->slug, $taxonomy->slug, $term->slug]);
         }
 
         return back();
     }
 
-    public function destroy(Type $type, Taxonomy $taxonomy, Term $term)
+    public function destroy(Item_type $item_type, Taxonomy $taxonomy, Term $term)
     {
-        $taxonomy = $taxonomy->getSingle($type);
+        $taxonomy = $taxonomy->getSingle($item_type);
         $term = $term->getSingle($taxonomy);
 
         $term->delete();

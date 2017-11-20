@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Object;
+namespace App\Http\Controllers\Item;
 
 use \Illuminate\Http\Request;
 
-use \App\Model\Object\Type;
-use \App\Model\Object\Taxonomy;
+use \App\Model\Item\Item_type;
+use \App\Model\Item\Taxonomy;
 
 class TaxonomyController extends Controller
 {
-	public function show(Type $type, Taxonomy $taxonomy)
+	public function show(Item_type $item_type, Taxonomy $taxonomy)
 	{
-		$taxonomy = $taxonomy->getSingle($type);
-		return view('object.taxonomy.show', compact('type', 'taxonomy'));
+		$taxonomy = $taxonomy->getSingle($item_type);
+		return view('item.taxonomy.show', compact('item_type', 'taxonomy'));
 	}
 }

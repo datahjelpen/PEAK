@@ -7,9 +7,9 @@ use \View;
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\Validator;
 
-use \App\Model\Object\Type;
-use \App\Model\Object\Taxonomy;
-use \App\Model\Object\Term;
+use \App\Model\Item\Item_type;
+use \App\Model\Item\Taxonomy;
+use \App\Model\Item\Term;
 
 class Controller extends \App\Http\Controllers\Controller
 {
@@ -21,7 +21,7 @@ class Controller extends \App\Http\Controllers\Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->types = Type::all();
-        View::share('types', Type::all());
+        $this->item_types = Item_type::all();
+        View::share('item_types', Item_type::all());
     }
 }

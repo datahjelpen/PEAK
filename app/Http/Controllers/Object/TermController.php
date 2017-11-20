@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Object;
+namespace App\Http\Controllers\Item;
 
 use \Illuminate\Http\Request;
 
-use \App\Model\Object\Type;
-use \App\Model\Object\Taxonomy;
-use \App\Model\Object\Term;
+use \App\Model\Item\Item_type;
+use \App\Model\Item\Taxonomy;
+use \App\Model\Item\Term;
 
 class TermController extends Controller
 {
-	public function show(Type $type, Taxonomy $taxonomy, Term $term)
+	public function show(Item_type $item_type, Taxonomy $taxonomy, Term $term)
 	{
-		$taxonomy = $taxonomy->getSingle($type);
+		$taxonomy = $taxonomy->getSingle($item_type);
 		$term = $term->getSingle($taxonomy);
-		return view('object.term.show', compact('type', 'taxonomy', 'term'));
+		return view('item.term.show', compact('item_type', 'taxonomy', 'term'));
 	}
 }

@@ -1,87 +1,87 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Object;
+namespace App\Http\Controllers\Admin\Item;
 
 use Session;
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\Validator;
 
-use \App\Model\Object\Type;
+use \App\Model\Item\Item_type;
 
-class TypeController extends Controller
+class Item_typeController extends Controller
 {
     public function index()
     {
-        return view('admin.superadmin.object.type.index');
+        return view('admin.superadmin.item.type.index');
     }
 
     public function create()
     {
-        return view('admin.superadmin.object.type.create');
+        return view('admin.superadmin.item.type.create');
     }
 
     public function store(Request $request)
     {
-        $type = new Type;
-        $request->slug = $type->make_slug($request);
+        $item_type = new Item_type;
+        $request->slug = $item_type->make_slug($request);
 
         $this->validate($request, [
             'name'      => 'required|string|min:2',
-            'slug'      => 'required|unique:object_types|string|min:2',
+            'slug'      => 'required|unique:item_types|string|min:2',
             'template'  => 'integer|nullable',
         ]);
 
-        $type->slug = $request->slug;
-        $type->name = $request->name;
-        $type->template = $request->template;
+        $item_type->slug = $request->slug;
+        $item_type->name = $request->name;
+        $item_type->template = $request->template;
 
-        $type->save();
+        $item_type->save();
 
         Session::flash('alert-success', __('validation.succeeded.create', ['name' => $request->name]));
         return back();
     }
 
-    public function edit(Type $type)
+    public function edit(Item_type $item_type)
     {
-        return view('admin.superadmin.object.type.edit', compact('type'));
+        return view('admin.superadmin.item.type.edit', compact('item_type'));
     }
 
-    public function update(Request $request, Type $type)
+    public function update(Request $request, Item_type $item_type)
     {
-        $slug_changed = $type->slug_changed($type->slug, $request->slug);
-        $request->slug = $type->make_slug($request);
+        $slug_changed = $item_type->slug_changed($item_type->slug, $request->slug);
+        $request->slug = $item_type->make_slug($request);
 
         $validator = Validator::make($request->all(), [
             'name'      => 'required|string|min:2',
-            'slug'      => 'required|unique:object_types,slug,'.$type->id.'|string|min:2',
+            'slug'      => 'required|unique:item_types,slug,'.$item_type->id.'|string|min:2',
             'template'  => 'integer|nullable',
         ]);
 
         if ($validator->fails()) {
-            Session::flash('alert-danger', __('validation.failed.update', ['name' => $type->name]));
-            return redirect()->route('superadmin.type.edit', $type->slug)->withErrors($validator)->withInput();
+            Session::flash('alert-danger', __('validation.failed.update', ['name' => $item_type->name]));
+            return redirect()->route('superadmin.type.edit', $item_type->slug)->withErrors($validator)->withInput();
         }
 
-        $type->name     = $request->name;
-        $type->slug     = $request->slug;
-        $type->template = $request->template;
+        $item_type->name     = $request->name;
+        $item_type->slug     = $request->slug;
+        $item_type->template = $request->template;
 
-        $type->save();
+        $item_type->save();
 
-        Session::flash('alert-success', __('validation.succeeded.update', ['name' => $type->name]));
+        Session::flash('alert-success', __('validation.succeeded.update', ['name' => $item_type->name]));
 
         if ($slug_changed) {
-            return redirect()->route('superadmin.type.edit', $type->slug);
+            return redirect()->route('superadmin.type.edit', $item_type->slug);
         }
 
         return back();
     }
 
-    public function destroy(Type $type)
+    public function destroy(Item_type $item_type)
     {
-        $type->delete();
+        $item_type->delete();
 
-        Session::flash('alert-success', __('validation.succeeded.delete', ['name' => $type->name]));
+        Session::flash('alert-success', __('validation.succeeded.delete', ['name' => $item_type->name]));
         return back();
     }
 }

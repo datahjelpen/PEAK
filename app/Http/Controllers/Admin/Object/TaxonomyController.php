@@ -1,28 +1,28 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Object;
+namespace App\Http\Controllers\Admin\Item;
 
 use Session;
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\Validator;
 
-use \App\Model\Object\Type;
-use \App\Model\Object\Taxonomy;
+use \App\Model\Item\Item_type;
+use \App\Model\Item\Taxonomy;
 
 class TaxonomyController extends Controller
 {
-    public function index(Type $type, Taxonomy $taxonomy)
+    public function index(Item_type $type, Taxonomy $taxonomy)
     {
         $taxonomy = $taxonomy->getSingle($type);
-        return view('admin.superadmin.object.taxonomy.index', compact('type', 'taxonomy'));
+        return view('admin.superadmin.item.taxonomy.index', compact('item_type', 'taxonomy'));
     }
 
-    public function create(Type $type)
+    public function create(Item_type $type)
     {
-        return view('admin.superadmin.object.taxonomy.create');
+        return view('admin.superadmin.item.taxonomy.create');
     }
 
-    public function store(Type $type, Request $request)
+    public function store(Item_type $type, Request $request)
     {
         $taxonomy = new Taxonomy;
         $request->slug = $taxonomy->make_slug($request);
@@ -45,13 +45,13 @@ class TaxonomyController extends Controller
         return back();
     }
 
-    public function edit(Type $type, Taxonomy $taxonomy)
+    public function edit(Item_type $type, Taxonomy $taxonomy)
     {
         $taxonomy = $taxonomy->getSingle($type);
-        return view('admin.superadmin.object.taxonomy.edit', compact('type', 'taxonomy'));
+        return view('admin.superadmin.item.taxonomy.edit', compact('item_type', 'taxonomy'));
     }
 
-    public function update(Type $type, Request $request, Taxonomy $taxonomy)
+    public function update(Item_type $type, Request $request, Taxonomy $taxonomy)
     {
         $taxonomy = $taxonomy->getSingle($type);
 
@@ -86,7 +86,7 @@ class TaxonomyController extends Controller
         return back();
     }
 
-    public function destroy(Type $type, Taxonomy $taxonomy)
+    public function destroy(Item_type $type, Taxonomy $taxonomy)
     {
         $taxonomy = $taxonomy->getSingle($type);
 

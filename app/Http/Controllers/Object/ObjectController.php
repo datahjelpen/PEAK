@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Object;
+namespace App\Http\Controllers\Item;
 
 use \Illuminate\Http\Request;
 
-use \App\Model\Object\Type;
-use \App\Model\Object\Object;
-use \App\Model\Object\Taxonomy;
-use \App\Model\Object\Term;
+use \App\Model\Item\Item_type;
+use \App\Model\Item\Item;
+use \App\Model\Item\Taxonomy;
+use \App\Model\Item\Term;
 
-class ObjectController extends Controller
+class ItemController extends Controller
 {
-    public function show(Type $type, Taxonomy $taxonomy, Term $term, Object $object)
+    public function show(Item_type $item_type, Taxonomy $taxonomy, Term $term, Item $item)
     {
-        return view('object.show', compact('type', 'object'));
+        return view('item.show', compact('item_type', 'item'));
     }
 }

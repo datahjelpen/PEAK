@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Object;
+namespace App\Http\Controllers\Item;
 
 use \Illuminate\Http\Request;
 
-use \App\Model\Object\Type;
+use \App\Model\Item\Item_type;
 
-class TypeController extends Controller
+class Item_typeController extends Controller
 {
-    public function show(Type $type)
+    public function show(Item_type $item_type)
     {
-        return view('object.type.show', compact('type'));
+        return view('item.type.show', compact('item_type'));
     }
 }

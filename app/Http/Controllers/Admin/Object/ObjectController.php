@@ -1,24 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Object;
+namespace App\Http\Controllers\Admin\Item;
 
 use Session;
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\Validator;
 
-use \App\Model\Object\Type;
-use \App\Model\Object\Taxonomy;
-use \App\Model\Object\Term;
-// use \App\Model\Object\TermRelationship;
-use \App\Model\Object\Object;
-use \App\Model\Object\Status;
+use \App\Model\Item\Item_type;
+use \App\Model\Item\Taxonomy;
+use \App\Model\Item\Term;
+use \App\Model\Item\Item;
+use \App\Model\Item\Status;
 
-class ObjectController extends Controller
+class ItemController extends Controller
 {
-    public function index(Type $type)
+    public function index(Item_type $item_type)
     {
-        $objects = Object::all()->where('object_type', $type->id);
-        $taxonomies = Taxonomy::all()->where('object_type', $type->id);
+        $items = Item::all()->where('item_type', $item_type->id);
+        $taxonomies = Taxonomy::all()->where('item_type', $item_type->id);
 
         foreach ($taxonomies as $taxonomy) {
             $terms = Term::where(['taxonomy' => $taxonomy->id, 'parent' => null])->get();
@@ -28,42 +27,42 @@ class ObjectController extends Controller
             }
         }
 
-        $statuses = Status::all()->where('object_type', $type->id);
+        $statuses = Status::all()->where('item_type', $item_type->id);
 
-        return view('admin.object.index', compact('type', 'taxonomies', 'terms', 'objects', 'statuses'));
+        return view('admin.item.index', compact('type', 'taxonomies', 'terms', 'items', 'statuses'));
     }
 
-    public function create(Type $type)
+    public function create(Item_type $item_type)
     {
-        return view('admin.object.create');
+        return view('admin.item.create');
     }
 
-    public function store(Type $type, Request $request)
+    public function store(Item_type $item_type, Request $request)
     {
         if (!$request->slug && $request->name) $request->merge(['slug' => str_slug($request->name, '-')]);
 
-        $request->merge(['object_type' => $type->id]);
+        $request->merge(['item_type' => $item_type->id]);
         $request->merge(['comments' => ($request->comments ? true : false) ]);
 
         $this->validate($request, [
-            'name'          => 'required|string|min:2',
-            'slug'          => 'required|unique_with:objects,object_type,'.$type->id.'|string|min:2',
-            'text'          => 'required|string',
-            'excerpt'       => 'required|string',
-            'object_type'   => 'required|integer',
-            'author'        => 'required|integer',
-            'template'      => 'required|integer',
-            'comments'      => 'required|boolean',
-            'status'        => 'required|unique_with:objects,status,'.$request->status.'|integer',
-            'terms'         => 'required'
+            'name'      => 'required|string|min:2',
+            'slug'      => 'required|unique_with:items,item_type,'.$item_type->id.'|string|min:2',
+            'text'      => 'required|string',
+            'excerpt'   => 'required|string',
+            'item_type' => 'required|integer',
+            'author'    => 'required|integer',
+            'template'  => 'required|integer',
+            'comments'  => 'required|boolean',
+            'status'    => 'required|unique_with:items,status,'.$request->status.'|integer',
+            'terms'     => 'required'
         ]);
 
-        $object = Object::create(request([
+        $item = Item::create(request([
             'name',
             'slug',
             'text',
             'excerpt',
-            'object_type',
+            'item_type',
             'author',
             'template',
             'comments',
@@ -72,7 +71,7 @@ class ObjectController extends Controller
 
         if (count($request['terms']) != 0) {
             foreach ($request['terms'] as $term) {
-                $object->terms()->attach($term);
+                $item->terms()->attach($term);
             }
         }
 
@@ -80,76 +79,76 @@ class ObjectController extends Controller
         return back();
     }
 
-    public function edit(Type $type, Object $object)
+    public function edit(Item_type $item_type, Item $item)
     {
-        $object = Object::getSingle($type, $object);
+        $item = Item::getSingle($item_type, $item);
 
         if (session('_old_input') !== null) {
-            $slug = $object->slug; // Keep the original slug to prevent url issues
-            $object = json_decode(json_encode(session('_old_input')), false); // Fill object with old input values
-            $object->_old_slug = $object->slug;
-            $object->slug = $slug;
+            $slug = $item->slug; // Keep the original slug to prevent url issues
+            $item = json_decode(json_encode(session('_old_input')), false); // Fill item with old input values
+            $item->_old_slug = $item->slug;
+            $item->slug = $slug;
         }
 
-        return view('admin.object.edit', compact('type', 'object'));
+        return view('admin.item.edit', compact('type', 'item'));
     }
 
-    public function update(Type $type, Request $request, Object $object)
+    public function update(Item_type $item_type, Request $request, Item $item)
     {
-        $slug_changed = $object->slug_changed($object->slug, $request->slug);
-        $object = Object::getSingle($type, $object);
+        $slug_changed = $item->slug_changed($item->slug, $request->slug);
+        $item = Item::getSingle($item_type, $item);
 
         if (!$request->slug && $request->name) $request->merge(['slug' => str_slug($request->name, '-')]);
 
-        // TODO: allow users to move a object to another object_type
-        $request->merge(['object_type' => $type->id]);
+        // TODO: allow users to move a item to another item_type
+        $request->merge(['item_type' => $item_type->id]);
         $request->merge(['comments' => ($request->comments ? true : false) ]);
 
         $validator = Validator::make($request->all(), [
-            'name'          => 'required|string|min:2',
-            'slug'          => 'required|unique_with:objects,object_type,'.$object->id.'|string|min:2',
-            'text'          => 'required|string',
-            'excerpt'       => 'required|string',
-            'object_type'   => 'required|integer',
-            'author'        => 'required|integer',
-            'template'      => 'required|integer',
-            'comments'      => 'required|boolean',
-            'status'        => 'required|unique_with:objects,status,'.$object->id.'integer|'
+            'name'      => 'required|string|min:2',
+            'slug'      => 'required|unique_with:items,item_type,'.$item->id.'|string|min:2',
+            'text'      => 'required|string',
+            'excerpt'   => 'required|string',
+            'item_type' => 'required|integer',
+            'author'    => 'required|integer',
+            'template'  => 'required|integer',
+            'comments'  => 'required|boolean',
+            'status'    => 'required|unique_with:items,status,'.$item->id.'integer|'
         ]);
 
         if ($validator->fails()) {
-            Session::flash('alert-danger', __('validation.failed.update', ['name' => $object->name]));
-            return redirect()->route('admin.object.edit', [$type->slug, $object->slug])->withErrors($validator)->withInput();
+            Session::flash('alert-danger', __('validation.failed.update', ['name' => $item->name]));
+            return redirect()->route('admin.item.edit', [$item_type->slug, $item->slug])->withErrors($validator)->withInput();
         }
 
-        $object->name        = $request->name;
-        $object->slug        = $request->slug;
-        $object->text        = $request->text;
-        $object->excerpt     = $request->excerpt;
-        $object->object_type = $request->object_type;
-        $object->author      = $request->author;
-        $object->template    = $request->template;
-        $object->comments    = $request->comments;
-        $object->status      = $request->status;
+        $item->name      = $request->name;
+        $item->slug      = $request->slug;
+        $item->text      = $request->text;
+        $item->excerpt   = $request->excerpt;
+        $item->item_type = $request->item_type;
+        $item->author    = $request->author;
+        $item->template  = $request->template;
+        $item->comments  = $request->comments;
+        $item->status    = $request->status;
 
-        $object->save();
+        $item->save();
 
-        Session::flash('alert-success', __('validation.succeeded.update', ['name' => $object->name]));
+        Session::flash('alert-success', __('validation.succeeded.update', ['name' => $item->name]));
 
         if ($slug_changed) {
-            return redirect()->route('admin.object.edit', [$type->slug, $object->slug]);
+            return redirect()->route('admin.item.edit', [$item_type->slug, $item->slug]);
         }
 
         return back();
     }
 
-    public function destroy(Type $type, Object $object)
+    public function destroy(Item_type $item_type, Item $item)
     {
-        $object = Object::getSingle($type, $object);
+        $item = Item::getSingle($item_type, $item);
 
-        $object->delete();
+        $item->delete();
 
-        Session::flash('alert-success', __('validation.succeeded.delete', ['name' => $object->name]));
+        Session::flash('alert-success', __('validation.succeeded.delete', ['name' => $item->name]));
         return back();
     }
 }
