@@ -13,13 +13,13 @@ Route::prefix('admin')->group(function () {
 
 	Route::prefix('superadmin')->group(function () {
 
-		Route::get('item_types',        'Admin\Item\TypeController@index')->name('superadmin.item_types');
-		Route::get('item_type/new',     'Admin\Item\TypeController@create')->name('superadmin.item_type.create');
-		Route::post('item_type/create', 'Admin\Item\TypeController@store')->name('superadmin.item_type.store');
+		Route::get('item_types',        'Admin\Item\Item_typeController@index')->name('superadmin.item_types');
+		Route::get('item_type/new',     'Admin\Item\Item_typeController@create')->name('superadmin.item_type.create');
+		Route::post('item_type/create', 'Admin\Item\Item_typeController@store')->name('superadmin.item_type.store');
 		Route::prefix('item_type')->group(function () {
-			Route::get('{item_type}/edit',      'Admin\Item\TypeController@edit')->name('superadmin.item_type.edit');
-			Route::patch('{item_type}/update',  'Admin\Item\TypeController@update')->name('superadmin.item_type.update');
-			Route::delete('{item_type}/delete', 'Admin\Item\TypeController@destroy')->name('superadmin.item_type.destroy');
+			Route::get('{item_type}/edit',      'Admin\Item\Item_typeController@edit')->name('superadmin.item_type.edit');
+			Route::patch('{item_type}/update',  'Admin\Item\Item_typeController@update')->name('superadmin.item_type.update');
+			Route::delete('{item_type}/delete', 'Admin\Item\Item_typeController@destroy')->name('superadmin.item_type.destroy');
 		});
 
 		Route::prefix('{item_type}')->group(function () {
@@ -71,7 +71,7 @@ Route::get('/', function () {
 
 Route::prefix('{item_type}')->group(function () {
 
-	Route::get('/', 'Item\TypeController@show')->name('item_type.show');
+	Route::get('/', 'Item\Item_typeController@show')->name('item_type.show');
 
 	Route::prefix('{taxonomy}')->group(function () {
 		Route::get('/', 'Item\TaxonomyController@show')->name('taxonomy.show');

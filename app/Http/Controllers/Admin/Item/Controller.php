@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Object;
+namespace App\Http\Controllers\Admin\Item;
 
 use Session;
 use \Illuminate\Http\Request;
