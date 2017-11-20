@@ -13,7 +13,7 @@ class Status extends Model
 
 	public function getSingle(Item_type $item_type)
 	{
-		return $item_type->satuses()->where('slug', '=', $this->slug)->get()->first();
+		return $item_type->statuses()->where('slug', '=', $this->slug)->get()->first();
 	}
 
 	public function item_type()
