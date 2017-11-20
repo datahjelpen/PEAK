@@ -1,0 +1,2 @@
+<label for="term-{{ $term->id }}">{{ $term->name }}</label>
+<input id="term-{{ $term->id }}" type="checkbox" name="terms[]" value="{{ $term->id }}" {{ old('terms[]', isset($term->terms) ? 'checked' : null) }}>

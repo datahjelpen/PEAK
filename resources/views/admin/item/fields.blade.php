@@ -15,9 +15,15 @@
 		$item->slug = $item->_old_slug;
 	}
 
-	echo "<pre>";
-	var_dump($item);
-	echo "</pre>";
+
+	if (isset($item->terms)) {
+		dump( old('terms[]') );
+		dump( isset($item) && in_array(8, $item->terms_simple) ? true : false );
+	}
+
+	// echo "<pre>";
+	// var_dump($item);
+	// echo "</pre>";
 @endphp
 
 <label for="item-item-name">{{ __('general.name') }}</label>
@@ -32,28 +38,17 @@
 <label for="item-item-excerpt">{{ __('general.excerpt') }}</label>
 <textarea id="item-item-excerpt" name="excerpt" placeholder="excerpt">{{ $item->excerpt }}</textarea>
 
-@foreach ($taxonomies as $taxonomy)
+@foreach ($item_type->taxonomies as $taxonomy)
 	<p><strong>{{ $taxonomy->name }}</strong></p>
 	<ul>
-		@foreach ($terms as $term)
-			@if ($term['taxonomy'] == $taxonomy->id)
-				<li>
-					<label for="term-{{ $term['id'] }}">{{ $term['name'] }}</label>
-					<input id="term-{{ $term['id'] }}" type="checkbox" name="terms[]" value="{{ $term['id'] }}" {{ $term['id'] == $term->parent ? 'selected' : null }}>
 
-					@if ($term['hasChildren'])
-						<ul>
-							@foreach ($term['children'] as $child)
-								<li>
-									<label for="term-{{ $child['id'] }}">{{ $child['name'] }}</label>
-									<input id="term-{{ $child['id'] }}" type="checkbox" name="terms[]" value="{{ $child['id'] }}">
-								</li>
-							@endforeach
-						</ul>
-					@endif
-				</li>
-			@endif
-		@endforeach
+		@if ($taxonomy->hierarchical)
+			<ul>
+				@foreach ($taxonomy->parents as $parent)
+					@include('admin.item.field-item-parent')
+				@endforeach
+			</ul>
+		@endif
 	</ul>
 @endforeach
 
@@ -73,8 +68,8 @@
 
 <p><strong>Statuses</strong></p>
 <select name="status">
-	@foreach ($statuses as $status)
-		<option value="{{ $status['id'] }}">{{ $status['name'] }}</option>
+	@foreach ($item_type->statuses as $status)
+		<option value="{{ $status->id }}">{{ $status->name }}</option>
 
 		{{-- {{ $status['id'] == $item->status ? 'selected' : null }} --}}
 

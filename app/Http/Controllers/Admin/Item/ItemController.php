@@ -16,20 +16,16 @@ class ItemController extends Controller
 {
     public function index(Item_type $item_type)
     {
-        $items = Item::all()->where('item_type', $item_type->id);
-        $taxonomies = Taxonomy::all()->where('item_type', $item_type->id);
-
-        foreach ($taxonomies as $taxonomy) {
-            $terms = Term::where(['taxonomy' => $taxonomy->id, 'parent' => null])->get();
-
-            foreach ($terms as $term) {
-                $term->getChildrenRecursively();
+        foreach ($item_type->taxonomies as $taxonomy) {
+            if ($taxonomy->hierarchical) {
+                $taxonomy->parents = $taxonomy->terms()->where(['parent_id' => null])->get();
+                foreach ($taxonomy->parents as $parent) $parent->getChildrenRecursively();
+            } else {
+                $taxonomy->parents = $taxonomy->terms()->get();
             }
         }
 
-        $statuses = Status::all()->where('item_type', $item_type->id);
-
-        return view('admin.item.index', compact('type', 'taxonomies', 'terms', 'items', 'statuses'));
+        return view('admin.item.index', compact('item_type'));
     }
 
     public function create(Item_type $item_type)
@@ -41,7 +37,9 @@ class ItemController extends Controller
     {
         if (!$request->slug && $request->name) $request->merge(['slug' => str_slug($request->name, '-')]);
 
-        $request->merge(['item_type' => $item_type->id]);
+        $item = new Item;
+        $request->slug = $item->make_slug($request);
+
         $request->merge(['comments' => ($request->comments ? true : false) ]);
 
         $this->validate($request, [
@@ -56,23 +54,24 @@ class ItemController extends Controller
             'terms'     => 'required'
         ]);
 
-        $item = Item::create(request([
-            'name',
-            'slug',
-            'text',
-            'excerpt',
-            'item_type',
-            'author',
-            'template',
-            'comments',
-            'status'
-        ]));
+        $item->name     = $request->name;
+        $item->slug     = $request->slug;
+        $item->text     = $request->text;
+        $item->excerpt  = $request->excerpt;
+        $item->author   = $request->author;
+        $item->template = $request->template;
+        $item->comments = $request->comments;
+        $item->status   = $request->status;
 
-        if (count($request['terms']) != 0) {
-            foreach ($request['terms'] as $term) {
-                $item->terms()->attach($term);
-            }
-        }
+        $item->item_type()->associate($item_type);
+
+        // if (count($request['terms']) != 0) {
+        //     foreach ($request['terms'] as $term) {
+        //         $item->terms()->attach($term);
+        //     }
+        // }
+
+        $item->save();
 
         Session::flash('alert-success', __('validation.succeeded.create', ['name' => $request->name]));
         return back();
@@ -80,22 +79,29 @@ class ItemController extends Controller
 
     public function edit(Item_type $item_type, Item $item)
     {
-        $item = Item::getSingle($item_type, $item);
+        $item = $item->getSingle($item_type);
 
-        if (session('_old_input') !== null) {
-            $slug = $item->slug; // Keep the original slug to prevent url issues
-            $item = json_decode(json_encode(session('_old_input')), false); // Fill item with old input values
-            $item->_old_slug = $item->slug;
-            $item->slug = $slug;
+        foreach ($item_type->taxonomies as $taxonomy) {
+            if ($taxonomy->hierarchical) {
+                $taxonomy->parents = $taxonomy->terms()->where(['parent_id' => null])->get();
+                foreach ($taxonomy->parents as $parent) $parent->getChildrenRecursively();
+            } else {
+                $taxonomy->parents = $taxonomy->terms()->get();
+            }
+
+            $terms_simple = [];
+            foreach ($item->terms as $term) array_push($terms_simple, $term->id);
+            $item->terms_simple = $terms_simple;
         }
 
-        return view('admin.item.edit', compact('type', 'item'));
+        return view('admin.item.edit', compact('item_type', 'item'));
     }
 
     public function update(Item_type $item_type, Request $request, Item $item)
     {
+        $item = $item->getSingle($item_type);
+
         $slug_changed = $item->slug_changed($item->slug, $request->slug);
-        $item = Item::getSingle($item_type, $item);
 
         if (!$request->slug && $request->name) $request->merge(['slug' => str_slug($request->name, '-')]);
 
@@ -143,7 +149,7 @@ class ItemController extends Controller
 
     public function destroy(Item_type $item_type, Item $item)
     {
-        $item = Item::getSingle($item_type, $item);
+        $item = $item->getSingle($item_type);
 
         $item->delete();
 

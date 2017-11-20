@@ -17,6 +17,7 @@ class Item_type extends Model
         return $this->hasMany('App\Model\Item\Status');
     }
 
+
     public function taxonomies()
     {
         return $this->hasMany('App\Model\Item\Taxonomy');
@@ -25,5 +26,10 @@ class Item_type extends Model
     public function terms()
     {
         return $this->hasManyThrough('App\Model\Item\Term', 'App\Model\Item\Taxonomy');
+    }
+
+    public function items()
+    {
+        return $this->hasMany('App\Model\Item\Item');
     }
 }
