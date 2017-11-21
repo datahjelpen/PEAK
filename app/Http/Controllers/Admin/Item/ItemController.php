@@ -6,6 +6,7 @@ use Session;
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\Validator;
 
+use \App\User;
 use \App\Model\Item\Item_type;
 use \App\Model\Item\Taxonomy;
 use \App\Model\Item\Term;
@@ -43,7 +44,9 @@ class ItemController extends Controller
             return view('admin.item.index', compact('item_type', 'item'));
         }
 
+        $users = User::all();
 
+        return view('admin.item.index', compact('item_type', 'users'));
     }
 
     public function create(Item_type $item_type)
@@ -65,7 +68,7 @@ class ItemController extends Controller
             'slug'      => 'required|unique:items,slug,NULL,NULL,item_type_id,'.$item_type->id.'|string|min:2',
             'text'      => 'required|string',
             'excerpt'   => 'required|string',
-            'author'    => 'required|integer',
+            'author_id' => 'required|integer',
             'template'  => 'required|integer',
             'comments'  => 'required|boolean',
             'status'    => 'required|integer',
@@ -76,12 +79,12 @@ class ItemController extends Controller
         $item->slug     = $request->slug;
         $item->text     = $request->text;
         $item->excerpt  = $request->excerpt;
-        $item->author   = $request->author;
         $item->template = $request->template;
         $item->comments = $request->comments;
         $item->status   = $request->status;
 
         $item->item_type()->associate($item_type);
+        $item->author()->associate($request->author_id);
 
         $item->save();
         
@@ -116,6 +119,9 @@ class ItemController extends Controller
 
         $item->terms_simple = $terms_simple;
 
+        $users = User::all();
+
+        return view('admin.item.edit', compact('item_type', 'item', 'users'));
     }
 
     public function update(Item_type $item_type, Request $request, Item $item)
@@ -136,7 +142,7 @@ class ItemController extends Controller
             'text'      => 'required|string',
             'excerpt'   => 'required|string',
             'item_type' => 'required|integer',
-            'author'    => 'required|integer',
+            'author_id' => 'required|integer',
             'template'  => 'required|integer',
             'comments'  => 'required|boolean',
             'status'    => 'required|unique_with:items,status,'.$item->id.'integer|'
@@ -153,10 +159,10 @@ class ItemController extends Controller
         $item->text      = $request->text;
         $item->excerpt   = $request->excerpt;
         $item->item_type = $request->item_type;
-        $item->author    = $request->author;
         $item->template  = $request->template;
         $item->comments  = $request->comments;
         $item->status    = $request->status;
+        $item->author()->associate($request->author_id);
 
         $item->save();
 

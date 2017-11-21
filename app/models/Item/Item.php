@@ -12,7 +12,6 @@ class Item extends Model
 		'text',
 		'excerpt',
 		'item_type_id',
-		'author',
 		'template',
 		'comments',
 		'status'
@@ -32,4 +31,10 @@ class Item extends Model
 	{
 		return $this->belongsTo('App\Model\Item\Item_type');
 	}
+
+	public function author()
+	{
+		return $this->belongsTo('App\User');
+	}
+
 }

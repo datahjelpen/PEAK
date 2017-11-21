@@ -42,8 +42,8 @@ class CreateItemTables extends Migration
             $t->text('excerpt')->nullable()->default(null);
             $t->unsignedInteger('item_type_id');
             $t->foreign('item_type_id')->references('id')->on('item_types')->onDelete('cascade');
-            $t->unsignedInteger('author');
-            $t->foreign('author')->references('id')->on('users');
+            $t->unsignedInteger('author_id');
+            $t->foreign('author_id')->references('id')->on('users');
             $t->unsignedInteger('template')->nullable()->default(null);
             // $t->foreign('template')->references('id')->on('templates');
             $t->boolean('comments');

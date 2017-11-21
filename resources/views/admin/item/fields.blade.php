@@ -26,11 +26,11 @@
 
 
 <label for="item-item-author">{{ __('general.author') }}</label>
-<select id="item-item-author" name="author">
-	<option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
+<select id="item-item-author" name="author_id">
+	@foreach ($users as $user)
+		<option value="{{ $user->id }}" {{ $user->id == old('author_id', isset($item->author->id) ? $item->author->id : null) ? 'selected' : null }}>{{ $user->name }}</option>
+	@endforeach
 </select>
-
-{{-- <input type="text" id="item-item-author" name="author" placeholder="author" value="{{ $item->author }}"> --}}
 
 <label for="item-item-template">{{ __('general.template') }}</label>
 <input type="text" id="item-item-template" name="template" placeholder="template" value="{{ $item->template }}">
