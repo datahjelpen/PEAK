@@ -130,15 +130,11 @@ class ItemController extends Controller
 
         $slug_changed = $item->slug_changed($item->slug, $request->slug);
 
-        if (!$request->slug && $request->name) $request->merge(['slug' => str_slug($request->name, '-')]);
-
-        // TODO: allow users to move a item to another item_type
-        $request->merge(['item_type' => $item_type->id]);
         $request->merge(['comments' => ($request->comments ? true : false) ]);
 
         $validator = Validator::make($request->all(), [
             'name'      => 'required|string|min:2',
-            'slug'      => 'required|unique_with:items,item_type,'.$item->id.'|string|min:2',
+            'slug'      => 'required|unique:items,slug,'.$item->id.',id,item_type_id,'.$item_type->id.'|string|min:2',
             'text'      => 'required|string',
             'excerpt'   => 'required|string',
             'item_type' => 'required|integer',
