@@ -137,7 +137,6 @@ class ItemController extends Controller
             'slug'      => 'required|unique:items,slug,'.$item->id.',id,item_type_id,'.$item_type->id.'|string|min:2',
             'text'      => 'required|string',
             'excerpt'   => 'required|string',
-            'item_type' => 'required|integer',
             'author_id' => 'required|integer',
             'template'  => 'required|integer',
             'comments'  => 'required|boolean',
@@ -154,13 +153,15 @@ class ItemController extends Controller
         $item->slug      = $request->slug;
         $item->text      = $request->text;
         $item->excerpt   = $request->excerpt;
-        $item->item_type = $request->item_type;
         $item->template  = $request->template;
         $item->comments  = $request->comments;
+
+        $item->item_type()->associate($item_type);
         $item->status()->associate($request->status_id);
         $item->author()->associate($request->author_id);
 
         $item->save();
+        
 
         Session::flash('alert-success', __('validation.succeeded.update', ['name' => $item->name]));
 

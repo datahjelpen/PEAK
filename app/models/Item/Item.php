@@ -11,7 +11,6 @@ class Item extends Model
 		'slug',
 		'text',
 		'excerpt',
-		'item_type_id',
 		'template',
 		'comments',
 	];
