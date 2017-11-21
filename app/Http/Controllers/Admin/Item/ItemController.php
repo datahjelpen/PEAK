@@ -159,6 +159,7 @@ class ItemController extends Controller
         $item->item_type()->associate($item_type);
         $item->status()->associate($request->status_id);
         $item->author()->associate($request->author_id);
+        $item->terms()->sync($request['terms']);
 
         $item->save();
         
