@@ -14,8 +14,8 @@
 
 				<button class="modal-trigger" data-modal="#show-item-item_type-{{ $item->id }}">{{ __('navigation.actions.view_quick') }}</button>
 				<div id="show-item-item_type-{{ $item->id }}" class="modal">
-					{{-- <a href="{{ route('item.show', [$item_type->slug, $item->slug]) }}">{{ __('general.actions.open') }}</a> --}}
-					{{-- <a href="{{ route('item.show', [$item_type->slug, $item->slug]) }}" target="_blank">{{ __('navigation.actions.open_new_tab') }}</a> --}}
+					<a href="{{ route('item.show', [$item_type->slug, $item->terms->first()->taxonomy->slug, $item->terms->first()->slug, $item->slug]) }}">{{ __('general.actions.open') }}</a>
+					<a href="{{ route('item.show', [$item_type->slug, $item->terms->first()->taxonomy->slug, $item->terms->first()->slug, $item->slug]) }}" target="_blank">{{ __('navigation.actions.open_new_tab') }}</a>
 					<button class="modal-close"><i data-feather="x-square"></i></button>
 					@include('item.content-main', ['item' => $item])
 				</div>
