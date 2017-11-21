@@ -16,6 +16,7 @@ class ItemController extends Controller
 {
     public function index(Item_type $item_type)
     {
+        // Set a hierarchial taxonomy's "parents" key to be it's parent terms
         foreach ($item_type->taxonomies as $taxonomy) {
             if ($taxonomy->hierarchical) {
                 $taxonomy->parents = $taxonomy->terms()->where(['parent_id' => null])->get();
@@ -25,7 +26,24 @@ class ItemController extends Controller
             }
         }
 
-        return view('admin.item.index', compact('item_type'));
+        // Loop through all the items and assign a simple array containing attached terms
+        foreach ($item_type->items as $item) {
+            $terms_simple = [];
+            foreach ($item->terms as $term) array_push($terms_simple, $term->id);
+            $item->terms_simple = $terms_simple;
+        }
+
+        // If the session contains an item's terms, put them in a simple array
+        if (old('terms') != null) {
+            $item = new \stdClass();
+            $terms_simple = [];
+            foreach (old('terms') as $term) array_push($terms_simple, $term);
+            $item->terms_simple = $terms_simple;
+
+            return view('admin.item.index', compact('item_type', 'item'));
+        }
+
+
     }
 
     public function create(Item_type $item_type)
@@ -65,13 +83,11 @@ class ItemController extends Controller
 
         $item->item_type()->associate($item_type);
 
-        // if (count($request['terms']) != 0) {
-        //     foreach ($request['terms'] as $term) {
-        //         $item->terms()->attach($term);
-        //     }
-        // }
-
         $item->save();
+        
+        foreach ($request['terms'] as $term) {
+            $item->terms()->attach($term);
+        }
 
         Session::flash('alert-success', __('validation.succeeded.create', ['name' => $request->name]));
         return back();
@@ -88,13 +104,18 @@ class ItemController extends Controller
             } else {
                 $taxonomy->parents = $taxonomy->terms()->get();
             }
-
-            $terms_simple = [];
-            foreach ($item->terms as $term) array_push($terms_simple, $term->id);
-            $item->terms_simple = $terms_simple;
         }
 
-        return view('admin.item.edit', compact('item_type', 'item'));
+        $terms_simple = [];
+
+        if (old('terms') != null) {
+            foreach (old('terms') as $term) array_push($terms_simple, $term);
+        } else {
+            foreach ($item->terms as $term) array_push($terms_simple, $term->id);
+        }
+
+        $item->terms_simple = $terms_simple;
+
     }
 
     public function update(Item_type $item_type, Request $request, Item $item)
@@ -119,6 +140,7 @@ class ItemController extends Controller
             'template'  => 'required|integer',
             'comments'  => 'required|boolean',
             'status'    => 'required|unique_with:items,status,'.$item->id.'integer|'
+            'terms'     => 'required'
         ]);
 
         if ($validator->fails()) {

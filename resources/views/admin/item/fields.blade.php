@@ -1,31 +1,3 @@
-@php
-	if (!isset($item)) {
-		$item = new stdClass();
-		$item->name = old('name');
-		$item->slug = old('slug');
-		$item->text = old('text');
-		$item->excerpt = old('excerpt');
-		$item->author = old('author');
-		$item->template = old('template');
-		$item->status = old('status');
-		$item->comments = old('comments');
-	}
-
-	if (isset($item->_old_slug)) {
-		$item->slug = $item->_old_slug;
-	}
-
-
-	if (isset($item->terms)) {
-		dump( old('terms[]') );
-		dump( isset($item) && in_array(8, $item->terms_simple) ? true : false );
-	}
-
-	// echo "<pre>";
-	// var_dump($item);
-	// echo "</pre>";
-@endphp
-
 <label for="item-item-name">{{ __('general.name') }}</label>
 <input type="text" id="item-item-name" class="autofocus" name="name" placeholder="name" value="{{ $item->name }}" autofocus>
 
