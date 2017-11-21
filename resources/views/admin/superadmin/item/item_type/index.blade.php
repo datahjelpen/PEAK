@@ -1,7 +1,7 @@
 @extends('admin.partials.master')
 
 @section('content-main')
-	<h1>Object item_types</h1>
+	<h1>item types</h1>
 	
 	<hr>
 	@include('admin.superadmin.item.item_type.form-create')
