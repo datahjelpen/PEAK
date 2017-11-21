@@ -1,14 +1,14 @@
 <label for="item-item-name">{{ __('general.name') }}</label>
-<input type="text" id="item-item-name" class="autofocus" name="name" placeholder="name" value="{{ $item->name }}" autofocus>
+<input type="text" id="item-item-name" class="autofocus" name="name" placeholder="name" value="{{ old('name', isset($item->name) ? $item->name : null) }}" autofocus>
 
 <label for="item-item-slug">{{ __('general.slug') }}</label>
-<input type="text" id="item-item-slug" name="slug" placeholder="slug" value="{{ $item->slug }}">
+<input type="text" id="item-item-slug" name="slug" placeholder="slug" value="{{ old('slug', isset($item->slug) ? $item->slug : null) }}">
 
 <label for="item-item-text">{{ __('general.text') }}</label>
-<textarea id="item-item-text" name="text" placeholder="text">{{ $item->text }}</textarea>
+<textarea id="item-item-text" name="text" placeholder="text">{{ old('text', isset($item->text) ? $item->text : null) }}</textarea>
 
 <label for="item-item-excerpt">{{ __('general.excerpt') }}</label>
-<textarea id="item-item-excerpt" name="excerpt" placeholder="excerpt">{{ $item->excerpt }}</textarea>
+<textarea id="item-item-excerpt" name="excerpt" placeholder="excerpt">{{ old('excerpt', isset($item->excerpt) ? $item->excerpt : null) }}</textarea>
 
 @foreach ($item_type->taxonomies as $taxonomy)
 	<p><strong>{{ $taxonomy->name }}</strong></p>
@@ -33,10 +33,7 @@
 </select>
 
 <label for="item-item-template">{{ __('general.template') }}</label>
-<input type="text" id="item-item-template" name="template" placeholder="template" value="{{ $item->template }}">
-
-{{-- <label for="item-item-status">{{ __('general.status') }}</label>
-<input type="text" id="item-item-status" name="status" placeholder="status" value="{{ $item->status }}"> --}}
+<input type="text" id="item-item-template" name="template" placeholder="template" value="{{ old('template', isset($item->template) ? $item->template : null) }}">
 
 <p><strong>Statuses</strong></p>
 <select name="status_id">
@@ -46,4 +43,4 @@
 </select>
 
 <label for="item-item-comments">{{ __('general.comments') }}</label>
-<input type="checkbox" id="item-item-comments" name="comments" placeholder="comments" {{ $item->comments ? 'checked' : null }}>
+<input type="checkbox" id="item-item-comments" name="comments" placeholder="comments" {{ old('comments', isset($item->comments) ? $item->comments : null) ? 'checked' : null }}>
