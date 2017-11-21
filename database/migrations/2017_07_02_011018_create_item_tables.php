@@ -47,8 +47,8 @@ class CreateItemTables extends Migration
             $t->unsignedInteger('template')->nullable()->default(null);
             // $t->foreign('template')->references('id')->on('templates');
             $t->boolean('comments');
-            $t->unsignedInteger('status');
-            $t->foreign('status')->references('id')->on('statuses');
+            $t->unsignedInteger('status_id');
+            $t->foreign('status_id')->references('id')->on('statuses');
 
             $t->unique( ['slug', 'item_type_id', 'status'] );
 

@@ -39,12 +39,9 @@
 <input type="text" id="item-item-status" name="status" placeholder="status" value="{{ $item->status }}"> --}}
 
 <p><strong>Statuses</strong></p>
-<select name="status">
+<select name="status_id">
 	@foreach ($item_type->statuses as $status)
-		<option value="{{ $status->id }}">{{ $status->name }}</option>
-
-		{{-- {{ $status['id'] == $item->status ? 'selected' : null }} --}}
-
+		<option value="{{ $status->id }}" {{ $status->id == old('status', isset($item->status->id) ? $item->status->id : null) ? 'selected' : null }}>{{ $status->name }}</option>
 	@endforeach
 </select>
 

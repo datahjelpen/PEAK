@@ -14,7 +14,6 @@ class Item extends Model
 		'item_type_id',
 		'template',
 		'comments',
-		'status'
 	];
 
 	public function getSingle(Item_type $item_type)
@@ -37,4 +36,8 @@ class Item extends Model
 		return $this->belongsTo('App\User');
 	}
 
+	public function status()
+	{
+		return $this->belongsTo('App\Model\Item\Status');
+	}
 }

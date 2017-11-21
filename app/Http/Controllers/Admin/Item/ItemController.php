@@ -71,7 +71,7 @@ class ItemController extends Controller
             'author_id' => 'required|integer',
             'template'  => 'required|integer',
             'comments'  => 'required|boolean',
-            'status'    => 'required|integer',
+            'status_id' => 'required|integer',
             'terms'     => 'required'
         ]);
 
@@ -81,9 +81,9 @@ class ItemController extends Controller
         $item->excerpt  = $request->excerpt;
         $item->template = $request->template;
         $item->comments = $request->comments;
-        $item->status   = $request->status;
 
         $item->item_type()->associate($item_type);
+        $item->status()->associate($request->status_id);
         $item->author()->associate($request->author_id);
 
         $item->save();
@@ -145,7 +145,7 @@ class ItemController extends Controller
             'author_id' => 'required|integer',
             'template'  => 'required|integer',
             'comments'  => 'required|boolean',
-            'status'    => 'required|unique_with:items,status,'.$item->id.'integer|'
+            'status_id' => 'required|integer',
             'terms'     => 'required'
         ]);
 
@@ -161,7 +161,7 @@ class ItemController extends Controller
         $item->item_type = $request->item_type;
         $item->template  = $request->template;
         $item->comments  = $request->comments;
-        $item->status    = $request->status;
+        $item->status()->associate($request->status_id);
         $item->author()->associate($request->author_id);
 
         $item->save();

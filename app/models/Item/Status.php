@@ -18,6 +18,11 @@ class Status extends Model
 
 	public function item_type()
 	{
-			return $this->belongsTo('App\Model\Item\Item_type');
+		return $this->belongsTo('App\Model\Item\Item_type');
+	}
+
+	public function items()
+	{
+		return $this->belongsToMany('App\Model\Item\Item');
 	}
 }
