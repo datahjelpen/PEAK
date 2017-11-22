@@ -50,7 +50,7 @@ class CreateItemTables extends Migration
             $t->unsignedInteger('status_id');
             $t->foreign('status_id')->references('id')->on('statuses');
 
-            $t->unique( ['slug', 'item_type_id', 'status'] );
+            $t->unique( ['slug', 'item_type_id', 'status_id'] );
 
             $t->timestamps();
         });
