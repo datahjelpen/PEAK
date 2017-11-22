@@ -1,9 +1,13 @@
 <?php
 
-use \App\Model\Item\Item_type;
-use \App\Model\Item\Term;
 use \App\Model\Item\Item;
+use \App\Model\Item\Term;
 use \App\Model\Item\Taxonomy;
+use \App\Model\Item\Item_type;
+
+Route::get('/', 'Controller@index')->name('index');
+Route::get('/home', 'Controller@index')->name('home');
+Route::get('/goodbye', 'Controller@goodbye')->name('goodbye');
 
 Auth::routes();
 
@@ -20,7 +24,8 @@ Route::prefix('profile')->group(function () {
 Route::prefix('admin')->group(function () {
 
 	Route::get('/', 'Admin\DashboardController@index')->name('admin.dashboard');
-
+	Route::get('oauth-dashboard', 'Admin\DashboardController@oauth')->name('oauth-dashboard');
+		
 	Route::prefix('superadmin')->group(function () {
 
 		Route::get('item_types',        'Admin\Item\Item_typeController@index')->name('superadmin.item_types');
@@ -71,24 +76,20 @@ Route::prefix('admin')->group(function () {
 			Route::delete('{term}/delete', 'Admin\Item\TermController@destroy')->name('admin.term.destroy');
 		});
 	});
-
-	Route::get('oauth-dashboard', 'Admin\DashboardController@oauth')->name('oauth-dashboard');
 });
-
-Route::get('/', function () {
-	return view('welcome', compact('item_types'));
-})->name('frontpage');
 
 Route::prefix('{item_type}')->group(function () {
 
 	Route::get('/', 'Item\Item_typeController@show')->name('item_type.show');
+
+	Route::get('{item}', 'Item\ItemController@show')->name('item.show');
 
 	Route::prefix('{taxonomy}')->group(function () {
 		Route::get('/', 'Item\TaxonomyController@show')->name('taxonomy.show');
 		
 		Route::prefix('{term}')->group(function () {
 			Route::get('/', 'Item\TermController@show')->name('term.show');
-			Route::get('{item}', 'Item\ItemController@show')->name('item.show');
+			Route::get('{item}', 'Item\ItemController@show');
 		});
 	});
 });
