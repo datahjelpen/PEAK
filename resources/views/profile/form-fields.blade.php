@@ -1,3 +1,6 @@
+<label for="item-profile-image">{{ __('general.image') }}</label>
+<input type="text" id="item-profile-image" class="autofocus" name="image" placeholder="image" value="{{ old('image', isset($profile->image) ? $profile->image : null) }}">
+
 <label for="item-profile-name_first">{{ __('general.name_first') }}</label>
 <input type="text" id="item-profile-name_first" class="autofocus" name="name_first" placeholder="name_first" value="{{ old('name_first', isset($profile->name_first) ? $profile->name_first : null) }}" autofocus>
 
