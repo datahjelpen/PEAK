@@ -17,4 +17,17 @@ class Controller extends BaseController
      * @var string
      */
     protected $redirectTo = '/admin';
+	public function index()
+	{
+		if (Auth::check()) {
+			return view('member.hello');
+		} else {
+			return view('guest.hello');
+		}
+	}
+
+	public function goodbye()
+	{
+		return view('member.goodbye');
+	}
 }
