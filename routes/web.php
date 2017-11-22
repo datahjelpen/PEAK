@@ -82,14 +82,12 @@ Route::prefix('{item_type}')->group(function () {
 
 	Route::get('/', 'Item\Item_typeController@show')->name('item_type.show');
 
-	Route::get('{item}', 'Item\ItemController@show')->name('item.show');
-
 	Route::prefix('{taxonomy}')->group(function () {
 		Route::get('/', 'Item\TaxonomyController@show')->name('taxonomy.show');
 		
 		Route::prefix('{term}')->group(function () {
 			Route::get('/', 'Item\TermController@show')->name('term.show');
-			Route::get('{item}', 'Item\ItemController@show');
+			Route::get('{item}', 'Item\ItemController@show')->name('item.show');
 		});
 	});
 });
