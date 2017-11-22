@@ -179,7 +179,6 @@ return [
 
         Laravel\Passport\PassportServiceProvider::class,
 
-        Felixkiss\UniqueWithValidator\ServiceProvider::class, // Adds unique_with validator
         Spatie\Permission\PermissionServiceProvider::class // Adds user roles & permissions
 
     ],
