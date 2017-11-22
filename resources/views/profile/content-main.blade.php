@@ -1,0 +1,1 @@
+<h1>{{ $profile->name_display }}</h1>

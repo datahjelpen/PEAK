@@ -8,7 +8,7 @@
 		</li>
 		<li><a href="{{ route('admin.dashboard') }}">admin</a></li>
 		<li>
-			<span>{{ Auth::user()->name }}</span>
+			<a href="{{ route('profile') }}">{{ Auth::user()->name }}</a>
 			<ul>
 				<li>
 					<a id="admin-logout-action" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('admin-logout-form').submit();">
