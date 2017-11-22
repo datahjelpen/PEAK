@@ -17,7 +17,8 @@ class Controller extends BaseController
      * @var string
      */
     protected $redirectTo = '/admin';
-	public function index()
+
+	public function home()
 	{
 		if (Auth::check()) {
 			return view('member.hello');
