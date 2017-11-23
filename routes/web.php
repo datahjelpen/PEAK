@@ -5,8 +5,8 @@ use \App\Model\Item\Term;
 use \App\Model\Item\Taxonomy;
 use \App\Model\Item\Item_type;
 
-Route::get('/', 'Controller@index')->name('index');
-Route::get('/home', 'Controller@index')->name('home');
+Route::get('/', 'Controller@home')->name('index');
+Route::get('/home', 'Controller@home')->name('home');
 Route::get('/goodbye', 'Controller@goodbye')->name('goodbye');
 
 Auth::routes();
