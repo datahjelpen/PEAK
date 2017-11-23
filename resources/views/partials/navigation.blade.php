@@ -9,7 +9,10 @@
 			</li>
 			<li><a href="{{ route('admin.dashboard') }}">admin</a></li>
 			<li>
-				<a href="{{ route('profile') }}">{{ Auth::user()->name }}</a>
+				<a href="{{ route('profile') }}">
+					<img src="{{ Auth::user()->profile->image->url }}" alt="{{ Auth::user()->profile->image->alt }}" width="32px">
+					<span>{{ Auth::user()->name }}</span>
+				</a>
 				<ul>
 					<li>
 						<a id="admin-logout-action" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('admin-logout-form').submit();">
