@@ -24,4 +24,12 @@ class Profile extends \Illuminate\Database\Eloquent\Model
     {
         return $this->hasMany('App\Link');
     }
+
+    public function image()
+    {
+        return $this->belongsTo('App\Image')->withDefault([
+            'url' => '/images/peak/graphics/peak-comp.png',
+            'alt' => 'PEAK avatar'
+        ]);
+    }
 }

@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('profile.update', $profile->id) }}">
+<form method="POST" action="{{ route('profile.update', $profile->id) }}" enctype="multipart/form-data">
 	{{ method_field('PATCH') }}
 	{{ csrf_field() }}
 
