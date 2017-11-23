@@ -1,10 +1,6 @@
-@extends('layouts.app')
+@extends('partials.master')
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
+@section('content-main')
                 <div class="panel-heading">Reset Password</div>
 
                 <div class="panel-body">
@@ -69,8 +65,4 @@
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
