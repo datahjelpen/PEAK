@@ -6,19 +6,36 @@
 @import "_helpers";
 // @import "vendor/skeleton";
 
+*,
+*:before,
+*:after{
+	box-sizing: inherit
+}
+
+html {
+	box-sizing: border-box;
+}
+
 body {
 	margin: 0;
 }
+
+// tmp for dev ----
+main {
+	padding: 1em;
+}
+// tmp for dev ----
 
 @import "components/_colors";
 @import "components/_typography";
 @import "components/_buttons";
 @import "components/_forms";
 @import "components/_modals";
+@import "components/_navigation";
 
 @import "components/_grid"; // Bootstrap 4 grid
 
-@import "turbolinks";
+// @import "turbolinks";
 
 @media (min-width: $xs) {}
 @media (min-width: $s) {}

@@ -1,4 +1,4 @@
-<ul>
+<ul id="flash-message">
 	@foreach (['danger', 'warning', 'success', 'info'] as $msg)
 		@if (Session::has('alert-' . $msg))
 			<li class="alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}</li>

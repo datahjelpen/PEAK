@@ -1,4 +1,4 @@
-<nav>
+<nav id="nav-main">
 	<ul>
 		@if (Auth::check())
 			<li>
