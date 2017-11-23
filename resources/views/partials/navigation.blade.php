@@ -10,7 +10,7 @@
 			<li><a href="{{ route('admin.dashboard') }}">admin</a></li>
 			<li>
 				<a href="{{ route('profile') }}">
-					<img src="{{ Auth::user()->profile->image->url }}" alt="{{ Auth::user()->profile->image->alt }}" width="32px">
+					<img src="{{ $profile->image->url }}" alt="{{ $profile->image->alt }}" width="32px">
 					<span>{{ Auth::user()->name }}</span>
 				</a>
 				<ul>
