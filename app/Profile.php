@@ -7,6 +7,7 @@ class Profile extends \Illuminate\Database\Eloquent\Model
     protected $table = 'profiles';
 
     protected $fillable = [
+        'url',
         'name_first',
         'name_last',
         'name_display',

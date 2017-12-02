@@ -15,6 +15,7 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('url')->unique();
             $table->string('name_first')->nullable()->default(null);
             $table->string('name_last')->nullable()->default(null);
             $table->string('name_display')->nullable()->default(null);
@@ -22,7 +23,7 @@ class CreateProfilesTable extends Migration
             $table->string('email_display')->nullable()->default(null);
             $table->text('description')->nullable()->default(null);
 
-            $table->unsignedInteger('user_id')->nullable()->default(null);
+            $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->unsignedInteger('image_id')->nullable()->default(null);

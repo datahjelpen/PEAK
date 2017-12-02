@@ -43,8 +43,10 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         if (Auth::user()->profile != null) return redirect()->route('profile');
+        $request->url = str_slug($request->url);
 
         $this->validate($request, [
+            'url'           => 'required|unique:profiles|string',
             'name_first'    => 'nullable|string',
             'name_last'     => 'nullable|string',
             'name_display'  => 'nullable|string',
@@ -54,6 +56,7 @@ class ProfileController extends Controller
         ]);
 
         $profile = new Profile;
+        $profile->url = $request->url;
         $profile->name_first = $request->name_first;
         $profile->name_last = $request->name_last;
         $profile->name_display = $request->name_display;
@@ -101,7 +104,10 @@ class ProfileController extends Controller
 
     public function update(Request $request, Profile $profile)
     {
+        $request->url = str_slug($request->url);
+
         $validator = Validator::make($request->all(), [
+            'url'          => 'required|unique:profiles,url,'.$profile->id.'|string|min:2',
             'name_first'    => 'nullable|string',
             'name_last'     => 'nullable|string',
             'name_display'  => 'nullable|string',
@@ -119,6 +125,7 @@ class ProfileController extends Controller
             $profile->image()->dissociate();
         }
 
+        $profile->url = $request->url;
         $profile->name_first = $request->name_first;
         $profile->name_last = $request->name_last;
         $profile->name_display = $request->name_display;

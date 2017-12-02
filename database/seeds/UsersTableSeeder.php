@@ -25,10 +25,10 @@ class UsersTableSeeder extends Seeder
         $super_user->assignRole('admin');
         $super_user->save();
 
-        $profile = Profile::create([
-            'name_display' => $super_user->name,
-            'email_display' => $super_user->email
-        ]);
+        $profile = new Profile;
+        $profile->url = str_slug($super_user->name);
+        $profile->name_display = $super_user->name;
+        $profile->email_display = $super_user->email;
         $profile->user()->associate($super_user->id);
         $profile->save();
 
