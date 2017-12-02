@@ -76,5 +76,6 @@ return [
      * role is updated. Then the cache will be flushed immediately.
      */
 
-    'cache_expiration_time' => 60 * 24,
+    // 'cache_expiration_time' => 60 * 24,
+    'cache_expiration_time' => 0,
 ];
