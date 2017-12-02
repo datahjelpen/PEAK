@@ -11,7 +11,7 @@
 			<li>
 				<a href="{{ route('profile') }}">
 					<img src="{{ $profile->image->url }}" alt="{{ $profile->image->alt }}" width="32px">
-					<span>{{ Auth::user()->name }}</span>
+					<span>{{ $profile->name_display }}</span>
 				</a>
 				<ul>
 					<li>
