@@ -4,11 +4,13 @@
 <label for="item-item-slug">{{ __('general.slug') }}</label>
 <input type="text" id="item-item-slug" name="slug" placeholder="slug" value="{{ old('slug', isset($item->slug) ? $item->slug : null) }}">
 
-<label for="item-item-text">{{ __('general.text') }}</label>
-<textarea id="item-item-text" name="text" placeholder="text">{{ old('text', isset($item->text) ? $item->text : null) }}</textarea>
+<label for="item-item-text-{{ str_random(15) }}">{{ __('general.text') }}</label>
+{{-- <textarea class="wysiwyg-editor" id="item-item-text" name="text" placeholder="text">{{ old('text', isset($item->text) ? $item->text : null) }}</textarea> --}}
+<div class="wysiwyg-editor" id="item-item-text-{{ str_random(15) }}" name="text">{{ old('text', isset($item->text) ? $item->text : null) }}</div>
 
-<label for="item-item-excerpt">{{ __('general.excerpt') }}</label>
-<textarea id="item-item-excerpt" name="excerpt" placeholder="excerpt">{{ old('excerpt', isset($item->excerpt) ? $item->excerpt : null) }}</textarea>
+<label for="item-item-excerpt-{{ str_random(15) }}">{{ __('general.excerpt') }}</label>
+{{-- <textarea class="wysiwyg-editor" id="item-item-excerpt-{{ str_random(15) }}" name="excerpt" placeholder="excerpt">{{ old('excerpt', isset($item->excerpt) ? $item->excerpt : null) }}</textarea> --}}
+<div class="wysiwyg-editor" id="item-item-excerpt-{{ str_random(15) }}" name="excerpt">{{ old('excerpt', isset($item->excerpt) ? $item->excerpt : null) }}</div>
 
 @foreach ($item_type->taxonomies as $taxonomy)
 	<p><strong>{{ $taxonomy->name }}</strong></p>
@@ -25,6 +27,7 @@
 @endforeach
 
 
+{{ dump($users) }}
 <label for="item-item-author">{{ __('general.author') }}</label>
 <select id="item-item-author" name="author_id">
 	@foreach ($users as $user)

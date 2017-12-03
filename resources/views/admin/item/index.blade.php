@@ -1,6 +1,7 @@
 @extends('admin.partials.master')
 
 @section('content-main')
+	<link rel="stylesheet" href="{{ mix('/css/wysiwyg.css') }}">
 	<h1>{{ str_plural($item_type->name) }}</h1>
 	
 	<hr>
