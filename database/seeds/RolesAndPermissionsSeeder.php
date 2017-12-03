@@ -43,6 +43,11 @@ class RolesAndPermissionsSeeder extends Seeder
         $update_statuses = Permission::create(['name' => 'update statuses']);
         $delete_statuses = Permission::create(['name' => 'delete statuses']);
 
+        $view_items   = Permission::create(['name' => 'view items']);
+        $create_items = Permission::create(['name' => 'create items']);
+        $update_items = Permission::create(['name' => 'update items']);
+        $delete_items = Permission::create(['name' => 'delete items']);
+
         // create roles and assign existing permissions
         $role = new Role;
         $role->name = 'superadmin';
@@ -72,6 +77,12 @@ class RolesAndPermissionsSeeder extends Seeder
         $role->givePermissionTo($create_statuses);
         $role->givePermissionTo($update_statuses);
         $role->givePermissionTo($delete_statuses);
+
+        $role->givePermissionTo($view_items);
+        $role->givePermissionTo($create_items);
+        $role->givePermissionTo($update_items);
+        $role->givePermissionTo($delete_items);
+
         $role->save();
 
         $role = new Role;
