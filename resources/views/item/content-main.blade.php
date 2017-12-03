@@ -1,8 +1,13 @@
 <h1>This is an item</h1>
+{{ dump($item) }}
+
 <pre>
-	{{ dump($item) }}
-	{{ dump($item->terms) }}
+	@foreach ($item->terms as $term)
+		{{ $term->name }}
+	@endforeach
 </pre>
+
+
 <ul>
 	<li>id:        {{ $item->id }}</li>
 	<li>name:      {{ $item->name }}</li>
