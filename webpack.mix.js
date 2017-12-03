@@ -4,3 +4,6 @@ mix.js('resources/assets/js/app.js', 'public/js').minify('public/js/app.js').ver
 mix.sass('resources/assets/sass/app.scss', 'public/css', {
 	outputStyle: 'compressed'
 }).version();
+mix.sass('resources/assets/sass/wysiwyg.scss', 'public/css', {
+	outputStyle: 'compressed'
+}).version();
