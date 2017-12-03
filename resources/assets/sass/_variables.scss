@@ -28,9 +28,18 @@ $brand-warning: #cbb956;
 $brand-danger: #bf5329;
 
 // Typography
-$font-family-sans-serif: sans-serif;
-$font-family-serif: "butlerbold", serif;
-$font-family-headings: $font-family-serif;
+$font-family-sans-serif-black: sans-serif;
+$font-family-sans-serif-bold:  sans-serif;
+$font-family-sans-serif:       sans-serif;
+$font-family-sans-serif-light: sans-serif;
+$font-family-sans-serif-thin:  sans-serif;
+
+$font-family-serif-black: "butlerblack", serif;
+$font-family-serif-bold:  "butlerbold", serif;
+$font-family-serif:       "butlerregular", serif;
+$font-family-serif-light: "butlerlight", serif;
+$font-family-serif-thin:  "butlerultralight", serif;
+$font-family-headings: $font-family-serif-bold;
 
 $font-size-base: 14px;
 $text-color: #636b6f;
