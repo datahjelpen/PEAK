@@ -13,4 +13,5 @@
 		@include('profile.form-delete', [$profile->id])
 	</div>
 </li>
+    <p><a href="{{ route('profile.show', $profile->url) }}">See how others see your profile</a></p>
 @endsection
