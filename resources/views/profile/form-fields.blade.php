@@ -4,6 +4,9 @@
 <label for="item-profile-image_remove">{{ __('general.image-remove') }}</label>
 <input type="checkbox" id="item-profile-image_remove" name="image_remove" {{ old('image_remove') ? 'checked' : null }}>
 
+<label for="item-profile-url">{{ __('general.url') }}</label>
+<input type="text" id="item-profile-url" name="url" placeholder="url" value="{{ old('url', isset($profile->url) ? $profile->url : null) }}" required>
+
 <label for="item-profile-name_first">{{ __('general.name_first') }}</label>
 <input type="text" id="item-profile-name_first" name="name_first" placeholder="name_first" value="{{ old('name_first', isset($profile->name_first) ? $profile->name_first : null) }}" autofocus>
 
