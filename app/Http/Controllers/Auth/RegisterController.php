@@ -63,6 +63,7 @@ class RegisterController extends Controller
         ]);
 
         $profile = new Profile;
+        $profile->url = str_slug($created_user->email);
         $profile->name_display = $created_user->name;
         $profile->email_display = $created_user->email;
         $profile->user()->associate($created_user->id);
