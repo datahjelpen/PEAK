@@ -22,6 +22,10 @@ Route::prefix('profile')->middleware('auth')->group(function () {
 	Route::delete('{profile}/delete', 'ProfileController@destroy')->name('profile.destroy');
 });
 
+Route::prefix('upload')->middleware('auth')->group(function () {
+	Route::post('image', 'UploadController@image')->name('upload.image');
+});
+
 Route::prefix('admin')->middleware('role:admin|superadmin')->group(function () {
 
 	Route::get('/', 'Admin\DashboardController@index')->name('admin.dashboard');
