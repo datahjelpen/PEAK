@@ -26,24 +26,31 @@
 	</ul>
 @endforeach
 
-
-{{ dump($users) }}
 <label for="item-item-author">{{ __('general.author') }}</label>
 <select id="item-item-author" name="author_id">
-	@foreach ($users as $user)
+	@can('view users')
+		@foreach ($users as $user)
+			<option value="{{ $user->id }}" {{ $user->id == old('author_id', isset($item->author->id) ? $item->author->id : null) ? 'selected' : null }}>{{ $user->name }}</option>
+		@endforeach
+	@else
+		@php
+			$user = Auth::user();
+		@endphp
 		<option value="{{ $user->id }}" {{ $user->id == old('author_id', isset($item->author->id) ? $item->author->id : null) ? 'selected' : null }}>{{ $user->name }}</option>
-	@endforeach
+	@endcan
 </select>
 
 <label for="item-item-template">{{ __('general.template') }}</label>
 <input type="text" id="item-item-template" name="template" placeholder="template" value="{{ old('template', isset($item->template) ? $item->template : null) }}">
 
-<p><strong>Statuses</strong></p>
-<select name="status_id">
-	@foreach ($item_type->statuses as $status)
-		<option value="{{ $status->id }}" {{ $status->id == old('status', isset($item->status->id) ? $item->status->id : null) ? 'selected' : null }}>{{ $status->name }}</option>
-	@endforeach
-</select>
+@can('view statuses')
+	<p><strong>Statuses</strong></p>
+	<select name="status_id">
+		@foreach ($item_type->statuses as $status)
+			<option value="{{ $status->id }}" {{ $status->id == old('status', isset($item->status->id) ? $item->status->id : null) ? 'selected' : null }}>{{ $status->name }}</option>
+		@endforeach
+	</select>
+@endcan
 
 <label for="item-item-comments">{{ __('general.comments') }}</label>
 <input type="checkbox" id="item-item-comments" name="comments" placeholder="comments" {{ old('comments', isset($item->comments) ? $item->comments : null) ? 'checked' : null }}>
