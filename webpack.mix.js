@@ -7,3 +7,6 @@ mix.sass('resources/assets/sass/app.scss', 'public/css', {
 mix.sass('resources/assets/sass/wysiwyg.scss', 'public/css', {
 	outputStyle: 'compressed'
 }).version();
+mix.sass('resources/assets/fonts/butler/butler.scss', 'public/fonts', {
+	outputStyle: 'compressed'
+}).version();
