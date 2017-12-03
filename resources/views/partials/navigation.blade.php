@@ -1,12 +1,12 @@
 <nav id="nav-main">
 	<ul>
+		<li>
+			<a href="{{ route('home') }}">
+				<img class="comp" src="/images/peak/logo/black-512-comp.png" data-highres="/images/peak/logo/black-512.png" alt="{{ config('app.name', 'PEAK') }} logo">
+				<span>{{ config('app.name', 'PEAK') }}</span>
+			</a>
+		</li>
 		@if (Auth::check())
-			<li>
-				<a href="{{ route('home') }}">
-					<img class="comp" src="/images/peak/logo/black-512-comp.png" data-highres="/images/peak/logo/black-512.png" alt="{{ config('app.name', 'PEAK') }} logo">
-					<span>{{ config('app.name', 'PEAK') }}</span>
-				</a>
-			</li>
 			<li><a href="{{ route('admin.dashboard') }}">admin</a></li>
 			<li>
 				<a href="{{ route('profile') }}">
@@ -25,7 +25,6 @@
 				</ul>
 			</li>
 		@else
-			<li><a href="{{ route('home') }}">Home</a></li>
 			<li><a href="{{ route('login') }}">Login</a></li>
 			<li><a href="{{ route('register') }}">Register</a></li>
 		@endif
