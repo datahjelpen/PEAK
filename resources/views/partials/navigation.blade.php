@@ -2,7 +2,7 @@
 	<ul>
 		<li>
 			<a href="{{ route('home') }}">
-				<img class="comp" src="/images/peak/logo/black-512-comp.png" data-highres="/images/peak/logo/black-512.png" alt="{{ config('app.name', 'PEAK') }} logo">
+				<img id="nav-logo" src="/images/peak/logo/white.svg" alt="{{ config('app.name', 'PEAK') }} logo">
 				<span>{{ config('app.name', 'PEAK') }}</span>
 			</a>
 		</li>

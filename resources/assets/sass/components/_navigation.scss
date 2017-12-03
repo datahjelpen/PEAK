@@ -4,16 +4,21 @@
 	margin: 0;
 }
 
+#nav-logo {
+	width: 100%;
+	max-width: 64px;
+}
+
 #nav-main,
 #nav-admin,
 #nav-superadmin {
 	width: 100%;
-	background-color: #ffff00;
-	color: #000;
+	background-color: #222;
+	color: #fff;
 	padding: 1em;
 
 	a {
-		color: #000;
+		color: #fff;
 	}
 
 	ul {
@@ -36,9 +41,9 @@
 }
 
 #nav-superadmin {
-	background-color: #ffffa0;
+	background-color: #333;
 }
 
 #nav-admin {
-	background-color: #ffffb0;
+	background-color: #444;
 }
