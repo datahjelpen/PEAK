@@ -16,12 +16,16 @@ class ItemController extends Controller
         $item = $item->getSingle($item_type);
 
         // Make sure the route only works for the correct term
-        foreach ($item->terms as $item_term) {
-        	if ($item_term->id == $term->id) {
-        		return view('item.show', compact('item_type', 'item'));
-        	}
+        if (isset($item->terms)) {
+            foreach ($item->terms as $item_term) {
+                if ($item_term->id == $term->id) {
+                    return view('item.show', compact('item_type', 'item'));
+                }
+            }
+
+            return redirect()->route('item.show', [$item_type->slug, $taxonomy->slug, $item->terms->first()->slug, $item->slug]);
         }
 
-        return redirect()->route('item.show', [$item_type->slug, $taxonomy->slug, $item->terms->first()->slug, $item->slug]);
+        return abort(404);
     }
 }
