@@ -46,7 +46,7 @@ class ProfileController extends Controller
         $request->url = str_slug($request->url);
 
         $this->validate($request, [
-            'url'           => 'required|unique:profiles|string',
+            'url'           => 'required|string|unique:profiles|min:1',
             'name_first'    => 'nullable|string',
             'name_last'     => 'nullable|string',
             'name_display'  => 'nullable|string',
@@ -90,6 +90,12 @@ class ProfileController extends Controller
         return redirect()->route('profile');
     }
 
+    public function show($profile)
+    {
+        $profile = Profile::where('id', $profile)->orWhere('url', $profile)->firstOrFail();
+        return view('profile.show', compact('profile'));
+    }
+
     public function edit_mine()
     {
         $profile = Auth::user()->profile;
@@ -107,7 +113,7 @@ class ProfileController extends Controller
         $request->url = str_slug($request->url);
 
         $validator = Validator::make($request->all(), [
-            'url'          => 'required|unique:profiles,url,'.$profile->id.'|string|min:2',
+            'url'          => 'required|string|min:1|unique:profiles,url,'.$profile->id,
             'name_first'    => 'nullable|string',
             'name_last'     => 'nullable|string',
             'name_display'  => 'nullable|string',
@@ -118,7 +124,7 @@ class ProfileController extends Controller
 
         if ($validator->fails()) {
             Session::flash('alert-danger', __('validation.failed.update', ['name' => $profile->name_display]));
-            return redirect()->route('superadmin.profile.edit', $profile->slug)->withErrors($validator)->withInput();
+            return redirect()->route('profile.edit', $profile->id)->withErrors($validator)->withInput();
         }
 
         if ($request->image_remove) {

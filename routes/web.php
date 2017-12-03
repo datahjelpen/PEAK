@@ -16,6 +16,7 @@ Route::prefix('profile')->group(function () {
 	Route::get('new',                 'ProfileController@create')->name('profile.create');
 	Route::get('edit',                'ProfileController@edit_mine')->name('profile.edit_mine');
 	Route::post('create',             'ProfileController@store')->name('profile.store');
+	Route::get('{profile}',           'ProfileController@show')->name('profile.show');
 	Route::get('{profile}/edit',      'ProfileController@edit')->name('profile.edit');
 	Route::patch('{profile}/update',  'ProfileController@update')->name('profile.update');
 	Route::delete('{profile}/delete', 'ProfileController@destroy')->name('profile.destroy');
