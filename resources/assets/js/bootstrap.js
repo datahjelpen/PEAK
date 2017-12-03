@@ -66,8 +66,54 @@ try {
 
 	require('quill/themes/snow.js');
 
+	function selectLocalImage(editor) {
+		var input = document.createElement('input');
+		input.setAttribute('type', 'file');
+		input.click();
 
-	var fonts = ['sofia', 'slabo', 'roboto', 'inconsolata', 'ubuntu'];
+		// Listen upload local image and save to server
+		input.onchange = () => {
+			var file = input.files[0];
+
+			// file type is only image.
+			if (/^image\//.test(file.type)) {
+				saveToServer(editor, file);
+			} else {
+				console.warn('You could only upload images.');
+			}
+		};
+	}
+
+	function saveToServer(editor, file) {
+		var fd = new FormData();
+		fd.append('image', file);
+
+		$.ajax({
+			url:'/upload/image',
+			data: fd,
+			processData: false,
+			contentType: false,
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			success: function(data){
+				insertToEditor(editor, data.url);
+			}
+		});
+	}
+
+	function insertToEditor(editor, url) {
+		var range = editor.getSelection();
+
+		if (range) {
+			editor.insertEmbed(range.index, 'image', '/uploads/'+url);
+		} else {
+			editor.insertEmbed(1, 'image', '/uploads/'+url);
+		}
+	}
+
+	var fonts = ['serif', 'sans-serif', 'monospace'];
 	var toolbarOptions = [
 		[{ 'size': [] }, { 'font': fonts }],
 		[ 'bold', 'italic', 'underline'],
@@ -77,19 +123,45 @@ try {
 		[ 'clean' ]
 	];
 
-
 	var editors = document.querySelectorAll('.wysiwyg-editor');
+	var forms = [];
+	var editorsQuill = [];
+	var editorTargets = [];
+
 	for (var i = 0; i < editors.length; i++) {
-		var editor = new window.quill('#'+editors[i].getAttribute('id'), {
+		var editor = editors[i];
+		var editorTarget = $(editor).next('.wysiwyg-editor-target');
+		var form = editorTarget[0].form;
+
+		if (!(forms.indexOf(form) > -1)) {
+			forms.push(form);
+		}
+
+		// Setup unique classname for all editor elements to ensure uniqueness and avoid duplicate toolbars
+		var random = 'unique_'+generate_guid();
+		var id = '#'+editor.getAttribute('id')+'.'+random;
+		editor.className += ' '+random;
+		editorTarget[0].className = ' '+random;
+
+
+		// Setup Quill editor
+		var quill_editor = new window.quill(id, {
 			modules: {
 				toolbar: toolbarOptions
 			},
 			theme: 'snow'
 		});
+		editorsQuill.push(quill_editor);
+		editorTargets.push(editorTarget);
+
+		// custom image upload button
+		quill_editor.getModule('toolbar').addHandler('image', function(e) {
+			selectLocalImage(this.quill);
+		});
+
 	}
 
 
-	// window.quill
 } catch (e) {
 	console.log(e);
 }
