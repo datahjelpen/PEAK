@@ -37,6 +37,7 @@ class Controller extends \App\Http\Controllers\Controller
                     }
                 }
 
+
                 // Make $profile available for all views
                 view()->share('profile', $request->user()->profile);
             }

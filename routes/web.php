@@ -11,7 +11,7 @@ Route::get('/goodbye', 'Controller@goodbye')->name('goodbye');
 
 Auth::routes();
 
-Route::prefix('profile')->group(function () {
+Route::prefix('profile')->middleware('auth')->group(function () {
 	Route::get('/',                   'ProfileController@index')->name('profile');
 	Route::get('new',                 'ProfileController@create')->name('profile.create');
 	Route::get('edit',                'ProfileController@edit_mine')->name('profile.edit_mine');

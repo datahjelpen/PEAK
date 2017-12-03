@@ -13,21 +13,12 @@ use \App\Profile;
 
 class ProfileController extends Controller
 {
-    public function __construct()
-    {
-       $this->middleware('auth');
-    }
-
     public function index()
     {
         $profile = Auth::user()->profile;
 
         if ($profile == null) {
             return redirect()->route('profile.create');
-        }
-
-        if ($profile->image->id != null) {
-            $profile->image->url = Storage::url($profile->image->url);
         }
 
         return view('profile.index', compact('profile'));
@@ -93,6 +84,14 @@ class ProfileController extends Controller
     public function show($profile)
     {
         $profile = Profile::where('id', $profile)->orWhere('url', $profile)->firstOrFail();
+
+        // Make sure profile image has an url
+        if (isset($profile->image->id)) {
+            if ($profile->image->id != null) {
+                $profile->image->url = Storage::url($profile->image->url);
+            }
+        }
+
         return view('profile.show', compact('profile'));
     }
 
@@ -142,6 +141,7 @@ class ProfileController extends Controller
         if ($request->file('image') != null) {
             $image = new Image;
             $image->url = $request->file('image')->store('profile_avatars');
+            // $image->url = Storage::url($image->url);
             // $image->size_bytes = $request->file('image')->size;
             // $image->alt_tag = $request->file('image')->originalName;
             $image->size_bytes = '1';
@@ -156,7 +156,6 @@ class ProfileController extends Controller
 
             $profile->image()->associate($image->id);
         }
-
         $profile->save();
 
         Session::flash('alert-success', __('validation.succeeded.update', ['name' => $profile->name_display]));
