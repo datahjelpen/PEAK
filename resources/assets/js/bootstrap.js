@@ -160,8 +160,24 @@ try {
 		});
 
 	}
+	
+	for (var i = 0; i < forms.length; i++) {
+		forms[i].addEventListener('submit', function(e) {
+			// e.preventDefault();
 
+			for (var i = 0; i < editorsQuill.length; i++) {
+				var contentHTML = editorsQuill[i].container.firstChild.innerHTML;
+				var contentDelta = editorsQuill[i].getContents();
 
+				if (contentDelta.length() > 1) {
+					editorTargets[i].val(contentHTML);
+				}
+			}
+
+			return false;
+		});
+
+	}
 } catch (e) {
 	console.log(e);
 }
