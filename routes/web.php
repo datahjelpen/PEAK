@@ -22,12 +22,12 @@ Route::prefix('profile')->group(function () {
 	Route::delete('{profile}/delete', 'ProfileController@destroy')->name('profile.destroy');
 });
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('role:admin|superadmin')->group(function () {
 
 	Route::get('/', 'Admin\DashboardController@index')->name('admin.dashboard');
 	Route::get('oauth-dashboard', 'Admin\DashboardController@oauth')->name('oauth-dashboard');
 		
-	Route::prefix('superadmin')->group(function () {
+	Route::prefix('superadmin')->middleware('role:superadmin')->group(function () {
 
 		Route::get('item_types',        'Admin\Item\Item_typeController@index')->name('superadmin.item_types');
 		Route::get('item_type/new',     'Admin\Item\Item_typeController@create')->name('superadmin.item_type.create');
@@ -81,14 +81,14 @@ Route::prefix('admin')->group(function () {
 
 Route::prefix('{item_type}')->group(function () {
 
-	Route::get('/', 'Item\Item_typeController@show')->name('item_type.show');
+	Route::get('/', 'Item\Item_typeController@show')->middleware('permission:view item_types')->name('item_type.show');
 
 	Route::prefix('{taxonomy}')->group(function () {
-		Route::get('/', 'Item\TaxonomyController@show')->name('taxonomy.show');
+		Route::get('/', 'Item\TaxonomyController@show')->middleware('permission:view taxonomies')->name('taxonomy.show');
 		
 		Route::prefix('{term}')->group(function () {
-			Route::get('/', 'Item\TermController@show')->name('term.show');
-			Route::get('{item}', 'Item\ItemController@show')->name('item.show');
+			Route::get('/', 'Item\TermController@show')->middleware('permission:view terms')->name('term.show');
+			Route::get('{item}', 'Item\ItemController@show')->middleware('permission:view items')->name('item.show');
 		});
 	});
 });
