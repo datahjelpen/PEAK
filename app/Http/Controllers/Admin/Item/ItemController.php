@@ -51,12 +51,42 @@ class ItemController extends Controller
 
     public function create(Item_type $item_type)
     {
-        return view('admin.item.create');
+        // Set a hierarchial taxonomy's "parents" key to be it's parent terms
+        foreach ($item_type->taxonomies as $taxonomy) {
+            if ($taxonomy->hierarchical) {
+                $taxonomy->parents = $taxonomy->terms()->where(['parent_id' => null])->get();
+                foreach ($taxonomy->parents as $parent) $parent->getChildrenRecursively();
+            } else {
+                $taxonomy->parents = $taxonomy->terms()->get();
+            }
+        }
+
+        // Loop through all the items and assign a simple array containing attached terms
+        foreach ($item_type->items as $item) {
+            $terms_simple = [];
+            foreach ($item->terms as $term) array_push($terms_simple, $term->id);
+            $item->terms_simple = $terms_simple;
+        }
+
+        // If the session contains an item's terms, put them in a simple array
+        if (old('terms') != null) {
+            $item = new \stdClass();
+            $terms_simple = [];
+            foreach (old('terms') as $term) array_push($terms_simple, $term);
+            $item->terms_simple = $terms_simple;
+
+            return view('admin.item.index', compact('item_type', 'item'));
+        }
+
+        $users = User::all();
+
+        return view('admin.item.create', compact('item_type', 'users'));
     }
 
     public function store(Item_type $item_type, Request $request)
     {
         if (!$request->slug && $request->name) $request->merge(['slug' => str_slug($request->name, '-')]);
+
 
         $item = new Item;
         $request->slug = $item->make_slug($request);
@@ -86,11 +116,13 @@ class ItemController extends Controller
         $item->status()->associate($request->status_id);
         $item->author()->associate($request->author_id);
 
+
         $item->save();
         
         foreach ($request['terms'] as $term) {
             $item->terms()->attach($term);
         }
+
 
         Session::flash('alert-success', __('validation.succeeded.create', ['name' => $request->name]));
         return back();
