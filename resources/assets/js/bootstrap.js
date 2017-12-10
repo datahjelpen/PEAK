@@ -60,58 +60,21 @@ if (token) {
 // 	})
 // } catch (e) {}
 
-// Use feather icons
+// Use quill text editor
+
+
+import Quill from 'quill';
+import BlotFormatter, { AlignAction, DeleteAction, ResizeAction, ImageSpec } from 'quill-blot-formatter'
+Quill.register('modules/blotFormatter', BlotFormatter);
+
+class CustomImageSpec extends ImageSpec {
+	getActions() {
+		return [AlignAction, DeleteAction, ResizeAction];
+	}
+}
+
 try {
-	window.quill = require('quill');
-
 	require('quill/themes/snow.js');
-
-	function selectLocalImage(editor) {
-		var input = document.createElement('input');
-		input.setAttribute('type', 'file');
-		input.click();
-
-		// Listen upload local image and save to server
-		input.onchange = () => {
-			var file = input.files[0];
-
-			// file type is only image.
-			if (/^image\//.test(file.type)) {
-				saveToServer(editor, file);
-			} else {
-				console.warn('You could only upload images.');
-			}
-		};
-	}
-
-	function saveToServer(editor, file) {
-		var fd = new FormData();
-		fd.append('image', file);
-
-		$.ajax({
-			url:'/upload/image',
-			data: fd,
-			processData: false,
-			contentType: false,
-			type: 'POST',
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			},
-			success: function(data){
-				insertToEditor(editor, data.url);
-			}
-		});
-	}
-
-	function insertToEditor(editor, url) {
-		var range = editor.getSelection();
-
-		if (range) {
-			editor.insertEmbed(range.index, 'image', '/uploads/'+url);
-		} else {
-			editor.insertEmbed(1, 'image', '/uploads/'+url);
-		}
-	}
 
 	var fonts = ['serif', 'sans-serif', 'monospace'];
 	var toolbarOptions = [
@@ -145,9 +108,20 @@ try {
 
 
 		// Setup Quill editor
-		var quill_editor = new window.quill(id, {
+		var quill_editor = new Quill(id, {
 			modules: {
-				toolbar: toolbarOptions
+				toolbar: toolbarOptions,
+				blotFormatter: {
+					specs: [
+						CustomImageSpec,
+					],
+					toolbar: {
+						buttonStyle: {
+						},
+						svgStyle: {
+						}
+					}
+				}
 			},
 			theme: 'snow'
 		});
@@ -163,8 +137,6 @@ try {
 	
 	for (var i = 0; i < forms.length; i++) {
 		forms[i].addEventListener('submit', function(e) {
-			// e.preventDefault();
-
 			for (var i = 0; i < editorsQuill.length; i++) {
 				var contentHTML = editorsQuill[i].container.firstChild.innerHTML;
 				var contentDelta = editorsQuill[i].getContents();
@@ -178,11 +150,95 @@ try {
 		});
 
 	}
+
+	var loadingIndicatorURL = '/images/graphics/image-upload-loading.gif';
+
+	function insertLoadingIndicator(editor) {
+		var range = editor.getSelection();
+
+		if (range) {
+			range = range.index;
+		} else {
+			range = 1;
+		}
+
+		editor.insertEmbed(range, 'image', loadingIndicatorURL);
+	}
+
+
+	function removeLoadingIndicator(editor) {
+		var content = editor.getContents();
+
+		for (var i = 0; i < content.ops.length; i++) {
+			var image = content.ops[i].insert.image;
+
+			if (image && image == loadingIndicatorURL) {
+				delete content.ops[i];
+			}
+		}
+
+		editor.setContents(content);
+	}
+
+	function selectLocalImage(editor) {
+		var input = document.createElement('input');
+		input.setAttribute('type', 'file');
+		input.click();
+
+		// Listen upload local image and save to server
+		input.onchange = () => {
+			var file = input.files[0];
+			insertLoadingIndicator(editor);
+
+			// file type is only image.
+			if (/^image\//.test(file.type)) {
+				saveToServer(editor, file);
+			} else {
+				removeLoadingIndicator(editor);
+				console.warn('You could only upload images.');
+			}
+		};
+	}
+
+	function saveToServer(editor, file) {
+		var fd = new FormData();
+		fd.append('image', file);
+
+		$.ajax({
+			url:'/upload/image',
+			data: fd,
+			processData: false,
+			contentType: false,
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			success: function(data){
+				insertToEditor(editor, data.url);
+			},
+			error: function(data){
+				removeLoadingIndicator(editor);
+			}
+		});
+	}
+
+	function insertToEditor(editor, url) {
+		var range = editor.getSelection();
+
+		if (range) {
+			range = range.index;
+		} else {
+			range = 1;
+		}
+
+		editor.insertEmbed(range, 'image', '/uploads/'+url);
+		removeLoadingIndicator(editor);
+	}
 } catch (e) {
 	console.log(e);
 }
 
-// Use quill text editor
+// Use feather icons
 try {
 	window.feather = require('feather-icons');
 	window.feather.replace();
