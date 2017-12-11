@@ -34,5 +34,25 @@
 		.ql-editor {
 			min-height: 15em;
 		}
+
+		.blot-formatter__toolbar-button {
+			border: 0;
+		}
+
+		&-drag-active {
+			position: relative;
+			background-color: rgba(#000000, 0.1) !important;
+
+			&:after {
+				content: 'Drop to upload';
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				left: 0;
+				right: 0;
+				text-align: center;
+				margin: 0 auto;
+			}
+		}
 	}
 }
