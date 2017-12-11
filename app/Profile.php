@@ -29,7 +29,7 @@ class Profile extends \Illuminate\Database\Eloquent\Model
     public function image()
     {
         return $this->belongsTo('App\Image')->withDefault([
-            'url' => '/images/peak/graphics/peak-comp.png',
+            'url' => '/images/icons/user.svg',
             'alt' => 'PEAK avatar'
         ]);
     }

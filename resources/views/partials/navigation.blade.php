@@ -10,7 +10,7 @@
 			<li><a href="{{ route('admin.dashboard') }}">admin</a></li>
 			<li>
 				<a href="{{ route('profile') }}">
-					<img src="{{ $profile->image->url }}" alt="{{ $profile->image->alt }}" width="32px">
+					<div id="avatar" style="background-image: url('{{ $profile->image->url }}')"></div>
 					<span>{{ $profile->name_display }}</span>
 				</a>
 				<ul>

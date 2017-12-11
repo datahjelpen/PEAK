@@ -65,6 +65,15 @@ main {
 		}
 	}
 }
+
+#avatar {
+	border-radius: 100%;
+	width: 3em;
+	height: 3em;
+	background-position: center;
+	background-color: $color-white;
+	background-size: cover;
+}
 // tmp for dev ----
 
 @import "components/_colors";
