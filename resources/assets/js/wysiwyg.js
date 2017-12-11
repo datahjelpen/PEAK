@@ -16,8 +16,6 @@ var toolbarOptions = [
 	[ 'bold', 'italic', 'underline'],
 	[{ 'list': 'ordered' }, { 'list': 'bullet'}, { 'align': [] }],
 	[ 'link', 'image', 'video'],
-	[ 'formula', 'code-block' ],
-	[ 'clean' ]
 ];
 
 var editors = document.querySelectorAll('.wysiwyg-editor');
@@ -51,23 +49,8 @@ for (var i = 0; i < editors.length; i++) {
 						IframeVideoSpec
 					],
 					toolbar: {
-						addButtonSelectStyle: true,
-						buttonStyle: {
-							display: 'inline-block',
-							width: '24px',
-							height: '24px',
-							background: 'green',
-							border: '1px solid #ff0000',
-							verticalAlign: 'middle',
-						},
-						svgStyle: {
-							display: 'inline-block',
-							width: '24px',
-							height: '24px',
-							background: 'green',
-							border: '1px solid #ff0000',
-							verticalAlign: 'middle',
-						},
+						buttonStyle: null,
+						svgStyle: null
 					}
 				}
 			},
@@ -75,6 +58,7 @@ for (var i = 0; i < editors.length; i++) {
 		});
 		editorsQuill.push(quill_editor);
 		editorTargets.push(editorTarget);
+		editorTarget.hide();
 
 		// custom image upload button
 		quill_editor.getModule('toolbar').addHandler('image', function(e) {
@@ -85,7 +69,6 @@ for (var i = 0; i < editors.length; i++) {
 		quill_editor.container.addEventListener('dragleave', function (e) { handleDragLeave(e, quill_editor) });
 		quill_editor.container.addEventListener('dragover', function (e) { handleDragOver(e, quill_editor) });
 		quill_editor.container.addEventListener('drop',      function (e) { handleDrop(e, quill_editor) });
-		quill_editor.container.addEventListener('paste',     function (e) { handlePaste(e, quill_editor) });
 	})();
 }
 
@@ -129,30 +112,6 @@ function handleDrop(evt, editor) {
 		}
 	}
 }
-
-function handlePaste(evt, editor) {
-	if (evt.clipboardData && evt.clipboardData.items && evt.clipboardData.items.length) {
-		console.log("paste", evt);
-		// this.readFiles(evt.clipboardData.items, dataUrl => {
-		// 	const selection = this.quill.getSelection();
-		// 	if (selection) {
-		// 		// we must be in a browser that supports pasting (like Firefox)
-		// 		// so it has already been placed into the editor
-		// 	}
-		// 	else {
-		// 		// otherwise we wait until after the paste when this.quill.getSelection()
-		// 		// will return a valid index
-		// 		setTimeout(() => this.insert(dataUrl), 0);
-		// 	}
-		// });
-	}
-}
-
-
-
-
-
-
 
 
 var loadingIndicatorURL = '/images/graphics/image-upload-loading.gif';
