@@ -8,6 +8,7 @@
 
     <button class="modal-trigger" data-modal="#edit-profile-{{ $profile->id }}">{{ __('general.actions.edit') }}</button>
     <div id="edit-profile-{{ $profile->id }}" class="modal">
+        <button class="modal-close"><i data-feather="x-square"></i></button>
         @include('profile.form-edit', [$profile->id])
     </div>
 

@@ -15,6 +15,7 @@
 
 					<button class="modal-trigger" data-modal="#show-item-item_type-{{ $item_type->slug }}">{{ __('navigation.actions.view_quick') }}</button>
 					<div id="show-item-item_type-{{ $item_type->slug }}" class="modal">
+						<button class="modal-close"><i data-feather="x-square"></i></button>
 {{-- 						<a href="{{ route('item.item_type.show', $item_type->slug) }}">{{ __('general.actions.open') }}</a>
 						<a href="{{ route('item.item_type.show', $item_type->slug) }}" target="_blank">{{ __('navigation.actions.open_new_tab') }}</a> --}}
 						@include('item.item_type.content-main', ['item_type' => $item_type])
@@ -22,11 +23,13 @@
 					
 					<button class="modal-trigger" data-modal="#edit-item-item_type-{{ $item_type->slug }}">{{ __('general.actions.edit') }}</button>
 					<div id="edit-item-item_type-{{ $item_type->slug }}" class="modal">
+						<button class="modal-close"><i data-feather="x-square"></i></button>
 						@include('admin.superadmin.item.item_type.form-edit', ['item_type' => $item_type])
 					</div>
 
 					<button class="modal-trigger" data-modal="#delete-item-item_type-{{ $item_type->slug }}">{{ __('general.actions.delete') }}</button>
 					<div id="delete-item-item_type-{{ $item_type->slug }}" class="modal">
+						<button class="modal-close"><i data-feather="x-square"></i></button>
 						@include('admin.superadmin.item.item_type.form-delete', ['item_type' => $item_type])
 					</div>
 

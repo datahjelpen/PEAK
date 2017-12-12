@@ -15,11 +15,13 @@
 					
 					<button class="modal-trigger" data-modal="#edit-item-item_type-{{ $status->id }}">{{ __('general.actions.edit') }}</button>
 					<div id="edit-item-item_type-{{ $status->id }}" class="modal">
+						<button class="modal-close"><i data-feather="x-square"></i></button>
 						@include('admin.superadmin.item.status.form-edit', [$item_type->slug, $status->slug])
 					</div>
 
 					<button class="modal-trigger" data-modal="#delete-item-item_type-{{ $status->id }}">{{ __('general.actions.delete') }}</button>
 					<div id="delete-item-item_type-{{ $status->id }}" class="modal">
+						<button class="modal-close"><i data-feather="x-square"></i></button>
 						@include('admin.superadmin.item.status.form-delete', [$item_type->slug, $status->slug])
 					</div>
 				</li>
